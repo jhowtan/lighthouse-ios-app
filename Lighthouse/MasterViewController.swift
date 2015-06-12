@@ -8,11 +8,18 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UITableViewDataSource, UITableViewDelegate {
 
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
-
+    
+    let beaconManager = ESTBeaconManager()
+    
+    let beaconRegion = CLBeaconRegion(
+        proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
+        identifier: "Lighthouse")
+    
+    var tableNumber = 0
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,8 +31,12 @@ class MasterViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var image = UIImage(named: "Icon-Small")
+        self.navigationItem.titleView = UIImageView(image: image)
+        
         // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
+//        self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
@@ -33,6 +44,20 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
+        
+        beaconManager.delegate = self
+    }
+    
+    func beaconManager(manager: AnyObject!,
+        didRangeBeacons beacons: [AnyObject]!,
+        inRegion region: CLBeaconRegion!) {
+            if tableNumber > 0 { return }
+            if let nearestBeacon = beacons.first as? CLBeacon {
+                beaconManager.stopRangingBeaconsInRegion(region)
+                
+//                tableNumber = nearestBeacon.minor.integerValue
+                println(nearestBeacon.minor.integerValue)
+            }
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,9 +66,12 @@ class MasterViewController: UITableViewController {
     }
 
     func insertNewObject(sender: AnyObject) {
-        objects.insert(NSDate(), atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        // objects.insert(NSDate(), atIndex: 0)
+        // let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        // self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        println("clicked")
+        beaconManager.requestWhenInUseAuthorization()
+        beaconManager.startRangingBeaconsInRegion(beaconRegion)
     }
 
     // MARK: - Segues
