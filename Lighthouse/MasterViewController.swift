@@ -13,11 +13,22 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
     
+    // Beacon variables
     let beaconManager = ESTBeaconManager()
     
     let beaconRegion = CLBeaconRegion(
         proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
         identifier: "Lighthouse")
+    
+    // Firebase reference
+    let fbRootRef = Firebase(url:"https://beacon-dan.firebaseio.com/")
+    let beaconsRef = Firebase(url:"https://beacon-dan.firebaseio.com/beacons/")
+    let locationRef = Firebase(url:"https://beacon-dan.firebaseio.com/location/")
+    let usersRef = Firebase(url:"https://beacon-dan.firebaseio.com/users/")
+    let messagesRef = Firebase(url:"https://beacon-dan.firebaseio.com/messages/")
+    let recepRef = Firebase(url:"https://beacon-dan.firebaseio.com/location/reception/")
+    
+    var recepBeacon:[String:String] = ["uuid":""]
     
     var tableNumber = 0
 
@@ -32,12 +43,14 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var image = UIImage(named: "Icon-Small")
+        let image = UIImage(named: "Icon-Small")
+        
         self.navigationItem.titleView = UIImageView(image: image)
         
         // Do any additional setup after loading the view, typically from a nib.
-//        self.navigationItem.leftBarButtonItem = self.editButtonItem()
-
+        // self.navigationItem.leftBarButtonItem = self.editButtonItem()
+        
+        // Add the plus button
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
@@ -45,33 +58,60 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
         
+        // Add the beacon manager delegate
         beaconManager.delegate = self
+        
+        setUpFirebaseData()
+    }
+    
+    func setUpFirebaseData() {
+        // Setup Reception Data
+        locationRef.childByAppendingPath("reception")
+        .observeEventType(.Value, withBlock: { recep in
+            let recepKey = recep.value as? String
+            
+            self.beaconsRef.childByAppendingPath(recepKey)
+                .observeEventType(.ChildAdded, withBlock: { snapshot in
+                    
+                    let rkey = snapshot.key as String
+                    let val = snapshot.value as! String
+                    self.recepBeacon[rkey] = val
+            })
+            
+            self.startRanging()
+        })
     }
     
     func beaconManager(manager: AnyObject!,
         didRangeBeacons beacons: [AnyObject]!,
         inRegion region: CLBeaconRegion!) {
-            if tableNumber > 0 { return }
+            
+            for (key,val) in self.recepBeacon {
+                println("\(key) : \(val)")
+            }
+            
             if let nearestBeacon = beacons.first as? CLBeacon {
                 beaconManager.stopRangingBeaconsInRegion(region)
                 
-//                tableNumber = nearestBeacon.minor.integerValue
                 println(nearestBeacon.minor.integerValue)
             }
+    }
+    
+    func startRanging(){
+        beaconManager.requestWhenInUseAuthorization()
+        beaconManager.startRangingBeaconsInRegion(beaconRegion)
+    }
+        
+    func insertNewObject(sender: AnyObject) {
+        // objects.insert(NSDate(), atIndex: 0)
+        // let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        // self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    func insertNewObject(sender: AnyObject) {
-        // objects.insert(NSDate(), atIndex: 0)
-        // let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        // self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        println("clicked")
-        beaconManager.requestWhenInUseAuthorization()
-        beaconManager.startRangingBeaconsInRegion(beaconRegion)
     }
 
     // MARK: - Segues

@@ -1,10 +1,13 @@
 PODS:
   - EstimoteSDK (3.2.5)
+  - Firebase (2.3.1)
 
 DEPENDENCIES:
   - EstimoteSDK
+  - Firebase (>= 2.3.1)
 
 SPEC CHECKSUMS:
   EstimoteSDK: df3ab4ee5f5ee32182a8d918321dc9604eda4829
+  Firebase: 462795adf92029ddb97777660627f5dd4fd59876
 
 COCOAPODS: 0.37.2

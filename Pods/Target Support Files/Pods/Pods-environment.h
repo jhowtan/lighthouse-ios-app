@@ -12,3 +12,9 @@
 #define COCOAPODS_VERSION_MINOR_EstimoteSDK 2
 #define COCOAPODS_VERSION_PATCH_EstimoteSDK 5
 
+// Firebase
+#define COCOAPODS_POD_AVAILABLE_Firebase
+#define COCOAPODS_VERSION_MAJOR_Firebase 2
+#define COCOAPODS_VERSION_MINOR_Firebase 3
+#define COCOAPODS_VERSION_PATCH_Firebase 1
+
