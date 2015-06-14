@@ -84,12 +84,6 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
             
         })
         
-        // Setup reception messages data
-//        messagesRef.childByAppendingPath("reception").queryOrderedByChild("to_user").queryEqualToValue(user)
-//        .observeEventType(.ChildAdded, withBlock: { snapshot in
-//            println(snapshot.key)
-//        })
-        
         messagesRef.childByAppendingPath("reception").queryOrderedByChild("to_user")
         .observeEventType(.Value, withBlock: { message in
             
@@ -105,18 +99,6 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
                 self.insertNewObject(c)
                 c++
             }
-            
-            // let child: FDataSnapshot = message.children.nextObject() as! FDataSnapshot
-            // println("Test: \(child.key)");
-//            let queryRef = ref.queryOrderedByChild("height").queryEndingAtValue(favoriteDinoHeight).queryLimitedToLast(2)
-//            queryRef.observeSingleEventOfType(.Value, withBlock: { querySnapshot in
-//                if querySnapshot.childrenCount == 2 {
-//                    let child: FDataSnapshot = querySnapshot.children.nextObject() as FDataSnapshot
-//                    println("The dinosaur just shorter than the stegasaurus is \(child.key)");
-//                } else {
-//                    println("The stegosaurus is the shortest dino");
-//                }
-//            })
         })
     }
     
