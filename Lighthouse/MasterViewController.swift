@@ -15,10 +15,7 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     
     // Beacon variables
     let beaconManager = ESTBeaconManager()
-    
-    let beaconRegion = CLBeaconRegion(
-        proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
-        identifier: "Lighthouse")
+    var beaconRegion:CLBeaconRegion?
     
     // Firebase reference
     let fbRootRef = Firebase(url:"https://beacon-dan.firebaseio.com/")
@@ -26,9 +23,11 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     let locationRef = Firebase(url:"https://beacon-dan.firebaseio.com/location/")
     let usersRef = Firebase(url:"https://beacon-dan.firebaseio.com/users/")
     let messagesRef = Firebase(url:"https://beacon-dan.firebaseio.com/messages/")
-    let recepRef = Firebase(url:"https://beacon-dan.firebaseio.com/location/reception/")
     
+    // Public variables
     var recepBeacon:[String:String] = ["uuid":""]
+    var user = "google:118075399016047699152"
+    var myMessage = [0:["beacon":""]]
     
     var tableNumber = 0
 
@@ -66,19 +65,58 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     
     func setUpFirebaseData() {
         // Setup Reception Data
-        locationRef.childByAppendingPath("reception")
+        locationRef.childByAppendingPath("reception").childByAppendingPath("beacon")
         .observeEventType(.Value, withBlock: { recep in
+            
             let recepKey = recep.value as? String
             
             self.beaconsRef.childByAppendingPath(recepKey)
-                .observeEventType(.ChildAdded, withBlock: { snapshot in
+            .observeEventType(.ChildAdded, withBlock: { snapshot in
                     
                     let rkey = snapshot.key as String
                     let val = snapshot.value as! String
                     self.recepBeacon[rkey] = val
+                    
+                    if(rkey == "uuid") {
+                        self.startRanging(NSUUID(UUIDString: val)!)
+                    }
             })
             
-            self.startRanging()
+        })
+        
+        // Setup reception messages data
+//        messagesRef.childByAppendingPath("reception").queryOrderedByChild("to_user").queryEqualToValue(user)
+//        .observeEventType(.ChildAdded, withBlock: { snapshot in
+//            println(snapshot.key)
+//        })
+        
+        messagesRef.childByAppendingPath("reception").queryOrderedByChild("to_user")
+        .observeEventType(.Value, withBlock: { message in
+            
+            let child = message.children
+            var c = 0
+            while let msg = child.nextObject() as? FDataSnapshot {
+                var details = ["beacon" : "","date" : "","message" : "","status" : "","to_user" : "","type":"", "title": ""]
+                for rest in msg.children.allObjects as! [FDataSnapshot] {
+                    // println(rest.value)
+                    details[rest.key] = rest.value as? String
+                }
+                self.myMessage[c] = details
+                self.insertNewObject(c)
+                c++
+            }
+            
+            // let child: FDataSnapshot = message.children.nextObject() as! FDataSnapshot
+            // println("Test: \(child.key)");
+//            let queryRef = ref.queryOrderedByChild("height").queryEndingAtValue(favoriteDinoHeight).queryLimitedToLast(2)
+//            queryRef.observeSingleEventOfType(.Value, withBlock: { querySnapshot in
+//                if querySnapshot.childrenCount == 2 {
+//                    let child: FDataSnapshot = querySnapshot.children.nextObject() as FDataSnapshot
+//                    println("The dinosaur just shorter than the stegasaurus is \(child.key)");
+//                } else {
+//                    println("The stegosaurus is the shortest dino");
+//                }
+//            })
         })
     }
     
@@ -86,27 +124,32 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
         didRangeBeacons beacons: [AnyObject]!,
         inRegion region: CLBeaconRegion!) {
             
-            for (key,val) in self.recepBeacon {
-                println("\(key) : \(val)")
-            }
+//            for (key,val) in self.recepBeacon {
+//                println("\(key) : \(val)")
+//            }
             
             if let nearestBeacon = beacons.first as? CLBeacon {
                 beaconManager.stopRangingBeaconsInRegion(region)
-                
                 println(nearestBeacon.minor.integerValue)
             }
     }
     
-    func startRanging(){
+    func startRanging(uuid:NSUUID){
+        beaconRegion = CLBeaconRegion(
+            proximityUUID: uuid,
+            identifier: "Lighthouse")
+
         beaconManager.requestWhenInUseAuthorization()
         beaconManager.startRangingBeaconsInRegion(beaconRegion)
     }
         
-    func insertNewObject(sender: AnyObject) {
-        // objects.insert(NSDate(), atIndex: 0)
-        // let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        // self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    func insertNewObject(sender: AnyObject!) {
+        let msgInd = sender as! Int
+        let message = self.myMessage[msgInd]!
         
+        objects.insert(message["title"]!, atIndex: msgInd)
+        let indexPath = NSIndexPath(forRow: msgInd, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,7 +162,7 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
-                let object = objects[indexPath.row] as! NSDate
+                let object = objects[indexPath.row] as! String
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
@@ -141,8 +184,8 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
 
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let object = objects[indexPath.row] as! String
+        cell.textLabel!.text = object
         return cell
     }
 
