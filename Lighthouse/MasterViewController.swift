@@ -25,8 +25,8 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     let messagesRef = Firebase(url:"https://beacon-dan.firebaseio.com/messages/")
     
     // Public variables
-    var recepBeacon:[String:String] = ["uuid":""]
-    var user = "google:118075399016047699152"
+    var recepBeacon:[String:String] = ["uuid":""] // Instantiate null object
+    var user = "google:118075399016047699152" // Hardcoded user data, changes with Firebase login.
     var myMessage = [0:["beacon":""]]
     
     var tableNumber = 0
@@ -39,6 +39,7 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
         }
     }
 
+    // Initialization method called automatically when App is launched.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,22 +60,28 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
         
         // Add the beacon manager delegate
         beaconManager.delegate = self
-        
+        // Retrieve firebase data
         setUpFirebaseData()
     }
     
+    
+    // Called on app initialization
     func setUpFirebaseData() {
-        // Setup Reception Data
+        
+        // Setup Reception Messages Data
         locationRef.childByAppendingPath("reception").childByAppendingPath("beacon")
         .observeEventType(.Value, withBlock: { recep in
             
+            // recepKey is the name of the reception beacon
             let recepKey = recep.value as? String
             
+            // Check beacon list for the key of the reception beacon
+            // Begins ranging for the Reception Beacon using the UUID
             self.beaconsRef.childByAppendingPath(recepKey)
-            .observeEventType(.ChildAdded, withBlock: { snapshot in
-                    
-                    let rkey = snapshot.key as String
-                    let val = snapshot.value as! String
+            .observeEventType(.ChildAdded, withBlock: { beacon in
+                    let rkey = beacon.key as String
+                    let val = beacon.value as! String
+                    // recepBeacon holds the beacon object retrieved from Firebase
                     self.recepBeacon[rkey] = val
                     
                     if(rkey == "uuid") {
@@ -82,26 +89,49 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
                     }
             })
             
+            self.getReceptionMessages()
         })
         
+
+    }
+
+    func getReceptionMessages() {
+        // Get messages from Firebase:
+        // Messages from Reception,
+        // Ordered by User,
+        // Listen for data changes at location.
         messagesRef.childByAppendingPath("reception").queryOrderedByChild("to_user")
-        .observeEventType(.Value, withBlock: { message in
-            
-            let child = message.children
-            var c = 0
-            while let msg = child.nextObject() as? FDataSnapshot {
-                var details = ["beacon" : "","date" : "","message" : "","status" : "","to_user" : "","type":"", "title": ""]
-                for rest in msg.children.allObjects as! [FDataSnapshot] {
-                    // println(rest.value)
-                    details[rest.key] = rest.value as? String
+            .observeEventType(.Value, withBlock: { message in
+                
+                let child = message.children
+                var c = 0
+                // Fix message loop for display of messages on the Table View:
+                // Messages don't delete correctly.
+                while let msg = child.nextObject() as? FDataSnapshot {
+                    var details = [
+                        "beacon" : "",
+                        "date" : "",
+                        "message" : "",
+                        "status" : "",
+                        "to_user" : "",
+                        "type":"",
+                        "title": ""
+                    ]
+                    
+                    for rest in msg.children.allObjects as! [FDataSnapshot] {
+                        // println(rest.value)
+                        details[rest.key] = rest.value as? String
+                    }
+                    self.myMessage[c] = details
+                    // Adds to the view.
+                    // self.insertNewObject(c)
+                    c++
                 }
-                self.myMessage[c] = details
-                self.insertNewObject(c)
-                c++
-            }
-        })
+            })
     }
     
+    // BeaconManager Class for listening to events:
+    // enterRegion, exitRegion, etc.
     func beaconManager(manager: AnyObject!,
         didRangeBeacons beacons: [AnyObject]!,
         inRegion region: CLBeaconRegion!) {
@@ -110,8 +140,13 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
 //                println("\(key) : \(val)")
 //            }
             
+            // To do:
+            // Check if nearestBeacon minor values match any of those in self.myMessages.
+            // If true: Push notification to phone.
+            
             if let nearestBeacon = beacons.first as? CLBeacon {
                 beaconManager.stopRangingBeaconsInRegion(region)
+                
                 println(nearestBeacon.minor.integerValue)
             }
     }
@@ -124,7 +159,8 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
         beaconManager.requestWhenInUseAuthorization()
         beaconManager.startRangingBeaconsInRegion(beaconRegion)
     }
-        
+    
+    // Message population onto Table View
     func insertNewObject(sender: AnyObject!) {
         let msgInd = sender as! Int
         let message = self.myMessage[msgInd]!
