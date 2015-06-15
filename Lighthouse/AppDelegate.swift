@@ -9,10 +9,9 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-
 
     func application(application: UIApplication, openURL url: NSURL,
         sourceApplication: String, annotation: AnyObject?,
@@ -37,12 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        
-//        var myMessage: [AnyObject] = MasterViewController.myMesage // retrieve list of all to-do items
-//        var unresolvedMessages = myMessage.filter({ (todoItem) -> Bool in
-//            return todoItem.deadline.compare(NSDate()) != .OrderedDescending
-//        })
-//        UIApplication.sharedApplication().applicationIconBadgeNumber = overdueItems.count // set our badge number to number of overdue items
     }
 
     func applicationDidEnterBackground(application: UIApplication) {

@@ -8,12 +8,13 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, GPPSignInDelegate, UITableViewDataSource, UITableViewDelegate {
+class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLLocationManagerDelegate, GPPSignInDelegate, UITableViewDataSource, UITableViewDelegate {
 
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
     
     // Beacon variables
+    // Should shift beaconManager to AppDelegate
     let beaconManager = ESTBeaconManager()
     var beaconRegion:CLBeaconRegion?
     
@@ -51,7 +52,7 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, GPP
         // self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
         // Add the plus button
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "authenticateWithGoogle:")
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -121,36 +122,50 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, GPP
     func getReceptionMessages() {
         // Get messages from Firebase:
         // Messages from Reception,
-        // Ordered by User,
-        // Listen for data changes at location.
-        messagesRef.childByAppendingPath("reception").queryOrderedByChild("to_user")
-            .observeEventType(.Value, withBlock: { message in
+        // Ordered by User
+        let fQueryReception = messagesRef.childByAppendingPath("reception").queryOrderedByChild("to_user")
+        
+        // Use fQueryReception constant to load the initial block of existing messages
+        // Then use observeEventType to push in new objects.
+        // observeEventType listens for data changes at location.
+        fQueryReception.observeEventType(.Value, withBlock: { message in
+            let child = message.children
+            var c = 0
+            // Fix message loop for display of messages on the Table View:
+            // Messages don't delete correctly.
+            while let msg = child.nextObject() as? FDataSnapshot {
+                var details = [
+                    "beacon" : "",
+                    "date" : "",
+                    "message" : "",
+                    "status" : "",
+                    "to_user" : "",
+                    "type":"",
+                    "title": ""
+                ]
                 
-                let child = message.children
-                var c = 0
-                // Fix message loop for display of messages on the Table View:
-                // Messages don't delete correctly.
-                while let msg = child.nextObject() as? FDataSnapshot {
-                    var details = [
-                        "beacon" : "",
-                        "date" : "",
-                        "message" : "",
-                        "status" : "",
-                        "to_user" : "",
-                        "type":"",
-                        "title": ""
-                    ]
-                    
-                    for rest in msg.children.allObjects as! [FDataSnapshot] {
-                        // println(rest.value)
-                        details[rest.key] = rest.value as? String
-                    }
-                    self.myMessage[c] = details
-                    // Adds to the view.
-                    // self.insertNewObject(c)
-                    c++
+                for rest in msg.children.allObjects as! [FDataSnapshot] {
+                    // println(rest.value)
+                    details[rest.key] = rest.value as? String
                 }
-            })
+                self.myMessage[c] = details
+                // Adds to the view. See insertNewObject(Object)
+                self.insertNewObject(c)
+                c++
+            }
+            // Call notification outside of loop
+            self.sendLocalNotificationWithMessage("You have a new message!")
+        })
+    }
+    
+    // Local Notification method call
+    // Todo: allow passing message object into parameter,
+    // call notification with message body and date/time
+    func sendLocalNotificationWithMessage(message: String!) {
+        let notification:UILocalNotification = UILocalNotification()
+        notification.alertBody = message
+        notification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
     // BeaconManager Class for listening to events:
@@ -159,16 +174,32 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, GPP
         didRangeBeacons beacons: [AnyObject]!,
         inRegion region: CLBeaconRegion!) {
             
-//            for (key,val) in self.recepBeacon {
-//                println("\(key) : \(val)")
-//            }
-            
             // To do:
             // Check if nearestBeacon minor values match any of those in self.myMessages.
             // If true: Push notification to phone.
-            
             if let nearestBeacon = beacons.first as? CLBeacon {
+                // stop polling for beacons
                 beaconManager.stopRangingBeaconsInRegion(region)
+                
+                // 1. Check if nearestBeacon object == reception beacon object
+                
+                
+                // 2. Check proximity of reception beacon object
+                switch nearestBeacon.proximity {
+                case CLProximity.Far:
+                    // Continue ranging for closer beacons
+                    beaconManager.startRangingBeaconsInRegion(region)
+                    sendLocalNotificationWithMessage("Device is Far from beacon.")
+                case CLProximity.Near:
+                    // Trigger notifications for messages
+                    sendLocalNotificationWithMessage("Device is near to a beacon.")
+                case CLProximity.Immediate:
+                    // Trigger notifications for messages
+                    sendLocalNotificationWithMessage("You are in the immediate proximity of the beacon")
+                case CLProximity.Unknown:
+                    // Do nothing
+                    return
+                }
                 
                 println(nearestBeacon.minor.integerValue)
             }
@@ -185,13 +216,15 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, GPP
     
     // Message population onto Table View
     func insertNewObject(sender: AnyObject!) {
-//        let msgInd = sender as! Int
-//        let message = self.myMessage[msgInd]!
-//        
-//        objects.insert(message["title"]!, atIndex: msgInd)
-//        let indexPath = NSIndexPath(forRow: msgInd, inSection: 0)
-//        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        authenticateWithGoogle()
+        let msgInd = sender as! Int
+        let message = self.myMessage[msgInd]!
+        
+        objects.insert(message["title"]!, atIndex: msgInd)
+        let indexPath = NSIndexPath(forRow: msgInd, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        //  authenticateWithGoogle()
+        //  -- 15/6/2015: confirmed that Google OAuth works --
+        // Create view for logging user into application
     }
 
     override func didReceiveMemoryWarning() {
@@ -214,7 +247,7 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, GPP
     }
 
     // MARK: - Table View
-
+    // Needs to refactor for more complete loading of message objects into the Table View
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
