@@ -8,3 +8,5 @@
 
 #import <EstimoteSDK/EstimoteSDK.h>
 #import <Firebase/Firebase.h>
+#import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>

@@ -18,3 +18,9 @@
 #define COCOAPODS_VERSION_MINOR_Firebase 3
 #define COCOAPODS_VERSION_PATCH_Firebase 1
 
+// googleplus-ios-sdk
+#define COCOAPODS_POD_AVAILABLE_googleplus_ios_sdk
+#define COCOAPODS_VERSION_MAJOR_googleplus_ios_sdk 1
+#define COCOAPODS_VERSION_MINOR_googleplus_ios_sdk 7
+#define COCOAPODS_VERSION_PATCH_googleplus_ios_sdk 1
+

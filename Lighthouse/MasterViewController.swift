@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UITableViewDataSource, UITableViewDelegate {
+class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, GPPSignInDelegate, UITableViewDataSource, UITableViewDelegate {
 
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
@@ -64,6 +64,33 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
         setUpFirebaseData()
     }
     
+    func authenticateWithGoogle() {
+        // use the Google+ SDK to get an OAuth token
+        var signIn = GPPSignIn.sharedInstance()
+        signIn.shouldFetchGooglePlusUser = true
+        signIn.clientID = "186193271444-835107nm0lkjlepsmv66fkl4rp6eoir7.apps.googleusercontent.com"
+        signIn.scopes = []
+        signIn.delegate = self
+        signIn.authenticate()
+    }
+    
+    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
+        if error != nil {
+            // There was an error obtaining the Google+ OAuth Token
+        } else {
+            // We successfully obtained an OAuth token, authenticate on Firebase with it
+            let ref = Firebase(url: "https://beacon-dan.firebaseio.com")
+            ref.authWithOAuthProvider("google", token: auth.accessToken,
+                withCompletionBlock: { error, authData in
+                    if error != nil {
+                        // Error authenticating with Firebase with OAuth token
+                    } else {
+                        // User is now logged in!
+                        println("Successfully logged in! \(authData)")
+                    }
+            })
+        }
+    }
     
     // Called on app initialization
     func setUpFirebaseData() {
@@ -83,10 +110,6 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
                     let val = beacon.value as! String
                     // recepBeacon holds the beacon object retrieved from Firebase
                     self.recepBeacon[rkey] = val
-                    
-                    if(rkey == "uuid") {
-                        self.startRanging(NSUUID(UUIDString: val)!)
-                    }
             })
             
             self.getReceptionMessages()
@@ -162,12 +185,13 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, UIT
     
     // Message population onto Table View
     func insertNewObject(sender: AnyObject!) {
-        let msgInd = sender as! Int
-        let message = self.myMessage[msgInd]!
-        
-        objects.insert(message["title"]!, atIndex: msgInd)
-        let indexPath = NSIndexPath(forRow: msgInd, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//        let msgInd = sender as! Int
+//        let message = self.myMessage[msgInd]!
+//        
+//        objects.insert(message["title"]!, atIndex: msgInd)
+//        let indexPath = NSIndexPath(forRow: msgInd, inSection: 0)
+//        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        authenticateWithGoogle()
     }
 
     override func didReceiveMemoryWarning() {

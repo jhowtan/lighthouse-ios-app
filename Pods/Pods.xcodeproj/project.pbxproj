@@ -7,195 +7,333 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00EA5079A83E1AD0270B8F1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E305B03383DEA12698CE81 /* Foundation.framework */; };
-		AE39EC2CEA1F4C9881B7240C /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F53D8D0B47DCBE2E2A18E44 /* Pods-dummy.m */; };
+		587C404EF768A06F757292A2 /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 583F6533FDD572B929F226C0 /* Pods-dummy.m */; };
+		E4D2C25CB1652A31757556C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F139B434590484950A9FFF /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		011DE977680E3F6610715572 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
-		0A81E8A098369429A17C8A39 /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
-		0FDBE2CC36324073359DC253 /* ESTOrientationRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTOrientationRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTOrientationRule.h; sourceTree = "<group>"; };
-		13C74B12FAF981433E01537B /* ESTUtilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTUtilityManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTUtilityManager.h; sourceTree = "<group>"; };
-		1BB5B8EF6710148956390E3D /* ESTDefinitions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTDefinitions.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTDefinitions.h; sourceTree = "<group>"; };
-		1E659E1C2DFB43D71BAE4018 /* ESTProximityRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTProximityRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTProximityRule.h; sourceTree = "<group>"; };
-		22E8E75FFFCDF028DC47A9F0 /* ESTNearableDefinitions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNearableDefinitions.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNearableDefinitions.h; sourceTree = "<group>"; };
-		236B441DB3CDC3672C93719D /* ESTMotionRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTMotionRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTMotionRule.h; sourceTree = "<group>"; };
-		28305FF202A7117F80868295 /* ESTBeaconManagerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconManagerDelegate.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconManagerDelegate.h; sourceTree = "<group>"; };
-		2B3F259D7D9AC43413ACC497 /* ESTBeaconDefinitions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconDefinitions.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconDefinitions.h; sourceTree = "<group>"; };
-		2F53D8D0B47DCBE2E2A18E44 /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
-		3355C00C666A6D643D06A963 /* ESTFirmwareInfoVO.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTFirmwareInfoVO.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTFirmwareInfoVO.h; sourceTree = "<group>"; };
-		33D700E9C00ECE83BB52154E /* Pods-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-environment.h"; sourceTree = "<group>"; };
-		35AAF316407D503E841D50A8 /* ESTBeaconUpdateInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconUpdateInfo.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconUpdateInfo.h; sourceTree = "<group>"; };
-		38E9F1D3F1A80914C93868B4 /* ESTNearableRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNearableRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNearableRule.h; sourceTree = "<group>"; };
-		3B16E957EA9C5B70A4D12B31 /* EstimoteSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EstimoteSDK.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/EstimoteSDK.h; sourceTree = "<group>"; };
-		40096616BA732E573C4C36E5 /* ESTBeaconUpdateConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconUpdateConfig.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconUpdateConfig.h; sourceTree = "<group>"; };
-		4A6DC91B9FC5260C07EA93E0 /* ESTBeaconConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconConnection.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconConnection.h; sourceTree = "<group>"; };
-		5226581CB08D49B39299A63C /* ESTBluetoothBeacon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBluetoothBeacon.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBluetoothBeacon.h; sourceTree = "<group>"; };
-		593D78A9AB6AA415C5F6639F /* ESTNearableManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNearableManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNearableManager.h; sourceTree = "<group>"; };
-		5F231DFEAA7956B8FC82F985 /* ESTRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTRule.h; sourceTree = "<group>"; };
-		5F6AEBAFCE6D5837231ECB2B /* ESTSecureBeaconManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTSecureBeaconManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTSecureBeaconManager.h; sourceTree = "<group>"; };
-		5F7C478BBE07AEAB93334FB8 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
-		67FEBF98D6D09D2D6A3A1042 /* ESTBulkUpdater.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBulkUpdater.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBulkUpdater.h; sourceTree = "<group>"; };
-		69BB0CCDDF6BE4C2BA539ACE /* ESTDateRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTDateRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTDateRule.h; sourceTree = "<group>"; };
-		76FE5A9030559E9BE9A07443 /* ESTTemperatureRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTTemperatureRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTTemperatureRule.h; sourceTree = "<group>"; };
-		79C391FCAB4AD6EFDD13BD07 /* ESTBeaconFirmwareVO.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconFirmwareVO.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconFirmwareVO.h; sourceTree = "<group>"; };
-		7AE74C69D09ECA295B14255B /* EstimoteSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EstimoteSDK.framework; path = EstimoteSDK/EstimoteSDK.framework; sourceTree = "<group>"; };
-		8112F96DEA296A95ABBD0D72 /* ESTCloudManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTCloudManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTCloudManager.h; sourceTree = "<group>"; };
-		8E5E576C4D6BF66B64316D3C /* ESTNearable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNearable.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNearable.h; sourceTree = "<group>"; };
-		9FEDA799F4528A03BF7B6B94 /* ESTSimulatedNearableManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTSimulatedNearableManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTSimulatedNearableManager.h; sourceTree = "<group>"; };
-		A00FEA1C0C25CD0B9C3E68BE /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
-		B4C6FEF845E37D361BD6F4D5 /* ESTTrigger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTTrigger.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTTrigger.h; sourceTree = "<group>"; };
-		C1D172E73F252414D5736F95 /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		CB6AEE09EEF3DCF6CA80DF61 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		D01D4F867B1E0CAF750E13AC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
-		D1E305B03383DEA12698CE81 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		DD2BEFBF0C7F6BC7EE7E2D9C /* ESTBeaconVO.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconVO.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconVO.h; sourceTree = "<group>"; };
-		DF39F376C2F26783B666B5F0 /* ESTBeaconManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconManager.h; sourceTree = "<group>"; };
-		EC4A0CAEE7CFFABBE7403BF5 /* ESTTriggerManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTTriggerManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTTriggerManager.h; sourceTree = "<group>"; };
-		EF054A2AE2636A5EA6AF111A /* ESTNotificationTransporter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNotificationTransporter.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNotificationTransporter.h; sourceTree = "<group>"; };
+		05EA2A6BB688E3211B252462 /* GTLPlusPlace.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusPlace.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusPlace.h"; sourceTree = "<group>"; };
+		086F4D1C902842D8A47739EA /* ESTTrigger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTTrigger.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTTrigger.h; sourceTree = "<group>"; };
+		08F24EE86C32F189799B6D58 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
+		0E95D4BE09897515A78E559D /* GTLQueryPlus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLQueryPlus.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLQueryPlus.h"; sourceTree = "<group>"; };
+		12BEA20A033F292421085938 /* OpenInChromeController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OpenInChromeController.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/OpenInChromeController.h"; sourceTree = "<group>"; };
+		12EF8E606B346E21FDE1FA2D /* GTMDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMDefines.h"; sourceTree = "<group>"; };
+		15949215D344F1C7712088AE /* GTLDateTime.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDateTime.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLDateTime.h"; sourceTree = "<group>"; };
+		1F4CEDC395128CE0E5B569B3 /* ESTBeaconConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconConnection.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconConnection.h; sourceTree = "<group>"; };
+		1F5AAACA5F1C59E0237430E8 /* GTMOAuth2ViewControllerTouch.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMOAuth2ViewControllerTouch.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMOAuth2ViewControllerTouch.h"; sourceTree = "<group>"; };
+		1F6363A6B0886E63AC7D1374 /* GooglePlus.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = "google-plus-ios-sdk-1.7.1/GooglePlus.bundle"; sourceTree = "<group>"; };
+		229FAD422BB4AA620EF2C0B3 /* GTMOAuth2Authentication.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMOAuth2Authentication.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMOAuth2Authentication.h"; sourceTree = "<group>"; };
+		25811D03062618E2D75C37A8 /* GTLPlusPeopleFeed.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusPeopleFeed.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusPeopleFeed.h"; sourceTree = "<group>"; };
+		26C3A3A6301830ECA85A94C4 /* ESTSimulatedNearableManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTSimulatedNearableManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTSimulatedNearableManager.h; sourceTree = "<group>"; };
+		2765676544DD41072F821725 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework"; sourceTree = "<group>"; };
+		2B42EA3AB1C7A8E7A4BCF1EA /* GTMHTTPUploadFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMHTTPUploadFetcher.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMHTTPUploadFetcher.h"; sourceTree = "<group>"; };
+		2C22353C829F4226B758A4DD /* ESTNearableDefinitions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNearableDefinitions.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNearableDefinitions.h; sourceTree = "<group>"; };
+		2FB8C7EE3CEB8BA803708200 /* GTLBase64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLBase64.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLBase64.h"; sourceTree = "<group>"; };
+		341B1569EFA59322A3C76484 /* GTLRuntimeCommon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLRuntimeCommon.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLRuntimeCommon.h"; sourceTree = "<group>"; };
+		37397A06AC6BABCA64D756B7 /* GTLBatchResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLBatchResult.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLBatchResult.h"; sourceTree = "<group>"; };
+		38ED1D02E5FB1F648AED6FDB /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "google-plus-ios-sdk-1.7.1/GooglePlus.framework"; sourceTree = "<group>"; };
+		38F139B434590484950A9FFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3E9328F6441EF04D7B24F427 /* GTLPlusActivityFeed.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusActivityFeed.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusActivityFeed.h"; sourceTree = "<group>"; };
+		403D14CB215E6AF4EAFC4264 /* ESTBeaconVO.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconVO.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconVO.h; sourceTree = "<group>"; };
+		414610DB75C9849EF3C63349 /* GPPShare.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPPShare.h; path = "google-plus-ios-sdk-1.7.1/GooglePlus.framework/Versions/A/Headers/GPPShare.h"; sourceTree = "<group>"; };
+		426B92E9EE0ABD01C617D33D /* ESTBeaconDefinitions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconDefinitions.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconDefinitions.h; sourceTree = "<group>"; };
+		4463862AD7CBF461E8F2EDE5 /* GTLPlus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlus.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlus.h"; sourceTree = "<group>"; };
+		45F46F531AAA20D51F5D66F7 /* GTLDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDefines.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLDefines.h"; sourceTree = "<group>"; };
+		47AA7C545C99990640BF1D34 /* ESTBeaconUpdateInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconUpdateInfo.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconUpdateInfo.h; sourceTree = "<group>"; };
+		486A373F1C0BCA99CA53F516 /* ESTNotificationTransporter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNotificationTransporter.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNotificationTransporter.h; sourceTree = "<group>"; };
+		4A052950C0FED7B29536E66B /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+URLArguments.h"; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMNSString+URLArguments.h"; sourceTree = "<group>"; };
+		4BDD906295F88085A6BDA8ED /* Pods-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-environment.h"; sourceTree = "<group>"; };
+		4C40AF00A9D08D911B7CD1CF /* ESTProximityRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTProximityRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTProximityRule.h; sourceTree = "<group>"; };
+		4D3F1698FC34CB7AF557CCD2 /* GTMNSDictionary+URLArguments.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "GTMNSDictionary+URLArguments.h"; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMNSDictionary+URLArguments.h"; sourceTree = "<group>"; };
+		4F270F7CEA68002DA494B348 /* GTLPlusConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusConstants.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusConstants.h"; sourceTree = "<group>"; };
+		583F6533FDD572B929F226C0 /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
+		58C2D9E57FC8259C9F2EABAE /* ESTTemperatureRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTTemperatureRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTTemperatureRule.h; sourceTree = "<group>"; };
+		58CD6338295321CA75E5EC00 /* ESTTriggerManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTTriggerManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTTriggerManager.h; sourceTree = "<group>"; };
+		598EDAB1B71B81F85E848CF1 /* GTLPlusAclentryResource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusAclentryResource.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusAclentryResource.h"; sourceTree = "<group>"; };
+		5B079D96D3EB25A7754C7A23 /* GPPSignIn.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPPSignIn.h; path = "google-plus-ios-sdk-1.7.1/GooglePlus.framework/Versions/A/Headers/GPPSignIn.h"; sourceTree = "<group>"; };
+		5E3C41037DC33DE0290C7C70 /* ESTFirmwareInfoVO.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTFirmwareInfoVO.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTFirmwareInfoVO.h; sourceTree = "<group>"; };
+		5F79CD84373879F1D6A91D19 /* GTLJSONParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLJSONParser.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLJSONParser.h"; sourceTree = "<group>"; };
+		5FA4ABE92FB519F4F8B74B0F /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMHTTPFetcher.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMHTTPFetcher.h"; sourceTree = "<group>"; };
+		65B3A799C297B047C236F461 /* ESTSecureBeaconManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTSecureBeaconManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTSecureBeaconManager.h; sourceTree = "<group>"; };
+		67D3C42E763ED50E5FD61C52 /* EstimoteSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EstimoteSDK.framework; path = EstimoteSDK/EstimoteSDK.framework; sourceTree = "<group>"; };
+		6922E5C511AADC814CFA06CB /* GTLObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLObject.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLObject.h"; sourceTree = "<group>"; };
+		72112C2CC987F0D4745BDA9D /* GTLBatchQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLBatchQuery.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLBatchQuery.h"; sourceTree = "<group>"; };
+		76DA060C4CE1E63D7A0E47EB /* ESTDateRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTDateRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTDateRule.h; sourceTree = "<group>"; };
+		7879EEE8BB2AB041BA673DA9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
+		78A5FF02AE09BE1FEFDED778 /* GooglePlus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GooglePlus.h; path = "google-plus-ios-sdk-1.7.1/GooglePlus.framework/Versions/A/Headers/GooglePlus.h"; sourceTree = "<group>"; };
+		792B2DB9DA575FBECEE42D0C /* GTLFramework.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLFramework.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLFramework.h"; sourceTree = "<group>"; };
+		7A6EDA1660DD505A3A0752F9 /* ESTBluetoothBeacon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBluetoothBeacon.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBluetoothBeacon.h; sourceTree = "<group>"; };
+		7ABC2B04873DC8CD31417128 /* GTMHTTPFetcherService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMHTTPFetcherService.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMHTTPFetcherService.h"; sourceTree = "<group>"; };
+		7BD92FC7C11D4EACF445A89D /* ESTUtilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTUtilityManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTUtilityManager.h; sourceTree = "<group>"; };
+		7F0274D11854EF17A59880AC /* GPPSignInButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPPSignInButton.h; path = "google-plus-ios-sdk-1.7.1/GooglePlus.framework/Versions/A/Headers/GPPSignInButton.h"; sourceTree = "<group>"; };
+		8175FEADE355BCEBD2AA373F /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
+		867E9EAE829578DD170B1829 /* GTLPlusAcl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusAcl.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusAcl.h"; sourceTree = "<group>"; };
+		8C8D608C5B69C14219F52895 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C90E30CAA1C8F1FDE3D68F9 /* GTLUploadParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLUploadParameters.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLUploadParameters.h"; sourceTree = "<group>"; };
+		9155B81F59F216AEDB10ED0D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
+		91F8FF52FBFB1265CC92F6C0 /* GTLService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLService.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLService.h"; sourceTree = "<group>"; };
+		94E6A23C25213AE2C8383B01 /* GTLPlusPerson.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusPerson.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusPerson.h"; sourceTree = "<group>"; };
+		965E86CDB7F284D793EC9849 /* GPPURLHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPPURLHandler.h; path = "google-plus-ios-sdk-1.7.1/GooglePlus.framework/Versions/A/Headers/GPPURLHandler.h"; sourceTree = "<group>"; };
+		96C6F57178937256455F9659 /* GTLPlusMomentsFeed.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusMomentsFeed.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusMomentsFeed.h"; sourceTree = "<group>"; };
+		9A532B1A2D1D646E0EFA508F /* GTLTargetNamespace.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLTargetNamespace.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLTargetNamespace.h"; sourceTree = "<group>"; };
+		9C0B24CE72D7526791F3AD82 /* ESTDefinitions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTDefinitions.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTDefinitions.h; sourceTree = "<group>"; };
+		9D34FE03AC7BAF4FA49FB873 /* ESTBeaconUpdateConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconUpdateConfig.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconUpdateConfig.h; sourceTree = "<group>"; };
+		9E2FFAFE0EEE2F3D4C217FCB /* ESTNearableManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNearableManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNearableManager.h; sourceTree = "<group>"; };
+		A0FDF88BAC161CCF5B13AD2C /* GTLPlusCommentFeed.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusCommentFeed.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusCommentFeed.h"; sourceTree = "<group>"; };
+		A404812CB04244528983613E /* GTMOAuth2SignIn.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMOAuth2SignIn.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMOAuth2SignIn.h"; sourceTree = "<group>"; };
+		A42581251ECBE96EA6968134 /* GPPDeepLink.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPPDeepLink.h; path = "google-plus-ios-sdk-1.7.1/GooglePlus.framework/Versions/A/Headers/GPPDeepLink.h"; sourceTree = "<group>"; };
+		A9B6936C2321FAEA5779E431 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
+		AD438141EFD131E2873502B4 /* ESTRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTRule.h; sourceTree = "<group>"; };
+		ADA41C07DAC111BFF8D83397 /* ESTBeaconManagerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconManagerDelegate.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconManagerDelegate.h; sourceTree = "<group>"; };
+		AE93F1F56A49D228D5004439 /* ESTBulkUpdater.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBulkUpdater.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBulkUpdater.h; sourceTree = "<group>"; };
+		AF98A4224253FA458BFB3CA6 /* ESTMotionRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTMotionRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTMotionRule.h; sourceTree = "<group>"; };
+		B30AC4502F576A0555E2D0FC /* GTLServicePlus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLServicePlus.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLServicePlus.h"; sourceTree = "<group>"; };
+		B44FA47BF4AA3D0B0E3DC0DA /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B93EA6346BD5E14DEA1D888A /* EstimoteSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EstimoteSDK.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/EstimoteSDK.h; sourceTree = "<group>"; };
+		B9DC9B1E3DD1E288A3679FA3 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMGarbageCollection.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMGarbageCollection.h"; sourceTree = "<group>"; };
+		BA48C2E77D42CDCAE67757FB /* GTLPlusMoment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusMoment.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusMoment.h"; sourceTree = "<group>"; };
+		BDFEA5698406C61A941A7D71 /* GTLPlusComment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusComment.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusComment.h"; sourceTree = "<group>"; };
+		BEBF5C9394D9AC67D9367804 /* ESTBeaconFirmwareVO.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconFirmwareVO.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconFirmwareVO.h; sourceTree = "<group>"; };
+		CFBE430207482ECEE24AA7B3 /* GTMHTTPFetcherLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMHTTPFetcherLogging.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMHTTPFetcherLogging.h"; sourceTree = "<group>"; };
+		D05184E6C948BB1DB04DF208 /* ESTOrientationRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTOrientationRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTOrientationRule.h; sourceTree = "<group>"; };
+		D642E55BCC8780B426B12616 /* GTLQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLQuery.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLQuery.h"; sourceTree = "<group>"; };
+		DA16BEADC8EB472AB38126BF /* GTMObjC2Runtime.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMObjC2Runtime.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMObjC2Runtime.h"; sourceTree = "<group>"; };
+		DABFC49A9623D800B1739022 /* GTLPlusItemScope.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusItemScope.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusItemScope.h"; sourceTree = "<group>"; };
+		DD992A52C5DCEFB01F326B31 /* GTMLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMLogger.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMLogger.h"; sourceTree = "<group>"; };
+		E03E7672783C76073F3C6B7D /* GTMMethodCheck.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMMethodCheck.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMMethodCheck.h"; sourceTree = "<group>"; };
+		E307EC25CBAF3C789D363F58 /* GoogleOpenSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GoogleOpenSource.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GoogleOpenSource.h"; sourceTree = "<group>"; };
+		E501FAC36BC5A8209C15B14A /* ESTBeaconManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTBeaconManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTBeaconManager.h; sourceTree = "<group>"; };
+		F4A5401170827AC3CEB182A0 /* ESTNearable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNearable.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNearable.h; sourceTree = "<group>"; };
+		F5565CF8CA4C65663311E73E /* ESTCloudManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTCloudManager.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTCloudManager.h; sourceTree = "<group>"; };
+		FBC4FF5DA042D7E700E137E7 /* GTLErrorObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLErrorObject.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLErrorObject.h"; sourceTree = "<group>"; };
+		FC104E3DED60A349174F6393 /* ESTNearableRule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ESTNearableRule.h; path = EstimoteSDK/EstimoteSDK.framework/Versions/A/Headers/ESTNearableRule.h; sourceTree = "<group>"; };
+		FE53E0EB5BE6F2BD794F3BA0 /* GTMHTTPFetchHistory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMHTTPFetchHistory.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTMHTTPFetchHistory.h"; sourceTree = "<group>"; };
+		FEE1B5EEC81467CD653F192F /* GTLUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLUtilities.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLUtilities.h"; sourceTree = "<group>"; };
+		FF377F6B9177C33425F2BBB6 /* GTLPlusActivity.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLPlusActivity.h; path = "google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework/Versions/A/Headers/GTLPlusActivity.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5DCE9115986BF704399678A8 /* Frameworks */ = {
+		1F0D10D633FB76627EDB0212 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00EA5079A83E1AD0270B8F1F /* Foundation.framework in Frameworks */,
+				E4D2C25CB1652A31757556C9 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1EDDA78D8A9A01F45C838067 /* iOS */ = {
+		21AF2EAD1A704FD5D92EF427 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D1E305B03383DEA12698CE81 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		31FAAF1B9DB8D3DAE0ECA9A4 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				C864EE0A5E27E2AB02FDE119 /* Pods */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		371E9E5062D38474F9357C1F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CB6AEE09EEF3DCF6CA80DF61 /* libPods.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5CDB4764850D98F52A9F70DF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7AE74C69D09ECA295B14255B /* EstimoteSDK.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5FA095B23A8410B8581192B3 /* EstimoteSDK */ = {
-			isa = PBXGroup;
-			children = (
-				4A6DC91B9FC5260C07EA93E0 /* ESTBeaconConnection.h */,
-				2B3F259D7D9AC43413ACC497 /* ESTBeaconDefinitions.h */,
-				79C391FCAB4AD6EFDD13BD07 /* ESTBeaconFirmwareVO.h */,
-				DF39F376C2F26783B666B5F0 /* ESTBeaconManager.h */,
-				28305FF202A7117F80868295 /* ESTBeaconManagerDelegate.h */,
-				40096616BA732E573C4C36E5 /* ESTBeaconUpdateConfig.h */,
-				35AAF316407D503E841D50A8 /* ESTBeaconUpdateInfo.h */,
-				DD2BEFBF0C7F6BC7EE7E2D9C /* ESTBeaconVO.h */,
-				5226581CB08D49B39299A63C /* ESTBluetoothBeacon.h */,
-				67FEBF98D6D09D2D6A3A1042 /* ESTBulkUpdater.h */,
-				8112F96DEA296A95ABBD0D72 /* ESTCloudManager.h */,
-				69BB0CCDDF6BE4C2BA539ACE /* ESTDateRule.h */,
-				1BB5B8EF6710148956390E3D /* ESTDefinitions.h */,
-				3355C00C666A6D643D06A963 /* ESTFirmwareInfoVO.h */,
-				236B441DB3CDC3672C93719D /* ESTMotionRule.h */,
-				8E5E576C4D6BF66B64316D3C /* ESTNearable.h */,
-				22E8E75FFFCDF028DC47A9F0 /* ESTNearableDefinitions.h */,
-				593D78A9AB6AA415C5F6639F /* ESTNearableManager.h */,
-				38E9F1D3F1A80914C93868B4 /* ESTNearableRule.h */,
-				EF054A2AE2636A5EA6AF111A /* ESTNotificationTransporter.h */,
-				0FDBE2CC36324073359DC253 /* ESTOrientationRule.h */,
-				1E659E1C2DFB43D71BAE4018 /* ESTProximityRule.h */,
-				5F231DFEAA7956B8FC82F985 /* ESTRule.h */,
-				5F6AEBAFCE6D5837231ECB2B /* ESTSecureBeaconManager.h */,
-				9FEDA799F4528A03BF7B6B94 /* ESTSimulatedNearableManager.h */,
-				76FE5A9030559E9BE9A07443 /* ESTTemperatureRule.h */,
-				B4C6FEF845E37D361BD6F4D5 /* ESTTrigger.h */,
-				EC4A0CAEE7CFFABBE7403BF5 /* ESTTriggerManager.h */,
-				13C74B12FAF981433E01537B /* ESTUtilityManager.h */,
-				3B16E957EA9C5B70A4D12B31 /* EstimoteSDK.h */,
-				5CDB4764850D98F52A9F70DF /* Frameworks */,
-			);
-			path = EstimoteSDK;
-			sourceTree = "<group>";
-		};
-		6B3CDBFAB0928E85FA33C594 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5FA095B23A8410B8581192B3 /* EstimoteSDK */,
-				6E0AF9FB2A8DCFE9FA838ABC /* Firebase */,
+				8F7AE8DCAC6D369016046730 /* EstimoteSDK */,
+				F7D6F8490747EC6516796FB5 /* Firebase */,
+				DA30BD080E35CA2457156F4C /* googleplus-ios-sdk */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		6E0AF9FB2A8DCFE9FA838ABC /* Firebase */ = {
+		3666703F443C43D591B2E023 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8C8D608C5B69C14219F52895 /* libPods.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6E1FCF7E79FD88A9023F8DA3 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				F19698A12376932D552FA893 /* Pods */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		7369BAF0174FCF6142595ED8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2765676544DD41072F821725 /* GoogleOpenSource.framework */,
+				38ED1D02E5FB1F648AED6FDB /* GooglePlus.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8F7AE8DCAC6D369016046730 /* EstimoteSDK */ = {
+			isa = PBXGroup;
+			children = (
+				1F4CEDC395128CE0E5B569B3 /* ESTBeaconConnection.h */,
+				426B92E9EE0ABD01C617D33D /* ESTBeaconDefinitions.h */,
+				BEBF5C9394D9AC67D9367804 /* ESTBeaconFirmwareVO.h */,
+				E501FAC36BC5A8209C15B14A /* ESTBeaconManager.h */,
+				ADA41C07DAC111BFF8D83397 /* ESTBeaconManagerDelegate.h */,
+				9D34FE03AC7BAF4FA49FB873 /* ESTBeaconUpdateConfig.h */,
+				47AA7C545C99990640BF1D34 /* ESTBeaconUpdateInfo.h */,
+				403D14CB215E6AF4EAFC4264 /* ESTBeaconVO.h */,
+				7A6EDA1660DD505A3A0752F9 /* ESTBluetoothBeacon.h */,
+				AE93F1F56A49D228D5004439 /* ESTBulkUpdater.h */,
+				F5565CF8CA4C65663311E73E /* ESTCloudManager.h */,
+				76DA060C4CE1E63D7A0E47EB /* ESTDateRule.h */,
+				9C0B24CE72D7526791F3AD82 /* ESTDefinitions.h */,
+				5E3C41037DC33DE0290C7C70 /* ESTFirmwareInfoVO.h */,
+				AF98A4224253FA458BFB3CA6 /* ESTMotionRule.h */,
+				F4A5401170827AC3CEB182A0 /* ESTNearable.h */,
+				2C22353C829F4226B758A4DD /* ESTNearableDefinitions.h */,
+				9E2FFAFE0EEE2F3D4C217FCB /* ESTNearableManager.h */,
+				FC104E3DED60A349174F6393 /* ESTNearableRule.h */,
+				486A373F1C0BCA99CA53F516 /* ESTNotificationTransporter.h */,
+				D05184E6C948BB1DB04DF208 /* ESTOrientationRule.h */,
+				4C40AF00A9D08D911B7CD1CF /* ESTProximityRule.h */,
+				AD438141EFD131E2873502B4 /* ESTRule.h */,
+				65B3A799C297B047C236F461 /* ESTSecureBeaconManager.h */,
+				26C3A3A6301830ECA85A94C4 /* ESTSimulatedNearableManager.h */,
+				58C2D9E57FC8259C9F2EABAE /* ESTTemperatureRule.h */,
+				086F4D1C902842D8A47739EA /* ESTTrigger.h */,
+				58CD6338295321CA75E5EC00 /* ESTTriggerManager.h */,
+				7BD92FC7C11D4EACF445A89D /* ESTUtilityManager.h */,
+				B93EA6346BD5E14DEA1D888A /* EstimoteSDK.h */,
+				A2B6A611DD969A52B100778E /* Frameworks */,
+			);
+			path = EstimoteSDK;
+			sourceTree = "<group>";
+		};
+		97028AAAEAEF650F2AA4434B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				38F139B434590484950A9FFF /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		A2B6A611DD969A52B100778E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				67D3C42E763ED50E5FD61C52 /* EstimoteSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A986FC37DB2B47964045618E = {
+			isa = PBXGroup;
+			children = (
+				B44FA47BF4AA3D0B0E3DC0DA /* Podfile */,
+				BA75D57664F98463DFED7EAF /* Frameworks */,
+				21AF2EAD1A704FD5D92EF427 /* Pods */,
+				3666703F443C43D591B2E023 /* Products */,
+				6E1FCF7E79FD88A9023F8DA3 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		BA75D57664F98463DFED7EAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97028AAAEAEF650F2AA4434B /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA30BD080E35CA2457156F4C /* googleplus-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				A42581251ECBE96EA6968134 /* GPPDeepLink.h */,
+				414610DB75C9849EF3C63349 /* GPPShare.h */,
+				5B079D96D3EB25A7754C7A23 /* GPPSignIn.h */,
+				7F0274D11854EF17A59880AC /* GPPSignInButton.h */,
+				965E86CDB7F284D793EC9849 /* GPPURLHandler.h */,
+				2FB8C7EE3CEB8BA803708200 /* GTLBase64.h */,
+				72112C2CC987F0D4745BDA9D /* GTLBatchQuery.h */,
+				37397A06AC6BABCA64D756B7 /* GTLBatchResult.h */,
+				15949215D344F1C7712088AE /* GTLDateTime.h */,
+				45F46F531AAA20D51F5D66F7 /* GTLDefines.h */,
+				FBC4FF5DA042D7E700E137E7 /* GTLErrorObject.h */,
+				792B2DB9DA575FBECEE42D0C /* GTLFramework.h */,
+				5F79CD84373879F1D6A91D19 /* GTLJSONParser.h */,
+				6922E5C511AADC814CFA06CB /* GTLObject.h */,
+				4463862AD7CBF461E8F2EDE5 /* GTLPlus.h */,
+				867E9EAE829578DD170B1829 /* GTLPlusAcl.h */,
+				598EDAB1B71B81F85E848CF1 /* GTLPlusAclentryResource.h */,
+				FF377F6B9177C33425F2BBB6 /* GTLPlusActivity.h */,
+				3E9328F6441EF04D7B24F427 /* GTLPlusActivityFeed.h */,
+				BDFEA5698406C61A941A7D71 /* GTLPlusComment.h */,
+				A0FDF88BAC161CCF5B13AD2C /* GTLPlusCommentFeed.h */,
+				4F270F7CEA68002DA494B348 /* GTLPlusConstants.h */,
+				DABFC49A9623D800B1739022 /* GTLPlusItemScope.h */,
+				BA48C2E77D42CDCAE67757FB /* GTLPlusMoment.h */,
+				96C6F57178937256455F9659 /* GTLPlusMomentsFeed.h */,
+				25811D03062618E2D75C37A8 /* GTLPlusPeopleFeed.h */,
+				94E6A23C25213AE2C8383B01 /* GTLPlusPerson.h */,
+				05EA2A6BB688E3211B252462 /* GTLPlusPlace.h */,
+				D642E55BCC8780B426B12616 /* GTLQuery.h */,
+				0E95D4BE09897515A78E559D /* GTLQueryPlus.h */,
+				341B1569EFA59322A3C76484 /* GTLRuntimeCommon.h */,
+				91F8FF52FBFB1265CC92F6C0 /* GTLService.h */,
+				B30AC4502F576A0555E2D0FC /* GTLServicePlus.h */,
+				9A532B1A2D1D646E0EFA508F /* GTLTargetNamespace.h */,
+				8C90E30CAA1C8F1FDE3D68F9 /* GTLUploadParameters.h */,
+				FEE1B5EEC81467CD653F192F /* GTLUtilities.h */,
+				12EF8E606B346E21FDE1FA2D /* GTMDefines.h */,
+				B9DC9B1E3DD1E288A3679FA3 /* GTMGarbageCollection.h */,
+				FE53E0EB5BE6F2BD794F3BA0 /* GTMHTTPFetchHistory.h */,
+				5FA4ABE92FB519F4F8B74B0F /* GTMHTTPFetcher.h */,
+				CFBE430207482ECEE24AA7B3 /* GTMHTTPFetcherLogging.h */,
+				7ABC2B04873DC8CD31417128 /* GTMHTTPFetcherService.h */,
+				2B42EA3AB1C7A8E7A4BCF1EA /* GTMHTTPUploadFetcher.h */,
+				DD992A52C5DCEFB01F326B31 /* GTMLogger.h */,
+				E03E7672783C76073F3C6B7D /* GTMMethodCheck.h */,
+				4D3F1698FC34CB7AF557CCD2 /* GTMNSDictionary+URLArguments.h */,
+				4A052950C0FED7B29536E66B /* GTMNSString+URLArguments.h */,
+				229FAD422BB4AA620EF2C0B3 /* GTMOAuth2Authentication.h */,
+				A404812CB04244528983613E /* GTMOAuth2SignIn.h */,
+				1F5AAACA5F1C59E0237430E8 /* GTMOAuth2ViewControllerTouch.h */,
+				DA16BEADC8EB472AB38126BF /* GTMObjC2Runtime.h */,
+				E307EC25CBAF3C789D363F58 /* GoogleOpenSource.h */,
+				78A5FF02AE09BE1FEFDED778 /* GooglePlus.h */,
+				12BEA20A033F292421085938 /* OpenInChromeController.h */,
+				7369BAF0174FCF6142595ED8 /* Frameworks */,
+				E03CF145323C306A28D8422A /* Resources */,
+			);
+			path = "googleplus-ios-sdk";
+			sourceTree = "<group>";
+		};
+		E03CF145323C306A28D8422A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1F6363A6B0886E63AC7D1374 /* GooglePlus.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		F19698A12376932D552FA893 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8175FEADE355BCEBD2AA373F /* Pods-acknowledgements.markdown */,
+				A9B6936C2321FAEA5779E431 /* Pods-acknowledgements.plist */,
+				583F6533FDD572B929F226C0 /* Pods-dummy.m */,
+				4BDD906295F88085A6BDA8ED /* Pods-environment.h */,
+				08F24EE86C32F189799B6D58 /* Pods-resources.sh */,
+				7879EEE8BB2AB041BA673DA9 /* Pods.debug.xcconfig */,
+				9155B81F59F216AEDB10ED0D /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			path = "Target Support Files/Pods";
+			sourceTree = "<group>";
+		};
+		F7D6F8490747EC6516796FB5 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Firebase;
 			sourceTree = "<group>";
 		};
-		8B2BC9358016409738066958 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				1EDDA78D8A9A01F45C838067 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C864EE0A5E27E2AB02FDE119 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0A81E8A098369429A17C8A39 /* Pods-acknowledgements.markdown */,
-				5F7C478BBE07AEAB93334FB8 /* Pods-acknowledgements.plist */,
-				2F53D8D0B47DCBE2E2A18E44 /* Pods-dummy.m */,
-				33D700E9C00ECE83BB52154E /* Pods-environment.h */,
-				A00FEA1C0C25CD0B9C3E68BE /* Pods-resources.sh */,
-				011DE977680E3F6610715572 /* Pods.debug.xcconfig */,
-				D01D4F867B1E0CAF750E13AC /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			path = "Target Support Files/Pods";
-			sourceTree = "<group>";
-		};
-		D088BD0273E5A7C29513834F = {
-			isa = PBXGroup;
-			children = (
-				C1D172E73F252414D5736F95 /* Podfile */,
-				8B2BC9358016409738066958 /* Frameworks */,
-				6B3CDBFAB0928E85FA33C594 /* Pods */,
-				371E9E5062D38474F9357C1F /* Products */,
-				31FAAF1B9DB8D3DAE0ECA9A4 /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		48F4F9CFBE3F8A41C3137020 /* Pods */ = {
+		8DD1A18C0258463F24437171 /* Pods */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E35C0D62EC867BAE1E76E262 /* Build configuration list for PBXNativeTarget "Pods" */;
+			buildConfigurationList = AC2033D181231D2BF97AB5FD /* Build configuration list for PBXNativeTarget "Pods" */;
 			buildPhases = (
-				62B6722817708F802B615131 /* Sources */,
-				5DCE9115986BF704399678A8 /* Frameworks */,
+				8CF41EAD1A4E783C0BF013BC /* Sources */,
+				1F0D10D633FB76627EDB0212 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -203,47 +341,47 @@
 			);
 			name = Pods;
 			productName = Pods;
-			productReference = CB6AEE09EEF3DCF6CA80DF61 /* libPods.a */;
+			productReference = 8C8D608C5B69C14219F52895 /* libPods.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		1E7A9F528087CCEFDACB75FF /* Project object */ = {
+		5D8A07CE2251DB23C489B723 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
 			};
-			buildConfigurationList = ED58FD5D7A995DC2B6CAB503 /* Build configuration list for PBXProject "Pods" */;
+			buildConfigurationList = 5B15A20CB6B49494AA12636C /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = D088BD0273E5A7C29513834F;
-			productRefGroup = 371E9E5062D38474F9357C1F /* Products */;
+			mainGroup = A986FC37DB2B47964045618E;
+			productRefGroup = 3666703F443C43D591B2E023 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				48F4F9CFBE3F8A41C3137020 /* Pods */,
+				8DD1A18C0258463F24437171 /* Pods */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		62B6722817708F802B615131 /* Sources */ = {
+		8CF41EAD1A4E783C0BF013BC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE39EC2CEA1F4C9881B7240C /* Pods-dummy.m in Sources */,
+				587C404EF768A06F757292A2 /* Pods-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		58E8F1B7EEB8E471D21358E6 /* Debug */ = {
+		28DAE660864FC8945C956C03 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -282,9 +420,9 @@
 			};
 			name = Debug;
 		};
-		6EFC6EE4ED3CA49BDF3AD3E8 /* Release */ = {
+		C31CBEBD3C9953357DA5ADEA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D01D4F867B1E0CAF750E13AC /* Pods.release.xcconfig */;
+			baseConfigurationReference = 9155B81F59F216AEDB10ED0D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -298,7 +436,7 @@
 			};
 			name = Release;
 		};
-		858DFA3739BC376C17CD126F /* Release */ = {
+		EA3BC35ED4B2D01C9D99601B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -332,9 +470,9 @@
 			};
 			name = Release;
 		};
-		B40B26FAA71A94D1F26A446D /* Debug */ = {
+		F29842D192FEDB0899ED9C8F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 011DE977680E3F6610715572 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 7879EEE8BB2AB041BA673DA9 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -351,25 +489,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E35C0D62EC867BAE1E76E262 /* Build configuration list for PBXNativeTarget "Pods" */ = {
+		5B15A20CB6B49494AA12636C /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B40B26FAA71A94D1F26A446D /* Debug */,
-				6EFC6EE4ED3CA49BDF3AD3E8 /* Release */,
+				28DAE660864FC8945C956C03 /* Debug */,
+				EA3BC35ED4B2D01C9D99601B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED58FD5D7A995DC2B6CAB503 /* Build configuration list for PBXProject "Pods" */ = {
+		AC2033D181231D2BF97AB5FD /* Build configuration list for PBXNativeTarget "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				58E8F1B7EEB8E471D21358E6 /* Debug */,
-				858DFA3739BC376C17CD126F /* Release */,
+				F29842D192FEDB0899ED9C8F /* Debug */,
+				C31CBEBD3C9953357DA5ADEA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 1E7A9F528087CCEFDACB75FF /* Project object */;
+	rootObject = 5D8A07CE2251DB23C489B723 /* Project object */;
 }
