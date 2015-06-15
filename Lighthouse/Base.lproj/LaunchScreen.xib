@@ -41,6 +41,6 @@
         </view>
     </objects>
     <resources>
-        <image name="launch-logo" width="330" height="109"/>
+        <image name="launch-logo" width="420" height="99"/>
     </resources>
 </document>

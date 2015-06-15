@@ -15,6 +15,8 @@
 		AA3216F11B26C5E8008C6E02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA3216F01B26C5E8008C6E02 /* Images.xcassets */; };
 		AA3216F41B26C5E8008C6E02 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3216F21B26C5E8008C6E02 /* LaunchScreen.xib */; };
 		AA3217001B26C5E8008C6E02 /* LighthouseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3216FF1B26C5E8008C6E02 /* LighthouseTests.swift */; };
+		AA5B2ED91B2F2D0E00A1AFEB /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5B2ED81B2F2D0E00A1AFEB /* MessagesViewController.swift */; };
+		AA5B2EDC1B2F2FC500A1AFEB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5B2EDB1B2F2FC500A1AFEB /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,8 @@
 		AA3216F91B26C5E8008C6E02 /* LighthouseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LighthouseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3216FE1B26C5E8008C6E02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3216FF1B26C5E8008C6E02 /* LighthouseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LighthouseTests.swift; sourceTree = "<group>"; };
+		AA5B2ED81B2F2D0E00A1AFEB /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		AA5B2EDB1B2F2FC500A1AFEB /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AA890D5E1B297550002F2054 /* ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCBridge.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +99,7 @@
 		AA3216E41B26C5E8008C6E02 /* Lighthouse */ = {
 			isa = PBXGroup;
 			children = (
+				AA5B2EDA1B2F2D7F00A1AFEB /* Custom Views */,
 				AA3216E71B26C5E8008C6E02 /* AppDelegate.swift */,
 				AA3216E91B26C5E8008C6E02 /* MasterViewController.swift */,
 				AA3216EB1B26C5E8008C6E02 /* DetailViewController.swift */,
@@ -130,6 +135,15 @@
 				AA3216FE1B26C5E8008C6E02 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA5B2EDA1B2F2D7F00A1AFEB /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA5B2ED81B2F2D0E00A1AFEB /* MessagesViewController.swift */,
+				AA5B2EDB1B2F2FC500A1AFEB /* LoginView.swift */,
+			);
+			name = "Custom Views";
 			sourceTree = "<group>";
 		};
 		AC2B0CBDBD390C8D0B14589E /* Pods */ = {
@@ -279,6 +293,8 @@
 			files = (
 				AA3216EC1B26C5E8008C6E02 /* DetailViewController.swift in Sources */,
 				AA3216EA1B26C5E8008C6E02 /* MasterViewController.swift in Sources */,
+				AA5B2EDC1B2F2FC500A1AFEB /* LoginView.swift in Sources */,
+				AA5B2ED91B2F2D0E00A1AFEB /* MessagesViewController.swift in Sources */,
 				AA3216E81B26C5E8008C6E02 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

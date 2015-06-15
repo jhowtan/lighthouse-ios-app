@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(application: UIApplication, openURL url: NSURL,
         sourceApplication: String, annotation: AnyObject?,
         didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+            
         // Override point for customization after application launch.
         let splitViewController = self.window!.rootViewController as! UISplitViewController
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
