@@ -28,7 +28,7 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
     var recepBeacon:[String:String] = ["uuid":""] // Instantiate null object
     var myMessage = [0:["beacon":""]]
     
-    var tableNumber = 0
+    var msgIndex = 0
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -76,10 +76,15 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
             // Begins ranging for the Reception Beacon using the UUID
             self.beaconsRef.childByAppendingPath(recepKey)
             .observeEventType(.ChildAdded, withBlock: { beacon in
-                    let rkey = beacon.key as String
-                    let val = beacon.value as! String
-                    // recepBeacon holds the beacon object retrieved from Firebase
-                    self.recepBeacon[rkey] = val
+                let rkey = beacon.key as String
+                let val = beacon.value as! String
+                
+                // recepBeacon holds the beacon object retrieved from Firebase
+                self.recepBeacon[rkey] = val
+//                println(self.recepBeacon["beacon"])
+                
+//                if(self.recepBeacon == )
+//                self.sendLocalNotificationWithMessage("Please pickup item in reception!")
             })
         })
         
@@ -100,12 +105,12 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
 //            message in
 //            let child = message.children
 //
-//            for rest in child.allObjects as! [FDataSnapshot]] {
+//            for rest in child.allObjects as! [FDataSnapshot] {
 //                details[rest.key] = rest.value as? String
 //            }
-//            self.myMessage[self().count] =
-//            self.insertNewObject(self.myMessage.count-1)
-//            self.sendLocalNotificationWithMessage("You have a new message!")
+//            
+//            self.insertNewObject(0)
+//            // self.sendLocalNotificationWithMessage("You have a new message!")
 //        })
         
         // Todo: Use observeSingleEventType for initial load of existing messages.
@@ -116,12 +121,15 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
             // Fix message loop for display of messages on the Table View:
             // Messages don't delete correctly.
             while let msg = child.nextObject() as? FDataSnapshot {
+//                println(msg)
                 
                 for rest in msg.children.allObjects as! [FDataSnapshot] {
                     // println(rest.value)
                     details[rest.key] = rest.value as? String
                 }
+                
                 self.myMessage[c] = details
+                
                 // Adds to the view. See insertNewObject(Object)
                 self.insertNewObject(c)
                 c++
