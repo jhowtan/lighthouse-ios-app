@@ -10,7 +10,6 @@ import UIKit
 
 class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
     
     // Beacon variables
@@ -28,7 +27,6 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
     var recepBeacon:[String:String] = ["uuid":""] // Instantiate null object
     var myMessage = [0:["beacon":""]]
     
-    var msgIndex = 0
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,12 +46,6 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
         
         // Do any additional setup after loading the view, typically from a nib.
         // self.navigationItem.leftBarButtonItem = self.editButtonItem()
-        
-        // Set Master View as first view
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
-        }
         
         // Add the beacon manager delegate
         beaconManager.delegate = self
@@ -223,18 +215,6 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
 
     // MARK: - Segues
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println("prepare for segue")
-        if segue.identifier == "showDetail" {
-            if let indexPath = self.tableView.indexPathForSelectedRow() {
-                let object = objects[indexPath.row] as! String
-                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-                controller.navigationItem.leftItemsSupplementBackButton = true
-            }
-        }
-    }
 
     // MARK: - Table View
     // Needs to refactor for more complete loading of message objects into the Table View
