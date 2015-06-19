@@ -34,45 +34,25 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         self.navigationItem.titleView = UIImageView(image: image)
     }
         // Get the users messages
-    func getUserMessages(){
+    func getInitialUserMessages(){
         // .Value will always be triggered last so the ordering does not matter
         // We just need to cache the messages on load to pass to the Messages View
-        appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
-            let children = messages.children
-            var newMessage = Message()
+        
+        // Get initial values then stop listening, listening should be done in the messages list view
+        var childHandle = appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
+            // Use the appdelegate add message method
+            self.appDelegate.addMessageSnapshot(messages)
+        })
+        
+        var allHandle = appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.Value, withBlock: { messages in
+            // Trigger the next view
+            println("\(messages.childrenCount) : \(self.appDelegate.myMessages.count)")
             
-            while let message = children.nextObject() as? FDataSnapshot {
-                switch message.key {
-                case "date":
-                    var dateFormatter = NSDateFormatter()
-                    dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-                    dateFormatter.timeStyle = .ShortStyle
-                    
-                    if let t = message.value as? NSTimeInterval {
-                        // Cast the value to an NSTimeInterval
-                        // and divide by 1000 to get seconds.
-                        let date = NSDate(timeIntervalSince1970: t/1000)
-                        
-                        newMessage.date = dateFormatter.stringFromDate(date)
-                    }
-                    
-                case "location":
-                    newMessage.location = message.value as? String
-                case "message":
-                    newMessage.message = message.value as? String
-                case "status":
-                    newMessage.status = message.value as? String
-                case "title":
-                    newMessage.title = message.value as? String
-                case "type":
-                    newMessage.type = message.value as? String
-                default:
-                    println("Nothing to see here...")
-                }
-            }
+            self.appDelegate.messagesRef.removeObserverWithHandle(childHandle)
             
-            self.appDelegate.myMessages.insert(newMessage, atIndex: 0)
-            self.proceedToListView()
+            // Trigger the next view
+            // self.proceedToListView()
+            
         })
     }
     
@@ -114,16 +94,19 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         var img:String?
         switch indexPath.row {
         case 0:
-            cell.btnTitle.text = "Blast"
+            // cell.btnTitle.text = "Blast"
+            cell.btnTitle.text = "Sylvia"
             cell.btnSubTitle.text = "Administrative tool"
             img = "blast-icon"
         
         case 1:
-            cell.btnTitle.text = "Ticker"
+            // cell.btnTitle.text = "Ticker"
+            cell.btnTitle.text = "James"
             cell.btnSubTitle.text = "Timesheet Tracker Tool"
             img = "ticker-icon"
         case 2:
-            cell.btnTitle.text = "Broker"
+            // cell.btnTitle.text = "Broker"
+            cell.btnTitle.text = "Tina"
             cell.btnSubTitle.text = "Facilities Reservation Tool"
             img = "broker-icon"
         default:
@@ -156,7 +139,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                     vc.modalPresentationStyle = .OverFullScreen
                     vc.modalTransitionStyle = .CrossDissolve
                     presentViewController(vc, animated: true) {
-                        self.getUserMessages()
+                        self.getInitialUserMessages()
                     }
                 }
                 

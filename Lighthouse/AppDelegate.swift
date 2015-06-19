@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
     // Other global variables
     var myMessages = [Message]()
     var activeMenu = 0
+    var currentView = "mainmenu"
     
     // Google auth variables
     let googleClientID = "186193271444-835107nm0lkjlepsmv66fkl4rp6eoir7.apps.googleusercontent.com"
@@ -118,6 +119,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
 
     }
     
+    func addMessageSnapshot(messages:FDataSnapshot){
+        let children = messages.children
+        var newMessage = Message()
+        
+        while let message = children.nextObject() as? FDataSnapshot {
+            switch message.key {
+            case "date":
+                var dateFormatter = NSDateFormatter()
+                dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                dateFormatter.timeStyle = .ShortStyle
+                
+                if let t = message.value as? NSTimeInterval {
+                    // Cast the value to an NSTimeInterval
+                    // and divide by 1000 to get seconds.
+                    let date = NSDate(timeIntervalSince1970: t/1000)
+                    
+                    newMessage.date = dateFormatter.stringFromDate(date)
+                }
+                
+            case "location":
+                newMessage.location = message.value as? String
+            case "message":
+                newMessage.message = message.value as? String
+            case "status":
+                newMessage.status = message.value as? String
+            case "title":
+                newMessage.title = message.value as? String
+            case "type":
+                newMessage.type = message.value as? String
+            default:
+                println("Nothing to see here...")
+            }
+        }
+        
+        myMessages.insert(newMessage, atIndex: 0)
+    }
+        
     func authenticateWithGoogle() {
         // use the Google+ SDK to get an OAuth token
         var signIn = GPPSignIn.sharedInstance()

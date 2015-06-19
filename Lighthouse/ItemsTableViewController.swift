@@ -20,17 +20,24 @@ class ItemsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
+        var viewTitle:String?
         switch appDelegate.activeMenu {
         case 0:
-            self.title = "Blast"
+            // self.title = "Blast"
+            viewTitle = "Sylvia"
         case 1:
-            self.title = "Ticker"
+            // self.title = "Ticker"
+            viewTitle = "James"
         case 2:
-            self.title = "Broker"
+            // self.title = "Broker"
+            viewTitle = "Tina"
         default:
             println("default title")
         }
+        
+        self.title = viewTitle
+        
+        appDelegate.messagesRef.removeAllObservers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +69,21 @@ class ItemsTableViewController: UITableViewController {
         cell.msgDate!.text = message.date
         
         return cell
+    }
+    
+    func insertNewObject(rowIndex: Int) {
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func getNewlyAddedMessages(){
+        appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
+            // Use the appdelegate add message method
+            self.appDelegate.addMessageSnapshot(messages)
+            
+            // Trigger the next view
+            self.insertNewObject(0)
+        })
     }
     
 
