@@ -1,16 +1,16 @@
 PODS:
   - EstimoteSDK (3.2.5)
   - Firebase (2.3.1)
-  - googleplus-ios-sdk (1.7.1)
+  - google-plus-ios-sdk (1.7.1)
 
 DEPENDENCIES:
   - EstimoteSDK
   - Firebase (>= 2.3.1)
-  - googleplus-ios-sdk
+  - google-plus-ios-sdk
 
 SPEC CHECKSUMS:
   EstimoteSDK: df3ab4ee5f5ee32182a8d918321dc9604eda4829
   Firebase: 462795adf92029ddb97777660627f5dd4fd59876
-  googleplus-ios-sdk: 065d9135061a5f84c07656a68ced48336408fe35
+  google-plus-ios-sdk: 47adbe03ea904bdb7aa1c0eca282a23c4686e1bc
 
 COCOAPODS: 0.37.2

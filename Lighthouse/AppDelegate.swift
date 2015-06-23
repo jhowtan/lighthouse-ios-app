@@ -9,34 +9,39 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate, CLLocationManagerDelegate, GPPSignInDelegate {
+class AppDelegate:
+    UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
+    CLLocationManagerDelegate, GPPSignInDelegate {
 
     var window: UIWindow?
     
     // Beacon variables
-    // Should shift beaconManager to AppDelegate
     let beaconManager = ESTBeaconManager()
     var beaconRegion:CLBeaconRegion?
-    var beacons = [Beacon]()
+    var beacons = [Beacon]() // local store from Firebase
+    var detectedBeacons = [] // use with beaconManager
     
     // Firebase reference
     let fbRootRef = Firebase(url:"https://beacon-dan.firebaseio.com/")
     let beaconsRef = Firebase(url:"https://beacon-dan.firebaseio.com/beacons/")
     let locationRef = Firebase(url:"https://beacon-dan.firebaseio.com/location/")
     let messagesRef = Firebase(url:"https://beacon-dan.firebaseio.com/messages/")
+    let roomsRef = Firebase(url:"https://beacon-dan.firebaseio.com/rooms/")
     
     // Other global variables
     var myMessages = [Message]()
     var activeMenu = 0
     var currentView = "mainmenu"
+    var currentUser = "google:118075399016047699152"
+    var auth : NSObject?
     
     // Google auth variables
-    let googleClientID = "186193271444-835107nm0lkjlepsmv66fkl4rp6eoir7.apps.googleusercontent.com"
-    // Temp user ID
-    var currentUser = "google:118075399016047699152"
+    let googleClientID:String! = "186193271444-835107nm0lkjlepsmv66fkl4rp6eoir7.apps.googleusercontent.com"
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?, openURL url: NSURL, sourceApplication: String, annotation: AnyObject?) -> Bool {
-        
+
+    // ---------- APPLICATION SETUP ------------------------
+    // AppDelegate.application : handles notification and beacon settings
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Setup notifications
         let notificationType = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
         let settings = UIUserNotificationSettings(forTypes: notificationType, categories: nil)
@@ -44,13 +49,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
         
         // Add the beacon manager delegate
         beaconManager.delegate = self
-        
-        // return true
-        return GPPURLHandler.handleURL(url,
+        return true
+    }
+    
+    // AppDelegate.application : Handle redirects from Google to application
+    func application(application: UIApplication, openURL url: NSURL,
+        sourceApplication: String?, annotation: AnyObject?) -> Bool {
+            return GPPURLHandler.handleURL(url,
                 sourceApplication:sourceApplication,
                 annotation:annotation)
     }
     
+    // ------- GOOGLE AUTHENTICATION METHODS ----------------
+    func authenticateWithGoogle() {
+        // use the Google+ SDK to get an OAuth token
+        var signIn = GPPSignIn.sharedInstance()
+        signIn.shouldFetchGooglePlusUser = true
+        signIn.clientID = googleClientID
+        signIn.scopes = ["email"]
+        signIn.delegate = self
+        signIn.authenticate()
+    }
+    
+    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
+        if error != nil {
+            // There was an error obtaining the Google+ OAuth Token
+            println("Error! \(error)")
+        } else {
+            // We successfully obtained an OAuth token, authenticate on Firebase with it
+            let ref = Firebase(url: "https://beacon-dan.firebaseio.com")
+            ref.authWithOAuthProvider("google", token: auth.accessToken,
+                withCompletionBlock: { error, authData in
+                    if error != nil {
+                        // Error authenticating with Firebase with OAuth token
+                        println("Error! \(error)")
+                    } else {
+                        // User is now logged in, set currentUser to the obtained uid
+                        self.currentUser = authData.uid
+                        self.auth = authData
+                        println("currentUser: \(self.currentUser)")
+                    }
+            })
+        }
+    }
+    
+    // --------- BEACON MANAGEMENT METHODS ------------------
     // BeaconManager Class for listening to events:
     // enterRegion, exitRegion, etc.
     func beaconManager(manager: AnyObject!,
@@ -63,31 +106,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
             if let nearestBeacon = beacons.first as? CLBeacon {
                 // stop polling for beacons
                 beaconManager.stopRangingBeaconsInRegion(region)
-                println(nearestBeacon)
+                println("BeaconManager fired, nearest: \(nearestBeacon)")
+                // nearestBeacon is a CLBeacon object
+                // use nearestBeacon.minor to match with list of beacons in AppDelegate
+                // to find location to filter by
             }
     }
     
-    func startRanging(uuid:NSUUID){
+    func startRanging(){
         beaconRegion = CLBeaconRegion(
-            proximityUUID: uuid,
+            proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
             identifier: "Lighthouse")
         
-        println("ranging")
+        println("BeaconManager has begun ranging...")
         
         beaconManager.requestWhenInUseAuthorization()
         beaconManager.startRangingBeaconsInRegion(beaconRegion)
     }
     
+    // -------- FIREBASE METHODS --------------------------
     func getFirebaseData() {
-        // Get reception beacon label
-        locationRef.childByAppendingPath("reception").childByAppendingPath("beacon")
-        .observeEventType(.Value, withBlock: { recep in
-            // recepKey is the name of the reception beacon
-            let recepKey = recep.value as? String
-                
-            println(recepKey!)
-        })
-        
         // Get and save the constant beacon object
         beaconsRef.observeSingleEventOfType(.Value, withBlock: { beacon in
             let child = beacon.children
@@ -116,6 +154,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
                 self.beacons.append(nBeacon)
             }
         })
+        
+        
+        
+        // --------- OBTAIN KEY FOR CURRENT LOCATION ---------------
+        // USE BEACON TO DETECT NEAREST BEACON THEN USE THAT TO MATCH AGAINST LOCATIONS
+        
+//        // Get reception key to retrieve reception messages from Reception
+//        locationRef.childByAppendingPath("reception").childByAppendingPath("beacon")
+//            .observeEventType(.Value, withBlock: { recep in
+//                // recepKey is the name of the reception beacon
+//                let recepKey = recep.value as? String
+//                println("RecepKey: \(recepKey!)")
+//            })
+        
+        
 
     }
     
@@ -155,35 +208,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
         
         myMessages.insert(newMessage, atIndex: 0)
     }
-        
-    func authenticateWithGoogle() {
-        // use the Google+ SDK to get an OAuth token
-        var signIn = GPPSignIn.sharedInstance()
-        signIn.shouldFetchGooglePlusUser = true
-        signIn.clientID = googleClientID
-        signIn.scopes = ["email"]
-        signIn.delegate = self
-        signIn.authenticate()
-    }
-    
-    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
-        if error != nil {
-            // There was an error obtaining the Google+ OAuth Token
-            println("Error! \(error)")
-        } else {
-            // We successfully obtained an OAuth token, authenticate on Firebase with it
-            let ref = Firebase(url: "https://beacon-dan.firebaseio.com")
-            ref.authWithOAuthProvider("google", token: auth.accessToken,
-                withCompletionBlock: { error, authData in
-                    if error != nil {
-                        // Error authenticating with Firebase with OAuth token
-                    } else {
-                        // User is now logged in!
-                        println("Successfully logged in! \(authData)")
-                    }
-            })
-        }
-    }
+
 
     
     func applicationWillResignActive(application: UIApplication) {

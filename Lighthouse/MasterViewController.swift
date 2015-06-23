@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Digital Arts Network. All rights reserved.
 //
 
+//---------- DEPRECATED VIEW CONTROLLER ----------------------
+// USE MainMenuViewController.swift FOR MESSAGE HANDLING LOGIC
+
 import UIKit
 
 class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
@@ -27,7 +30,6 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
     var recepBeacon:[String:String] = ["uuid":""] // Instantiate null object
     var myMessage = [0:["beacon":""]]
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
@@ -93,27 +95,30 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
         var details = ["beacon" : "","date" : "","message" : "","status" : "","to_user" : "","type":"","title": ""]
 
         // Use .ChildAdded to monitor new messages
-//        fQueryReception.observeEventType(.ChildAdded, withBlock: {
-//            message in
-//            let child = message.children
-//
-//            for rest in child.allObjects as! [FDataSnapshot] {
-//                details[rest.key] = rest.value as? String
-//            }
-//            
-//            self.insertNewObject(0)
-//            // self.sendLocalNotificationWithMessage("You have a new message!")
-//        })
+        fQueryReception.observeEventType(.ChildAdded, withBlock: {
+            message in
+            let child = message.children
+
+            for rest in child.allObjects as! [FDataSnapshot] {
+                details[rest.key] = rest.value as? String
+            }
+            self.myMessage[0] = details
+            self.insertNewObject(0)
+            self.sendLocalNotificationWithMessage("You have a new message!")
+        })
         
         // Todo: Use observeSingleEventType for initial load of existing messages.
-        
-        fQueryReception.observeEventType(.Value, withBlock: { message in
+        fQueryReception.observeSingleEventOfType(.Value, withBlock: { message in
             let child = message.children
             var c = 0
+            
+//            // Call notification outside of loop
+//            self.sendLocalNotificationWithMessage("You have a new message!")
+            
             // Fix message loop for display of messages on the Table View:
             // Messages don't delete correctly.
             while let msg = child.nextObject() as? FDataSnapshot {
-//                println(msg)
+                println(msg)
                 
                 for rest in msg.children.allObjects as! [FDataSnapshot] {
                     // println(rest.value)
@@ -127,8 +132,7 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
                 c++
             }
             
-            // Call notification outside of loop
-            self.sendLocalNotificationWithMessage("You have a new message!")
+
         })
     }
     
@@ -141,11 +145,11 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
         notification.soundName = UILocalNotificationDefaultSoundName
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
         
-        let remindAction = UIMutableUserNotificationAction()
-        remindAction.identifier = "Snooze"
-        remindAction.title = "Remind in 30 minutes"
-        remindAction.activationMode = .Background
-        remindAction.destructive = false
+//        let remindAction = UIMutableUserNotificationAction()
+//        remindAction.identifier = "Snooze"
+//        remindAction.title = "Remind in 30 minutes"
+//        remindAction.activationMode = .Background
+//        remindAction.destructive = false
         
     }
     
@@ -203,7 +207,7 @@ class MasterViewController: UITableViewController, ESTBeaconManagerDelegate, CLL
         objects.insert(message["title"]!, atIndex: msgInd)
         let indexPath = NSIndexPath(forRow: msgInd, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        //  authenticateWithGoogle()
+        // authenticateWithGoogle()
         //  -- 15/6/2015: confirmed that Google OAuth works --
         // Create view for logging user into application
     }

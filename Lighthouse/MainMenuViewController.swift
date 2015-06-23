@@ -15,6 +15,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        appDelegate.startRanging()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -22,8 +23,10 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        // -------- NEED TO CREATE A NEW LOGIN SCREEN -----------------
         // Add login button
-        var b : UIBarButtonItem = UIBarButtonItem(title: "Login", style: UIBarButtonItemStyle.Plain, target: self, action: "startAuth")
+        var b : UIBarButtonItem = UIBarButtonItem(title: "Login",
+            style: UIBarButtonItemStyle.Plain, target: self, action: "startAuth")
         self.navigationItem.rightBarButtonItem = b
         
         // Start getting firebase info
@@ -33,30 +36,36 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         let image = UIImage(named: "nav-logo")
         self.navigationItem.titleView = UIImageView(image: image)
     }
-        // Get the users messages
+    
+    // Get all of the current user's messages
+    // (NOT beacon activated)
+    // 1) Filter by beacon?
+    // 2) Load by beacon?
     func getInitialUserMessages(){
         // .Value will always be triggered last so the ordering does not matter
         // We just need to cache the messages on load to pass to the Messages View
+
+        // ------- BROKEN!! --------
+        // println(appDelegate.currentUser)
         
-        // Get initial values then stop listening, listening should be done in the messages list view
         var childHandle = appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
             // Use the appdelegate add message method
             self.appDelegate.addMessageSnapshot(messages)
         })
         
+        // Get initial values then stop listening, listening should be done in the messages list view
         var allHandle = appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.Value, withBlock: { messages in
-            // Trigger the next view
-            println("\(messages.childrenCount) : \(self.appDelegate.myMessages.count)")
-            
+
+            println("firebase - \(messages.childrenCount) : myMessages - \(self.appDelegate.myMessages.count)")
             self.appDelegate.messagesRef.removeObserverWithHandle(childHandle)
             
             // Trigger the next view
-            // self.proceedToListView()
-            
+            //self.proceedToListView()
         })
     }
     
-    // Authentication Method
+    // Authentication method called by Login button
+    // Move this function along with the login button when View for Login Page is done
     func startAuth (){
         appDelegate.authenticateWithGoogle()
     }
@@ -90,7 +99,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         let cell = tableView.dequeueReusableCellWithIdentifier("Nav Item", forIndexPath: indexPath) as! MenuItemCell
         
         // Configure the cell...
-            // Set the img variable as nil
+        // Set the img variable as nil
         var img:String?
         switch indexPath.row {
         case 0:
@@ -98,7 +107,6 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             cell.btnTitle.text = "Sylvia"
             cell.btnSubTitle.text = "Administrative tool"
             img = "blast-icon"
-        
         case 1:
             // cell.btnTitle.text = "Ticker"
             cell.btnTitle.text = "James"
@@ -134,13 +142,14 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                 // If not, call the start firebase call
                 if(appDelegate.myMessages.count > 0) {
                     proceedToListView()
-                }else {
+                } else {
                     let vc = storyboard!.instantiateViewControllerWithIdentifier("Preloader") as! UIViewController
                     vc.modalPresentationStyle = .OverFullScreen
                     vc.modalTransitionStyle = .CrossDissolve
                     presentViewController(vc, animated: true) {
                         self.getInitialUserMessages()
                     }
+                    self.proceedToListView()
                 }
                 
             case 1:
