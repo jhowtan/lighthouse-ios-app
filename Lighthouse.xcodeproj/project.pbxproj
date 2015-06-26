@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B7BD84A61A09EB129856110 /* Pods_Lighthouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F774BE6DF02979AF2E591F /* Pods_Lighthouse.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6A5DAE102EC1E1F6BF90AB60 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FB2C2063321B391C0FE536A /* libPods.a */; };
 		AA3216E81B26C5E8008C6E02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3216E71B26C5E8008C6E02 /* AppDelegate.swift */; };
 		AA3216EA1B26C5E8008C6E02 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3216E91B26C5E8008C6E02 /* MasterViewController.swift */; };
@@ -21,6 +22,7 @@
 		AA5B9E6A1B32FEC1007A3884 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5B9E691B32FEC1007A3884 /* ItemsTableViewController.swift */; };
 		AA5B9E6C1B330D1B007A3884 /* ListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5B9E6B1B330D1B007A3884 /* ListItemCell.swift */; };
 		AA5B9E6E1B33213D007A3884 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5B9E6D1B33213D007A3884 /* DetailViewController.swift */; };
+		FC90F3281B3D42D900334BF4 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC90F3271B3D42D900334BF4 /* Notifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +36,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		45F774BE6DF02979AF2E591F /* Pods_Lighthouse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lighthouse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE1E259F4246342CA8A9C4F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8BFAEC1F48022D2F26E32C1E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8FB2C2063321B391C0FE536A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B42A93E999332AE9AEBDE23 /* Pods-Lighthouse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lighthouse.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lighthouse/Pods-Lighthouse.release.xcconfig"; sourceTree = "<group>"; };
 		AA3216E21B26C5E8008C6E02 /* Lighthouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lighthouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3216E61B26C5E8008C6E02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3216E71B26C5E8008C6E02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +59,8 @@
 		AA5B9E6B1B330D1B007A3884 /* ListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItemCell.swift; sourceTree = "<group>"; };
 		AA5B9E6D1B33213D007A3884 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		AA890D5E1B297550002F2054 /* ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCBridge.h; sourceTree = "<group>"; };
+		AF3058131BC973764364FF6B /* Pods-Lighthouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lighthouse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lighthouse/Pods-Lighthouse.debug.xcconfig"; sourceTree = "<group>"; };
+		FC90F3271B3D42D900334BF4 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A5DAE102EC1E1F6BF90AB60 /* libPods.a in Frameworks */,
+				2B7BD84A61A09EB129856110 /* Pods_Lighthouse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				8FB2C2063321B391C0FE536A /* libPods.a */,
+				45F774BE6DF02979AF2E591F /* Pods_Lighthouse.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -170,6 +178,7 @@
 			children = (
 				AA5B9E2A1B314CB0007A3884 /* Message.swift */,
 				AA5B9E331B3184E2007A3884 /* Beacon.swift */,
+				FC90F3271B3D42D900334BF4 /* Notifications.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -179,6 +188,8 @@
 			children = (
 				6EE1E259F4246342CA8A9C4F /* Pods.debug.xcconfig */,
 				8BFAEC1F48022D2F26E32C1E /* Pods.release.xcconfig */,
+				AF3058131BC973764364FF6B /* Pods-Lighthouse.debug.xcconfig */,
+				9B42A93E999332AE9AEBDE23 /* Pods-Lighthouse.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -195,6 +206,7 @@
 				AA3216DF1B26C5E8008C6E02 /* Frameworks */,
 				AA3216E01B26C5E8008C6E02 /* Resources */,
 				AE17D4E198E0E354839065A3 /* Copy Pods Resources */,
+				D08C1D2662466B0529123883 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -309,7 +321,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lighthouse/Pods-Lighthouse-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D08C1D2662466B0529123883 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lighthouse/Pods-Lighthouse-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -319,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC90F3281B3D42D900334BF4 /* Notifications.swift in Sources */,
 				AA5B9E6E1B33213D007A3884 /* DetailViewController.swift in Sources */,
 				AA5B9E311B316112007A3884 /* MenuItemCell.swift in Sources */,
 				AA5B9E6C1B330D1B007A3884 /* ListItemCell.swift in Sources */,
@@ -454,7 +482,7 @@
 		};
 		AA3217041B26C5E8008C6E02 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EE1E259F4246342CA8A9C4F /* Pods.debug.xcconfig */;
+			baseConfigurationReference = AF3058131BC973764364FF6B /* Pods-Lighthouse.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -468,7 +496,7 @@
 		};
 		AA3217051B26C5E8008C6E02 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BFAEC1F48022D2F26E32C1E /* Pods.release.xcconfig */;
+			baseConfigurationReference = 9B42A93E999332AE9AEBDE23 /* Pods-Lighthouse.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
