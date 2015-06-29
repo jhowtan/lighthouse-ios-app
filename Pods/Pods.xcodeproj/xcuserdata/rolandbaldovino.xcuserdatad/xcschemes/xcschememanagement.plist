@@ -4,7 +4,27 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods-Lighthouse-Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Lighthouse-GoogleAPISwiftClient.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Lighthouse-ObjectMapper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Lighthouse-SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Lighthouse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -12,7 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>8DD1A18C0258463F24437171</key>
+		<key>020F1B4BF995CF340C3442FF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0B4EC1CFEFE9F56674FF42AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>421E991B701D4282456E7C49</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7BBF9F070C7E3BC2242A4D0A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8E396C0DF362325526335BCE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
