@@ -20,7 +20,11 @@ class ItemsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        sharedAccess.currentTableView = self
+        
         var viewTitle:String?
+        
         switch sharedAccess.activeView {
         case 0:
             // self.title = "Blast"
@@ -73,19 +77,9 @@ class ItemsTableViewController: UITableViewController {
         return cell
     }
     
-    func insertNewObject(rowIndex: Int) {
+    func insertNewObject() {
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-    }
-    
-    func getNewlyAddedMessages(){
-        sharedAccess.messagesRef.childByAppendingPath(sharedAccess.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
-            // Use the appdelegate add message method
-            sharedAccess.addMessageSnapshot(messages)
-            
-            // Trigger the next view
-            self.insertNewObject(0)
-        })
     }
     
 

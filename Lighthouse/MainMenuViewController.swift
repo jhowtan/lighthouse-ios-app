@@ -32,7 +32,6 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         sharedAccess.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
                 // user authenticated with Firebase
-                println("\(authData.uid) is logged in")
                 sharedAccess.currentUser = authData.uid
                 
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",

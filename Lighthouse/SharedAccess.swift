@@ -32,6 +32,10 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate, CLLocationManagerDelegate 
     // Google auth variables
     let googleClientID = "186193271444-835107nm0lkjlepsmv66fkl4rp6eoir7.apps.googleusercontent.com"
     
+    // Reference to current TableViewController
+    var currentTableView: ItemsTableViewController?
+    
+    // Instantiate the Singleton
     class var sharedInstance : SharedAccess {
         struct Static {
             static let instance : SharedAccess = SharedAccess()
@@ -93,6 +97,20 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate, CLLocationManagerDelegate 
         
     }
     
+    // ------ Blast(Messaging) Methods -------
+        // Get all of the current user's messages
+        // This is just used to list the messages the current user has
+    
+    func getUserMessages(){
+        // .Value will always be triggered last so the ordering does not matter
+        // We just need to cache the messages on load to pass to the Messages View
+        
+        messagesRef.childByAppendingPath(currentUser).observeEventType(.ChildAdded, withBlock: { messages in
+            // Use the appdelegate add message method
+            self.addMessageSnapshot(messages)
+        })
+    }
+    
     func addMessageSnapshot(messages:FDataSnapshot){
         let children = messages.children
         var newMessage = Message()
@@ -128,25 +146,16 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate, CLLocationManagerDelegate 
         }
         
         myMessages.insert(newMessage, atIndex: 0)
-    }
-    
-    // ------ Blast(Messaging) Methods -------
-    // Get all of the current user's messages
-    // This is just used to list the messages the current user has
-    
-    func getUserMessages(){
-        // .Value will always be triggered last so the ordering does not matter
-        // We just need to cache the messages on load to pass to the Messages View
         
-        messagesRef.childByAppendingPath(currentUser).observeEventType(.ChildAdded, withBlock: { messages in
-            // Use the appdelegate add message method
-            sharedAccess.addMessageSnapshot(messages)
-        })
+        if(currentTableView != nil){
+            currentTableView!.insertNewObject()
+        }
     }
+    
     
     // --------- BEACON MANAGEMENT METHODS ------------------
-    // BeaconManager Class for listening to events:
-    // enterRegion, exitRegion, etc.
+        // BeaconManager Class for listening to events:
+        // enterRegion, exitRegion, etc.
     func beaconManager(manager: AnyObject!,
         didRangeBeacons beacons: [AnyObject]!,
         inRegion region: CLBeaconRegion!) {
