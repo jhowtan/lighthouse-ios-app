@@ -8,9 +8,8 @@
 
 import UIKit
 
-struct Beacon {
+struct Location {
     var name:String?
-    var major:Int?
-    var minor:Int?
-    var uuid:String?
+    var beacon:String?
+    var key:String?
 }

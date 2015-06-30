@@ -36,7 +36,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We use your location to figure out which table you're sitting at.</string>
+	<string>We use your location to figure out which meeting room you're sitting at.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We use your location to figure out which beacon you're at.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

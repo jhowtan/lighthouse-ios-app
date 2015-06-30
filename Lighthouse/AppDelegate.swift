@@ -14,8 +14,6 @@ class AppDelegate:
     CLLocationManagerDelegate, GPPSignInDelegate {
 
     var window: UIWindow?
-    
-
 
     // ---------- APPLICATION SETUP ------------------------
     // AppDelegate.application : handles notification and beacon settings
@@ -24,9 +22,6 @@ class AppDelegate:
         let notificationType = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
         let settings = UIUserNotificationSettings(forTypes: notificationType, categories: nil)
         application.registerUserNotificationSettings(settings)
-        
-        // Add the beacon manager delegate
-        sharedAccess.beaconManager.delegate = self
         
         return true
     }
@@ -65,11 +60,6 @@ class AppDelegate:
                         // User is now logged in, set currentUser to the obtained uid
                         sharedAccess.currentUser = authData.uid
                         sharedAccess.auth = authData
-                        
-                        
-                        println("currentUser: \(sharedAccess.currentUser)")
-                        
-//                        return sharedAccess.nextFunc
                     }
             })
         }
@@ -84,6 +74,8 @@ class AppDelegate:
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        println("in background and starting monitoring")
+        sharedAccess.beaconManager.startMonitoringForRegion(sharedAccess.beaconRegion)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

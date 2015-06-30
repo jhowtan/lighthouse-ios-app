@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SharedAccess: UIView, ESTBeaconManagerDelegate, CLLocationManagerDelegate {
+class SharedAccess: UIView, ESTBeaconManagerDelegate {
     // Firebase reference
     let fbRootRef = Firebase(url:"https://beacon-dan.firebaseio.com/")
     let beaconsRef = Firebase(url:"https://beacon-dan.firebaseio.com/beacons/")
@@ -18,9 +18,13 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate, CLLocationManagerDelegate 
     
     // Beacon variables
     let beaconManager = ESTBeaconManager()
-    var beaconRegion:CLBeaconRegion?
-    var beacons = [Beacon]() // local store from Firebase
-    var detectedBeacons = [] // use with beaconManager
+    let beaconRegion = CLBeaconRegion(
+        proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
+        identifier: "Lighthouse")
+    
+    var beaconList = [Beacon]() // local store from Firebase
+    var locationList = [Location]()
+    var receptionBeacon:Beacon?
     
     // Other global variables
     var myMessages = [Message]()
@@ -49,62 +53,91 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate, CLLocationManagerDelegate 
     }
     
     // -------- FIREBASE METHODS --------------------------
-    // Add reference to initial firebase data
     func cacheFirebaseData() {
         // Get and save the static beacon object from firebase
-        beaconsRef.observeSingleEventOfType(.Value, withBlock: { beacon in
+        // Add reference to reception label
+        
+        locationRef.observeSingleEventOfType(.Value, withBlock: { beacon in
             let child = beacon.children
+            var receptionLabel = ""
             
-            while let b = child.nextObject() as? FDataSnapshot {
+            while let l = child.nextObject() as? FDataSnapshot {
                 // Create new beacon object
-                var nBeacon = Beacon()
+                var nLocation = Location()
                 
                 // Assign the attribute name
-                nBeacon.name = b.key as String
+                nLocation.key = l.key as String
                 
-                for rest in b.children.allObjects as! [FDataSnapshot] {
+                for loc in l.children.allObjects as! [FDataSnapshot] {
                     // Assign inner attributes
-                    if(rest.key == "minor") {
-                        nBeacon.minor = rest.value as? String
+                    if(loc.key == "name") {
+                        nLocation.name = loc.value as? String
                     }
-                    if(rest.key == "major") {
-                        nBeacon.major = rest.value as? String
+                    if(loc.key == "beacon") {
+                        nLocation.beacon = loc.value as? String
                     }
-                    if(rest.key == "uuid") {
-                        nBeacon.uuid = rest.value as? String
+                    
+                    // catch the beacon name for reception
+                    if(nLocation.name == "Reception") {
+                        receptionLabel = nLocation.beacon!
+                        println("receptionLabel is \(receptionLabel)")
                     }
+
                 }
                 
                 // Push beacon to global beacon variable
-                self.beacons.append(nBeacon)
+                self.locationList.append(nLocation)
             }
+            
+            self.beaconsRef.observeSingleEventOfType(.Value, withBlock: { beacon in
+                let child = beacon.children
+                
+                while let b = child.nextObject() as? FDataSnapshot {
+                    // Create new beacon object
+                    var nBeacon = Beacon()
+                    
+                    // Assign the attribute name
+                    nBeacon.name = b.key as String
+                    
+                    for rest in b.children.allObjects as! [FDataSnapshot] {
+                        // Assign inner attributes
+                        if(rest.key == "minor") {
+                            nBeacon.minor = rest.value as? Int
+                        }
+                        if(rest.key == "major") {
+                            nBeacon.major = rest.value as? Int
+                        }
+                        if(rest.key == "uuid") {
+                            nBeacon.uuid = rest.value as? String
+                        }
+                    }
+                    
+                    if(nBeacon.name == receptionLabel) {
+                        self.receptionBeacon = nBeacon
+                        // println("Found the receptionBeacon! ------ \(self.receptionBeacon?.minor)")
+                    }
+                    
+                    // Push beacon to global beacon variable
+                    self.beaconList.append(nBeacon)
+                }
+            })
         })
         
         
+        // Add the beacon manager delegate
+        beaconManager.delegate = self
         
-        // --------- OBTAIN KEY FOR CURRENT LOCATION ---------------
-        // USE BEACON TO DETECT NEAREST BEACON THEN USE THAT TO MATCH AGAINST LOCATIONS
-        
-        //        // Get reception key to retrieve reception messages from Reception
-        //        locationRef.childByAppendingPath("reception").childByAppendingPath("beacon")
-        //            .observeEventType(.Value, withBlock: { recep in
-        //                // recepKey is the name of the reception beacon
-        //                let recepKey = recep.value as? String
-        //                println("RecepKey: \(recepKey!)")
-        //            })
-        
-        
-        
+        // Start Ranging for beacons
+        sharedAccess.startRanging()
     }
     
-    // ------ Blast(Messaging) Methods -------
-        // Get all of the current user's messages
-        // This is just used to list the messages the current user has
     
+    // ------ Blast(Messaging) Methods -------
     func getUserMessages(){
         // .Value will always be triggered last so the ordering does not matter
         // We just need to cache the messages on load to pass to the Messages View
         
+        // This is just used to list the messages the current user has
         messagesRef.childByAppendingPath(currentUser).observeEventType(.ChildAdded, withBlock: { messages in
             // Use the appdelegate add message method
             self.addMessageSnapshot(messages)
@@ -152,36 +185,33 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate, CLLocationManagerDelegate 
         }
     }
     
-    
     // --------- BEACON MANAGEMENT METHODS ------------------
-        // BeaconManager Class for listening to events:
-        // enterRegion, exitRegion, etc.
-    func beaconManager(manager: AnyObject!,
-        didRangeBeacons beacons: [AnyObject]!,
-        inRegion region: CLBeaconRegion!) {
-            
+    func beaconManager(manager: AnyObject!, didRangeBeacons beacons: [AnyObject]!, inRegion region: CLBeaconRegion!) {
             // To do:
-            // Check if nearestBeacon minor values match any of those in self.myMessages.
-            // If true: Push notification to phone.
-            if let nearestBeacon = beacons.first as? CLBeacon {
-                // stop polling for beacons
-                beaconManager.stopRangingBeaconsInRegion(region)
-                println("BeaconManager fired, nearest: \(nearestBeacon)")
-                // nearestBeacon is a CLBeacon object
-                // use nearestBeacon.minor to match with list of beacons in AppDelegate
-                // to find location to filter by
+            // Push notification for messages.
+        
+        if let nearestBeacon = beacons.first as? CLBeacon {
+            // beaconManager.stopRangingBeaconsInRegion(region)
+            // nearestBeacon is a CLBeacon object
+            // use nearestBeacon.minor to match with list of beacons in AppDelegate
+            
+            // if nearest beacon is the reception beacon, alert the user
+            if(receptionBeacon != nil && nearestBeacon.minor.integerValue == receptionBeacon!.minor){
+                println("Neareset beacon check \(nearestBeacon.minor.integerValue == receptionBeacon!.minor)")
+                Notifications.display("You have some parcel for pickup.")
             }
+        }
+    }
+    
+    func beaconManager(manager: AnyObject!, didStartMonitoringForRegion region: CLBeaconRegion!) {
+        
     }
     
     func startRanging(){
-        beaconRegion = CLBeaconRegion(
-            proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
-            identifier: "Lighthouse")
-        
-        println("BeaconManager has begun ranging...")
-        
-        beaconManager.requestWhenInUseAuthorization()
+//        beaconManager.requestWhenInUseAuthorization()
+        beaconManager.requestAlwaysAuthorization()
         beaconManager.startRangingBeaconsInRegion(beaconRegion)
+        println("BeaconManager has begun ranging...")
     }
 
 }

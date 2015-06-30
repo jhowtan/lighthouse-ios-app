@@ -22,9 +22,6 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        // Start Ranging for beacons
-        sharedAccess.startRanging()
-        
         // Start getting firebase info
         sharedAccess.cacheFirebaseData()
         
