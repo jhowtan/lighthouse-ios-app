@@ -22,6 +22,7 @@
 		AA5B9E6A1B32FEC1007A3884 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5B9E691B32FEC1007A3884 /* ItemsTableViewController.swift */; };
 		AA5B9E6C1B330D1B007A3884 /* ListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5B9E6B1B330D1B007A3884 /* ListItemCell.swift */; };
 		AA5B9E6E1B33213D007A3884 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5B9E6D1B33213D007A3884 /* DetailViewController.swift */; };
+		AA98FE641B422E9B0096AF7A /* SharedAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA98FE631B422E9B0096AF7A /* SharedAccess.swift */; };
 		FC90F3281B3D42D900334BF4 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC90F3271B3D42D900334BF4 /* Notifications.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		AA5B9E6B1B330D1B007A3884 /* ListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItemCell.swift; sourceTree = "<group>"; };
 		AA5B9E6D1B33213D007A3884 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		AA890D5E1B297550002F2054 /* ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCBridge.h; sourceTree = "<group>"; };
+		AA98FE631B422E9B0096AF7A /* SharedAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedAccess.swift; sourceTree = "<group>"; };
 		AF3058131BC973764364FF6B /* Pods-Lighthouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lighthouse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lighthouse/Pods-Lighthouse.debug.xcconfig"; sourceTree = "<group>"; };
 		FC90F3271B3D42D900334BF4 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,6 +171,8 @@
 		AA5B9E271B3145DD007A3884 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
+				AA5B9E2A1B314CB0007A3884 /* Message.swift */,
+				AA5B9E331B3184E2007A3884 /* Beacon.swift */,
 			);
 			name = Structs;
 			sourceTree = "<group>";
@@ -176,9 +180,8 @@
 		AA5B9E321B3184BD007A3884 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				AA5B9E2A1B314CB0007A3884 /* Message.swift */,
-				AA5B9E331B3184E2007A3884 /* Beacon.swift */,
 				FC90F3271B3D42D900334BF4 /* Notifications.swift */,
+				AA98FE631B422E9B0096AF7A /* SharedAccess.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				AA5B9E6C1B330D1B007A3884 /* ListItemCell.swift in Sources */,
 				AA5B9E6A1B32FEC1007A3884 /* ItemsTableViewController.swift in Sources */,
 				AA5B9E291B314636007A3884 /* MainMenuViewController.swift in Sources */,
+				AA98FE641B422E9B0096AF7A /* SharedAccess.swift in Sources */,
 				AA3216EA1B26C5E8008C6E02 /* MasterViewController.swift in Sources */,
 				AA5B9E2B1B314CB0007A3884 /* Message.swift in Sources */,
 				AA3216E81B26C5E8008C6E02 /* AppDelegate.swift in Sources */,

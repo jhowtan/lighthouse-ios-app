@@ -2,4 +2,54 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Lighthouse/AppDelegate.swift"
+            timestampString = "457333811.133208"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "finishedWithAuth(_:error:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Lighthouse.AppDelegate.finishedWithAuth (Lighthouse.AppDelegate)(Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.GTMOAuth2Authentication&gt;, error : Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.NSError&gt;) -&gt; ()"
+                  moduleName = "Lighthouse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Sites/TBWA/Lighthouse/sg.dan.Lighthouse/Lighthouse/Lighthouse/AppDelegate.swift"
+                  timestampString = "457335781.253314"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "1628">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Lighthouse.AppDelegate.(finishedWithAuth (Lighthouse.AppDelegate) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.GTMOAuth2Authentication&gt;, error : Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.NSError&gt;) -&gt; ()).(closure #1)"
+                  moduleName = "Lighthouse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Sites/TBWA/Lighthouse/sg.dan.Lighthouse/Lighthouse/Lighthouse/AppDelegate.swift"
+                  timestampString = "457335781.253567"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "1756">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

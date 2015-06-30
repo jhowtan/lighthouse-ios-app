@@ -21,7 +21,7 @@ class ItemsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         var viewTitle:String?
-        switch appDelegate.activeMenu {
+        switch sharedAccess.activeView {
         case 0:
             // self.title = "Blast"
             viewTitle = "Sylvia"
@@ -37,7 +37,9 @@ class ItemsTableViewController: UITableViewController {
         
         self.title = viewTitle
         
-        appDelegate.messagesRef.removeAllObservers()
+        println(sharedAccess.currentView)
+        
+        sharedAccess.messagesRef.removeAllObservers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,14 +58,14 @@ class ItemsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return appDelegate.myMessages.count
+        return sharedAccess.myMessages.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("List Item", forIndexPath: indexPath) as! ListItemCell
         
-        let message = appDelegate.myMessages[indexPath.row]
+        let message = sharedAccess.myMessages[indexPath.row]
         cell.msgIndex = indexPath.row
         cell.msgTitle!.text = message.title
         cell.msgDate!.text = message.date
@@ -77,9 +79,9 @@ class ItemsTableViewController: UITableViewController {
     }
     
     func getNewlyAddedMessages(){
-        appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
+        sharedAccess.messagesRef.childByAppendingPath(sharedAccess.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
             // Use the appdelegate add message method
-            self.appDelegate.addMessageSnapshot(messages)
+            sharedAccess.addMessageSnapshot(messages)
             
             // Trigger the next view
             self.insertNewObject(0)
@@ -131,7 +133,7 @@ class ItemsTableViewController: UITableViewController {
         var nextView = segue.destinationViewController as! DetailViewController
         // Pass the selected object to the new view controller.
         if let indexPath = self.tableView.indexPathForSelectedRow() {
-            let msg = appDelegate.myMessages[indexPath.row]
+            let msg = sharedAccess.myMessages[indexPath.row]
             nextView.currentMsg = msg
         }
     }

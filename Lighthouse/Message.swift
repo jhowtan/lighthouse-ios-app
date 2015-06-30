@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Message {
+struct Message {
     var date:String?
     var location:String?
     var message:String?

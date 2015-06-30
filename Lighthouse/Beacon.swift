@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Beacon {
+struct Beacon {
     var name:String?
     var major:String?
     var minor:String?

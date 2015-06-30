@@ -15,7 +15,6 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        appDelegate.startRanging()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -23,57 +22,82 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        // -------- NEED TO CREATE A NEW LOGIN SCREEN -----------------
-        // Add login button
-        var b : UIBarButtonItem = UIBarButtonItem(title: "Login",
-            style: UIBarButtonItemStyle.Plain, target: self, action: "startAuth")
-        self.navigationItem.rightBarButtonItem = b
+        // Start Ranging for beacons
+        sharedAccess.startRanging()
         
         // Start getting firebase info
-        appDelegate.getFirebaseData()
+        sharedAccess.cacheFirebaseData()
+        
+        // Add auth listeners
+        sharedAccess.fbRootRef.observeAuthEventWithBlock({ authData in
+            if authData != nil {
+                // user authenticated with Firebase
+                println("\(authData.uid) is logged in")
+                sharedAccess.currentUser = authData.uid
+                
+                var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",
+                    style: UIBarButtonItemStyle.Plain, target: self, action: "logOut")
+                self.navigationItem.rightBarButtonItem = b
+            } else {
+                // No user is logged in
+                println("no users logged in")
+                
+                // Add login button
+                var b : UIBarButtonItem = UIBarButtonItem(title: "Login",
+                    style: UIBarButtonItemStyle.Plain, target: self, action: "startAuth")
+                self.navigationItem.rightBarButtonItem = b
+            }
+        })
         
         // Set main navigation logo
         let image = UIImage(named: "nav-logo")
         self.navigationItem.titleView = UIImageView(image: image)
     }
     
-    // Get all of the current user's messages
-    // (NOT beacon activated)
-    // 1) Filter by beacon?
-    // 2) Load by beacon?
-    func getInitialUserMessages(){
-        // .Value will always be triggered last so the ordering does not matter
-        // We just need to cache the messages on load to pass to the Messages View
-
-        // ------- BROKEN!! --------
-        // println(appDelegate.currentUser)
-        
-        var childHandle = appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
-            // Use the appdelegate add message method
-            self.appDelegate.addMessageSnapshot(messages)
-        })
-        
-        // Get initial values then stop listening, listening should be done in the messages list view
-        var allHandle = appDelegate.messagesRef.childByAppendingPath(appDelegate.currentUser).observeEventType(.Value, withBlock: { messages in
-
-            println("firebase - \(messages.childrenCount) : myMessages - \(self.appDelegate.myMessages.count)")
-            self.appDelegate.messagesRef.removeObserverWithHandle(childHandle)
-            
-            // Trigger the next view
-            //self.proceedToListView()
-        })
-    }
-    
     // Authentication method called by Login button
     // Move this function along with the login button when View for Login Page is done
     func startAuth (){
+        let pointer = moveToView
         appDelegate.authenticateWithGoogle()
+    }
+    
+    func logOut(){
+        sharedAccess.fbRootRef.unauth()
     }
     
     // Manual Segue Transition
     func proceedToListView() {
         dismissViewControllerAnimated(true, completion: nil)
         performSegueWithIdentifier("List View", sender: self)
+    }
+    
+    // Menu Interaction handlers
+    func moveToView() {
+        // If first row, check if messages array has value
+        switch sharedAccess.activeView {
+        case 0:
+            // Check if myMessages have values values
+            // If not, call the start firebase call
+            if(sharedAccess.myMessages.count > 0) {
+                proceedToListView()
+            } else {
+                let vc = storyboard!.instantiateViewControllerWithIdentifier("Preloader") as! UIViewController
+                vc.modalPresentationStyle = .OverFullScreen
+                vc.modalTransitionStyle = .CrossDissolve
+                presentViewController(vc, animated: true) {
+                    sharedAccess.getUserMessages()
+                }
+                
+                self.proceedToListView()
+            }
+            
+        case 1:
+            println("Will show Ticker list")
+        case 2:
+            println("Will show Broker list")
+        default:
+            println("Nothing to see here...")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,6 +119,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         return 3
     }
     
+    // Initialize the main navigation rows
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Nav Item", forIndexPath: indexPath) as! MenuItemCell
         
@@ -133,32 +158,15 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         if let indexPath = self.tableView.indexPathForSelectedRow() {
             
             // Save reference of selected main navi item
-            appDelegate.activeMenu = indexPath.row
+            sharedAccess.activeView = indexPath.row
             
-            // If first row, check if messages array has value
-            switch indexPath.row {
-            case 0:
-                // Check if myMessages have values values
-                // If not, call the start firebase call
-                if(appDelegate.myMessages.count > 0) {
-                    proceedToListView()
-                } else {
-                    let vc = storyboard!.instantiateViewControllerWithIdentifier("Preloader") as! UIViewController
-                    vc.modalPresentationStyle = .OverFullScreen
-                    vc.modalTransitionStyle = .CrossDissolve
-                    presentViewController(vc, animated: true) {
-                        self.getInitialUserMessages()
-                    }
-                    self.proceedToListView()
-                }
-                
-            case 1:
-                println("Will show Ticker list")
-            case 2:
-                println("Will show Broker list")
-            default:
-                println("Nothing to see here...")
+            // Check if logged in before going through with the funtions
+            if(sharedAccess.currentUser.isEmpty) {
+                startAuth()
+            }else {
+                moveToView()
             }
+            
         }
         
         tableView.reloadData()
