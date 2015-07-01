@@ -250,6 +250,11 @@
 					AA3216E11B26C5E8008C6E02 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 559VJ927B8;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					AA3216F81B26C5E8008C6E02 = {
 						CreatedOnToolsVersion = 6.3.2;

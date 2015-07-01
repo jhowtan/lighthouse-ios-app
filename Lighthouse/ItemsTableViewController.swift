@@ -36,12 +36,10 @@ class ItemsTableViewController: UITableViewController {
             // self.title = "Broker"
             viewTitle = "Tina"
         default:
-            println("default title")
+            println("Lighthouse")
         }
         
         self.title = viewTitle
-        
-        println(sharedAccess.currentView)
         
         sharedAccess.messagesRef.removeAllObservers()
     }
@@ -62,10 +60,18 @@ class ItemsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return sharedAccess.myMessages.count
+        switch sharedAccess.activeView {
+        case 0:
+            return sharedAccess.myMessages.count
+        case 1:
+            return 1
+        case 2:
+            return 1
+        default:
+            return 1
+        }
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("List Item", forIndexPath: indexPath) as! ListItemCell
         
@@ -73,6 +79,10 @@ class ItemsTableViewController: UITableViewController {
         cell.msgIndex = indexPath.row
         cell.msgTitle!.text = message.title
         cell.msgDate!.text = message.date
+        
+        if sharedAccess.activeView != 1 {
+            cell.roomAvailability.hidden = true
+        }
         
         return cell
     }

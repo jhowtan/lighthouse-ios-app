@@ -199,11 +199,22 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="availability" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5nx-a5-4aW" userLabel="Availability">
+                                            <rect key="frame" x="514" y="18" width="32" height="15"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="5nx-a5-4aW" secondAttribute="trailing" constant="46" id="ICh-xJ-VuO"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="5nx-a5-4aW" secondAttribute="bottom" constant="2.5" id="M9j-PN-bsJ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="msgDate" destination="Gee-Pj-ZUY" id="sSU-GB-98U"/>
                                     <outlet property="msgTitle" destination="JFC-2O-4Mh" id="Yf3-tt-LPr"/>
+                                    <outlet property="roomAvailability" destination="5nx-a5-4aW" id="AZD-SK-rbH"/>
                                     <segue destination="PBp-V4-XKD" kind="show" identifier="" id="rgp-uz-hRI"/>
                                 </connections>
                             </tableViewCell>

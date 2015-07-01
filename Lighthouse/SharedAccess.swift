@@ -29,7 +29,6 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     // Other global variables
     var myMessages = [Message]()
     var activeView = 0
-    var currentView = "mainmenu"
     var currentUser = ""
     var auth : NSObject?
     
@@ -48,9 +47,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     // View Methods
-    func setCurView(view:String){
-        currentView = view
-    }
+    
     
     // -------- FIREBASE METHODS --------------------------
     func cacheFirebaseData() {

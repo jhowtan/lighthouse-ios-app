@@ -12,6 +12,7 @@ class ListItemCell: UITableViewCell {
     
     @IBOutlet weak var msgTitle: UILabel!
     @IBOutlet weak var msgDate: UILabel!
+    @IBOutlet weak var roomAvailability: UILabel!
     
     var msgIndex:Int?
 }

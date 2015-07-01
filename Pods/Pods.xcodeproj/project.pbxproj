@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00021532D5BADE45D10B7457 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00688A6A6B05A411A5410F /* Alamofire.framework */; };
 		0B3842A41FDC46C09D86C951 /* FromJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F1B116D38EEF1FD58628E /* FromJSON.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		2259BFEA936A9D3BB5B71A71 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9D1CC864FD35F0AE00984B6 /* ObjectMapper.framework */; };
 		2571854A58FAF3D15C4D52E5 /* Pods-Lighthouse-Alamofire-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B702E60136338C3DE07FEDC /* Pods-Lighthouse-Alamofire-dummy.m */; };
 		2738D056BCD870ABD315C098 /* Pods-Lighthouse-SwiftyJSON-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2167649A8D2A31FDF6006411 /* Pods-Lighthouse-SwiftyJSON-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2CA4024EE590DE91F3AF9DF1 /* Pods-Lighthouse-ObjectMapper-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B16BFAB8FA7C1FE15194DCF8 /* Pods-Lighthouse-ObjectMapper-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -272,10 +270,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED1E18D0C61D6C7A35D6D726 /* Alamofire.framework in Frameworks */,
-				00021532D5BADE45D10B7457 /* Alamofire.framework in Frameworks */,
 				E57646FB2020BA8E83EDDE49 /* Foundation.framework in Frameworks */,
 				5DE2576EF711B97B00854C06 /* ObjectMapper.framework in Frameworks */,
-				2259BFEA936A9D3BB5B71A71 /* ObjectMapper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
