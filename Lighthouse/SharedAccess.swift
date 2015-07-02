@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class SharedAccess: UIView, ESTBeaconManagerDelegate {
     // Firebase reference
@@ -14,7 +15,6 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     let beaconsRef = Firebase(url:"https://beacon-dan.firebaseio.com/beacons/")
     let locationRef = Firebase(url:"https://beacon-dan.firebaseio.com/location/")
     let messagesRef = Firebase(url:"https://beacon-dan.firebaseio.com/messages/")
-    let roomsRef = Firebase(url:"https://beacon-dan.firebaseio.com/rooms/")
     
     // Beacon variables
     let beaconManager = ESTBeaconManager()
@@ -136,45 +136,15 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
         
         // This is just used to list the messages the current user has
         messagesRef.childByAppendingPath(currentUser).observeEventType(.ChildAdded, withBlock: { messages in
+            let json = JSON(messages.value)
+            var newMessage = Message(json: json)
+            
             // Use the appdelegate add message method
-            self.addMessageSnapshot(messages)
+            self.addMessageSnapshot(newMessage)
         })
     }
     
-    func addMessageSnapshot(messages:FDataSnapshot){
-        let children = messages.children
-        var newMessage = Message()
-        
-        while let message = children.nextObject() as? FDataSnapshot {
-            switch message.key {
-            case "date":
-                var dateFormatter = NSDateFormatter()
-                dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-                dateFormatter.timeStyle = .ShortStyle
-                
-                if let t = message.value as? NSTimeInterval {
-                    // Cast the value to an NSTimeInterval
-                    // and divide by 1000 to get seconds.
-                    let date = NSDate(timeIntervalSince1970: t/1000)
-                    
-                    newMessage.date = dateFormatter.stringFromDate(date)
-                }
-                
-            case "location":
-                newMessage.location = message.value as? String
-            case "message":
-                newMessage.message = message.value as? String
-            case "status":
-                newMessage.status = message.value as? String
-            case "title":
-                newMessage.title = message.value as? String
-            case "type":
-                newMessage.type = message.value as? String
-            default:
-                println("Nothing to see here...")
-            }
-        }
-        
+    func addMessageSnapshot(newMessage: Message) {
         myMessages.insert(newMessage, atIndex: 0)
         
         if(currentTableView != nil){

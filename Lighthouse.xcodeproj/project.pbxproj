@@ -24,6 +24,8 @@
 		AA98FE641B422E9B0096AF7A /* SharedAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA98FE631B422E9B0096AF7A /* SharedAccess.swift */; };
 		AA98FE661B428B100096AF7A /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA98FE651B428B100096AF7A /* Location.swift */; };
 		FC90F3281B3D42D900334BF4 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC90F3271B3D42D900334BF4 /* Notifications.swift */; };
+		FC91B5641B453FE100DDD8E4 /* CalendarEventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC91B5631B453FE100DDD8E4 /* CalendarEventsManager.swift */; };
+		FC91B5661B4540B300DDD8E4 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC91B5651B4540B300DDD8E4 /* Room.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		AA98FE651B428B100096AF7A /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		AF3058131BC973764364FF6B /* Pods-Lighthouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lighthouse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lighthouse/Pods-Lighthouse.debug.xcconfig"; sourceTree = "<group>"; };
 		FC90F3271B3D42D900334BF4 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		FC91B5631B453FE100DDD8E4 /* CalendarEventsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEventsManager.swift; sourceTree = "<group>"; };
+		FC91B5651B4540B300DDD8E4 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,7 @@
 				AA5B9E2A1B314CB0007A3884 /* Message.swift */,
 				AA5B9E331B3184E2007A3884 /* Beacon.swift */,
 				AA98FE651B428B100096AF7A /* Location.swift */,
+				FC91B5651B4540B300DDD8E4 /* Room.swift */,
 			);
 			name = Structs;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 			children = (
 				FC90F3271B3D42D900334BF4 /* Notifications.swift */,
 				AA98FE631B422E9B0096AF7A /* SharedAccess.swift */,
+				FC91B5631B453FE100DDD8E4 /* CalendarEventsManager.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -358,7 +364,9 @@
 				AA98FE661B428B100096AF7A /* Location.swift in Sources */,
 				AA5B9E6E1B33213D007A3884 /* DetailViewController.swift in Sources */,
 				AA5B9E311B316112007A3884 /* MenuItemCell.swift in Sources */,
+				FC91B5641B453FE100DDD8E4 /* CalendarEventsManager.swift in Sources */,
 				AA5B9E6C1B330D1B007A3884 /* ListItemCell.swift in Sources */,
+				FC91B5661B4540B300DDD8E4 /* Room.swift in Sources */,
 				AA5B9E6A1B32FEC1007A3884 /* ItemsTableViewController.swift in Sources */,
 				AA5B9E291B314636007A3884 /* MainMenuViewController.swift in Sources */,
 				AA98FE641B422E9B0096AF7A /* SharedAccess.swift in Sources */,
