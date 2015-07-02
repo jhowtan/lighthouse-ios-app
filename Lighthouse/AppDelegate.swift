@@ -11,7 +11,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate:
     UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
-    CLLocationManagerDelegate, GPPSignInDelegate {
+    CLLocationManagerDelegate{
 
     var window: UIWindow?
 
@@ -33,38 +33,6 @@ class AppDelegate:
                 sourceApplication:sourceApplication,
                 annotation:annotation)
     }
-    
-    // ------- GOOGLE AUTHENTICATION METHODS ----------------
-    func authenticateWithGoogle() {
-        // use the Google+ SDK to get an OAuth token
-        var signIn = GPPSignIn.sharedInstance()
-        signIn.shouldFetchGooglePlusUser = true
-        signIn.clientID = sharedAccess.googleClientID
-        signIn.scopes = ["email"]
-        signIn.delegate = self
-        signIn.authenticate()
-    }
-    
-    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
-        if error != nil {
-            // There was an error obtaining the Google+ OAuth Token
-            println("Error! \(error)")
-        } else {
-            // We successfully obtained an OAuth token, authenticate on Firebase with it
-            sharedAccess.fbRootRef.authWithOAuthProvider("google", token: auth.accessToken,
-                withCompletionBlock: { error, authData in
-                    if error != nil {
-                        // Error authenticating with Firebase with OAuth token
-                        println("Error! \(error)")
-                    } else {
-                        // User is now logged in, set currentUser to the obtained uid
-                        sharedAccess.currentUser = authData.uid
-                        sharedAccess.auth = authData
-                    }
-            })
-        }
-    }
-
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

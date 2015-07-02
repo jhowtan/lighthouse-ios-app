@@ -8,10 +8,10 @@
 
 import UIKit
 
-class MainMenuViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
+class MainMenuViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate, GPPSignInDelegate {
     
-    // Global variable
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//    // Global variable
+//    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // Add auth listeners
         sharedAccess.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
+                println(authData)
                 // user authenticated with Firebase
                 sharedAccess.currentUser = authData.uid
                 
@@ -54,10 +55,11 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
     // Move this function along with the login button when View for Login Page is done
     func startAuth (){
         let pointer = moveToView
-        appDelegate.authenticateWithGoogle()
+        self.authenticateWithGoogle()
     }
     
     func logOut(){
+        signOutOfGoogle()
         sharedAccess.fbRootRef.unauth()
     }
     
@@ -88,7 +90,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             }
             
         case 1:
-            println("Will show Ticker list")
+            CalendarEventsManager.sharedInstance.cacheFirebaseData()
         case 2:
             println("Will show Broker list")
         default:
@@ -167,6 +169,45 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         
         tableView.reloadData()
     }
+    
+    // ------- GOOGLE AUTHENTICATION METHODS ----------------
+    func authenticateWithGoogle() {
+        // use the Google+ SDK to get an OAuth token
+        var signIn = GPPSignIn.sharedInstance()
+        signIn.shouldFetchGooglePlusUser = true
+        signIn.clientID = sharedAccess.googleClientID
+        signIn.scopes = ["email", "https://www.googleapis.com/auth/calendar"]
+        signIn.delegate = self
+        signIn.authenticate()
+    }
+    
+    func signOutOfGoogle() {
+        var signIn = GPPSignIn.sharedInstance()
+        signIn.signOut()
+    }
+    
+    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
+        if error != nil {
+            // There was an error obtaining the Google+ OAuth Token
+            println("Error! \(error)")
+        } else {
+            // We successfully obtained an OAuth token, authenticate on Firebase with it
+            sharedAccess.fbRootRef.authWithOAuthProvider("google", token: auth.accessToken,
+                withCompletionBlock: { error, authData in
+                    if error != nil {
+                        // Error authenticating with Firebase with OAuth token
+                        println("Error! \(error)")
+                        println("User may have cancelled the Authentication Process")
+                    } else {
+                        // User is now logged in, set currentUser to the obtained uid
+                        sharedAccess.currentUser = authData.uid
+                        sharedAccess.auth = authData
+                    }
+            })
+        }
+    }
+
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
