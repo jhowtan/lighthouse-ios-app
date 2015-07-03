@@ -29,11 +29,9 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     var receptionBeacon:Beacon?
     
     // Other global variables
-    var myMessages = [Message]()
     var activeView = 0
     // Login Auth variables
-    var currentUser = ""
-    var auth : NSObject?
+    var auth : FAuthData? // user .uid for currentUser id; .token for accessToken
     
     // Instantiate the Singleton
     class var sharedInstance : SharedAccess {
@@ -53,67 +51,39 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
 
     // -------- FIREBASE METHODS --------------------------
     func cacheFirebaseData() {
+        // Add the beacon manager delegate
+        beaconManager.delegate = self
+        
+        // Start Ranging for beacons
+        SharedAccess.sharedInstance.startRanging()
+        
         // Get and save the static beacon object from firebase
         // Add reference to reception label
-        
-        locationRef.observeSingleEventOfType(.Value, withBlock: { beacon in
-            let child = beacon.children
+        locationRef.observeSingleEventOfType(.Value, withBlock: { locations in
             var receptionLabel = ""
             
-            while let l = child.nextObject() as? FDataSnapshot {
-                // Create new beacon object
-                var nLocation = Location()
-                
-                // Assign the attribute name
-                nLocation.key = l.key as String
-                
-                for loc in l.children.allObjects as! [FDataSnapshot] {
-                    // Assign inner attributes
-                    if(loc.key == "name") {
-                        nLocation.name = loc.value as? String
-                    }
-                    if(loc.key == "beacon") {
-                        nLocation.beacon = loc.value as? String
-                    }
-                    
-                    // catch the beacon name for reception
-                    if(nLocation.name == "Reception") {
-                        receptionLabel = nLocation.beacon!
-                        println("receptionLabel is \(receptionLabel)")
-                    }
-
-                }
-                
-                // Push beacon to global beacon variable
+            let json = JSON(locations.value)
+            for (key: String, subJson: JSON) in json {
+                var nLocation = Location(json: subJson)
+                nLocation.key = key
                 self.locationList.append(nLocation)
+                
+                // catch the beacon name for reception
+                if(nLocation.name == "Reception") {
+                    receptionLabel = nLocation.beacon!
+                    println("SharedAccess.swift - cacheFirebaseData(): receptionLabel is \(receptionLabel)")
+                }
             }
             
-            self.beaconsRef.observeSingleEventOfType(.Value, withBlock: { beacon in
-                let child = beacon.children
-                
-                while let b = child.nextObject() as? FDataSnapshot {
-                    // Create new beacon object
-                    var nBeacon = Beacon()
-                    
-                    // Assign the attribute name
-                    nBeacon.name = b.key as String
-                    
-                    for rest in b.children.allObjects as! [FDataSnapshot] {
-                        // Assign inner attributes
-                        if(rest.key == "minor") {
-                            nBeacon.minor = rest.value as? Int
-                        }
-                        if(rest.key == "major") {
-                            nBeacon.major = rest.value as? Int
-                        }
-                        if(rest.key == "uuid") {
-                            nBeacon.uuid = rest.value as? String
-                        }
-                    }
-                    
-                    if(nBeacon.name == receptionLabel) {
+            self.beaconsRef.observeSingleEventOfType(.Value, withBlock: { beacons in
+                let json = JSON(beacons.value)
+                for (key: String, subJson: JSON) in json {
+                    var nBeacon = Beacon(json: subJson)
+                    nBeacon.name = key
+                    // catch the beacon name for reception
+                    if (nBeacon.name == receptionLabel) {
                         self.receptionBeacon = nBeacon
-                        // println("Found the receptionBeacon! ------ \(self.receptionBeacon?.minor)")
+//                        println("Found the receptionBeacon! ------ \(self.receptionBeacon?.minor)")
                     }
                     
                     // Push beacon to global beacon variable
@@ -121,13 +91,6 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                 }
             })
         })
-        
-        
-        // Add the beacon manager delegate
-        beaconManager.delegate = self
-        
-        // Start Ranging for beacons
-        SharedAccess.sharedInstance.startRanging()
     }
     
     // --------- BEACON MANAGEMENT METHODS ------------------
