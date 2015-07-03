@@ -28,8 +28,8 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // Add auth listeners
         SharedAccess.sharedInstance.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
-                println(authData)
                 // user authenticated with Firebase
+                SharedAccess.sharedInstance.auth = authData
                 SharedAccess.sharedInstance.currentUser = authData.uid
                 
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",
@@ -74,7 +74,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // If first row, check if messages array has value
         switch SharedAccess.sharedInstance.activeView {
         case 0:
-            // Check if myMessages have values values
+            // Check if myMessages has values
             // If not, call the start firebase call
             if(MessageManager.sharedInstance.myMessages.count > 0) {
                 proceedToListView()
@@ -90,13 +90,15 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             }
             
         case 1:
-//            if (CalendarEventsManager.sharedInstance.roomList.count > 0) {
-//                proceedToListView()
-//            } else {
-//                CalendarEventsManager.sharedInstance.cacheFirebaseData()
-//            }
-            CalendarEventsManager.sharedInstance.cacheFirebaseData()
-                    case 2:
+            // Check if roomList has values
+            // If not, call the start firebase call
+            if (CalendarEventsManager.sharedInstance.roomList.count > 0) {
+                proceedToListView()
+            } else {
+                CalendarEventsManager.sharedInstance.cacheFirebaseData()
+                self.proceedToListView()
+            }
+        case 2:
             println("Will show Broker list")
         default:
             println("Nothing to see here...")
@@ -136,14 +138,15 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             cell.btnSubTitle.text = "Administrative tool"
             img = "blast-icon"
         case 1:
-            // cell.btnTitle.text = "Ticker"
-            cell.btnTitle.text = "James"
-            cell.btnSubTitle.text = "Timesheet Tracker Tool"
-            img = "ticker-icon"
-        case 2:
             // cell.btnTitle.text = "Broker"
             cell.btnTitle.text = "Tina"
             cell.btnSubTitle.text = "Facilities Reservation Tool"
+
+            img = "ticker-icon"
+        case 2:
+            // cell.btnTitle.text = "Ticker"
+            cell.btnTitle.text = "James"
+            cell.btnSubTitle.text = "Timesheet Tracker Tool"
             img = "broker-icon"
         default:
             println("Nothing to see here...")
