@@ -26,6 +26,7 @@
 		FC90F3281B3D42D900334BF4 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC90F3271B3D42D900334BF4 /* Notifications.swift */; };
 		FC91B5641B453FE100DDD8E4 /* CalendarEventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC91B5631B453FE100DDD8E4 /* CalendarEventsManager.swift */; };
 		FC91B5661B4540B300DDD8E4 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC91B5651B4540B300DDD8E4 /* Room.swift */; };
+		FC91B56B1B46260000DDD8E4 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC91B56A1B46260000DDD8E4 /* MessageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		FC90F3271B3D42D900334BF4 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		FC91B5631B453FE100DDD8E4 /* CalendarEventsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEventsManager.swift; sourceTree = "<group>"; };
 		FC91B5651B4540B300DDD8E4 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		FC91B56A1B46260000DDD8E4 /* MessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,10 +124,9 @@
 			isa = PBXGroup;
 			children = (
 				AA5B9E321B3184BD007A3884 /* Classes */,
-				AA5B9E271B3145DD007A3884 /* Structs */,
-				AA5B2EDA1B2F2D7F00A1AFEB /* Views */,
+				AA5B9E271B3145DD007A3884 /* Models */,
+				AA5B2EDA1B2F2D7F00A1AFEB /* Views+Controllers */,
 				AA3216E71B26C5E8008C6E02 /* AppDelegate.swift */,
-				AA5B9E281B314636007A3884 /* MainMenuViewController.swift */,
 				AA3216ED1B26C5E8008C6E02 /* Main.storyboard */,
 				AA3216F01B26C5E8008C6E02 /* Images.xcassets */,
 				AA3216F21B26C5E8008C6E02 /* LaunchScreen.xib */,
@@ -160,18 +161,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		AA5B2EDA1B2F2D7F00A1AFEB /* Views */ = {
+		AA5B2EDA1B2F2D7F00A1AFEB /* Views+Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA5B9E281B314636007A3884 /* MainMenuViewController.swift */,
 				AA5B9E301B316112007A3884 /* MenuItemCell.swift */,
 				AA5B9E691B32FEC1007A3884 /* ItemsTableViewController.swift */,
 				AA5B9E6B1B330D1B007A3884 /* ListItemCell.swift */,
 				AA5B9E6D1B33213D007A3884 /* DetailViewController.swift */,
 			);
-			name = Views;
+			name = "Views+Controllers";
 			sourceTree = "<group>";
 		};
-		AA5B9E271B3145DD007A3884 /* Structs */ = {
+		AA5B9E271B3145DD007A3884 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				AA5B9E2A1B314CB0007A3884 /* Message.swift */,
@@ -179,7 +181,7 @@
 				AA98FE651B428B100096AF7A /* Location.swift */,
 				FC91B5651B4540B300DDD8E4 /* Room.swift */,
 			);
-			name = Structs;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		AA5B9E321B3184BD007A3884 /* Classes */ = {
@@ -188,6 +190,7 @@
 				FC90F3271B3D42D900334BF4 /* Notifications.swift */,
 				AA98FE631B422E9B0096AF7A /* SharedAccess.swift */,
 				FC91B5631B453FE100DDD8E4 /* CalendarEventsManager.swift */,
+				FC91B56A1B46260000DDD8E4 /* MessageManager.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				AA5B9E291B314636007A3884 /* MainMenuViewController.swift in Sources */,
 				AA98FE641B422E9B0096AF7A /* SharedAccess.swift in Sources */,
 				AA5B9E2B1B314CB0007A3884 /* Message.swift in Sources */,
+				FC91B56B1B46260000DDD8E4 /* MessageManager.swift in Sources */,
 				AA3216E81B26C5E8008C6E02 /* AppDelegate.swift in Sources */,
 				AA5B9E341B3184E2007A3884 /* Beacon.swift in Sources */,
 			);

@@ -12,6 +12,8 @@
 	<dict>
 		<key>C300797BB7FF129F7C40373AD4766DBF47CBD003</key>
 		<string>https://bitbucket.org/jhowtan/lighthouse-ios-app.git</string>
+		<key>E758726E2FF577B48C157C91EC5D6B32088CF861</key>
+		<string>https://bitbucket.org/jhowtan/lighthouse-web-app.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Lighthouse.xcworkspace</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>C300797BB7FF129F7C40373AD4766DBF47CBD003</key>
 		<string>..</string>
+		<key>E758726E2FF577B48C157C91EC5D6B32088CF861</key>
+		<string>../../lighthouse-webapp</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://bitbucket.org/jhowtan/lighthouse-ios-app.git</string>
@@ -35,6 +39,14 @@
 			<string>C300797BB7FF129F7C40373AD4766DBF47CBD003</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Lighthouse</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E758726E2FF577B48C157C91EC5D6B32088CF861</string>
+			<key>IDESourceControlWCCName</key>
+			<string>lighthouse-webapp</string>
 		</dict>
 	</array>
 </dict>
