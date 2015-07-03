@@ -29,34 +29,43 @@ class CalendarEventsManager {
 
     // -------- FIREBASE METHODS -----------
     func cacheFirebaseData() {
-        roomsRef.observeSingleEventOfType(.Value, withBlock: { room in
-            let child = room.children
-            
-            while let r = child.nextObject() as? FDataSnapshot {
-                let json = JSON(r)
-                // Create new beacon object
-                var nRoom = Room(json: json)
-
-                // Push room to roomList
+        roomsRef.observeSingleEventOfType(.Value, withBlock: { allRooms in
+            let json = JSON(allRooms.value)
+            for (key: String, subJson: JSON) in json {
+                //Do something you want
+                var nRoom = Room(json: subJson)
+                nRoom.key = key
                 self.roomList.append(nRoom)
             }
         })
         
+        // For debugging
         self.getFreeBusy()
     }
     
     // ------ Calendar(Events) Methods -------
     func getFreeBusy() {
-        let now = NSDate()
-        let later = now.add("minute", value: 30)!
-        println("now: \(now)")
-        println("later: \(later)")
-//        let serviceName = "Calendar"
-//        let apiVersion = "3.0"
-//        let endpoint = "freeBusy"
-//        let params = ["timeMin" : "", "timeMax": "", "items" : [String]() ]
-//        
+        var now = NSDate()
+        var later = now.add("minute", value: 30)!
+        println("now: \(now.toISOString())")
+        println("later: \(later.toISOString())")
+        // Need to figure out how to pass the entire array of calendarIds into an
+        // array of objects
+        let items = [String: String]()
+//        for calendar in roomList {
+//            items["id"] = calendar.calendarId
+//        }
+        let params = [
+            "timeMin" : now.toISOString(),
+            "timeMax" : later.toISOString(),
+            "items" : items ]
+        let serviceName = "Calendar"
+        let apiVersion = "3.0"
+        let endpoint = "freeBusy"
    
+        // Figure out how to make the processRequest() call with GoogleAPISwiftClient
+        let accessToken = SharedAccess.sharedInstance.auth!.token
+        println(accessToken)
     }
 
     func changeRoomState(mutatedRoom : Room) {
@@ -74,7 +83,7 @@ class CalendarEventsManager {
                     cRoom = r
                 }
             }
-            // Do something with cRoom
+            // Do something with changed room (cRoom)
 
         })
     }

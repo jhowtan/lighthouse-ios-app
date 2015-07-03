@@ -28,11 +28,11 @@ class ItemsTableViewController: UITableViewController {
             // self.title = "Blast"
             viewTitle = "Sylvia"
         case 1:
-            // self.title = "Ticker"
-            viewTitle = "James"
-        case 2:
             // self.title = "Broker"
             viewTitle = "Tina"
+        case 2:
+            // self.title = "Ticker"
+            viewTitle = "James"
         default:
             println("Lighthouse")
         }
@@ -73,17 +73,32 @@ class ItemsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("List Item", forIndexPath: indexPath) as! ListItemCell
         
-        let message = MessageManager.sharedInstance.myMessages[indexPath.row]
-        cell.msgIndex = indexPath.row
-        cell.msgTitle!.text = message.title
-        cell.msgDate!.text = message.date
-        
-        if SharedAccess.sharedInstance.activeView != 1 {
-            cell.roomAvailability.hidden = true
+        switch SharedAccess.sharedInstance.activeView {
+        case 0: // Messaging section
+            let message = MessageManager.sharedInstance.myMessages[indexPath.row]
+            cell.msgIndex = indexPath.row
+            cell.msgTitle!.text = message.title
+            cell.msgDate!.text = message.date
+            
+            if SharedAccess.sharedInstance.activeView != 1 {
+                cell.roomAvailability.hidden = true
+            }
+
+            return cell
+        case 1: // Calendar section
+            let room = CalendarEventsManager.sharedInstance.roomList[indexPath.row]
+            cell.msgIndex = indexPath.row
+            cell.msgTitle!.text = room.name
+            cell.msgDate!.text = room.location
+            cell.roomAvailability!.text = room.status
+            return cell
+        case 2: // Timer section
+            return cell
+        default:
+            return cell
         }
         
-        return cell
-    }
+            }
     
     func insertNewObject() {
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
@@ -130,12 +145,31 @@ class ItemsTableViewController: UITableViewController {
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController]
-        var nextView = segue.destinationViewController as! DetailViewController
-        // Pass the selected object to the new view controller.
-        if let indexPath = self.tableView.indexPathForSelectedRow() {
-            let msg = MessageManager.sharedInstance.myMessages[indexPath.row]
-            nextView.currentMsg = msg
+        switch SharedAccess.sharedInstance.activeView {
+        // Messaging section
+        case 0:
+            // Get the new view controller using [segue destinationViewController]
+            var nextView = segue.destinationViewController as! DetailViewController
+            // Pass the selected object to the new view controller.
+            if let indexPath = self.tableView.indexPathForSelectedRow() {
+                let msg = MessageManager.sharedInstance.myMessages[indexPath.row]
+                nextView.currentMsg = msg
+            }
+        // Calendar section
+        case 1:
+            // Get the new view controller using [segue destinationViewController]
+            var nextView = segue.destinationViewController as! DetailViewController
+            // Pass the selected object to the new view controller.
+            if let indexPath = self.tableView.indexPathForSelectedRow() {
+                let room = CalendarEventsManager.sharedInstance.roomList[indexPath.row]
+                nextView.currentRoom = room
+            }
+
+        // Timer section
+        case 2:
+            return
+        default:
+            return
         }
     }
 

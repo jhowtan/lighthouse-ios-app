@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class DetailViewController: UIViewController {
 
@@ -16,19 +17,39 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var msgLocation: UILabel!
     @IBOutlet weak var msgContent: UITextView!
     
+    // Need to manage if detail is a message or a calendar room
     var currentMsg:Message?
-    
+    var currentRoom:Room?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        if let pageTitle = currentMsg!.title {
-            self.title = pageTitle
+        switch SharedAccess.sharedInstance.activeView {
+
+        case 0: // Messaging section
+            // Do any additional setup after loading the view.
+            if let pageTitle = currentMsg!.title {
+                self.title = pageTitle
+            }
+            
+            msgTitle.text = currentMsg!.title
+            msgDate.text = currentMsg!.date
+            msgContent.text = currentMsg!.message
+            msgLocation.text = currentMsg!.location?.uppercaseString
+
+        case 1: // Calendar section
+            if let pageTitle = currentRoom!.name {
+                self.title = pageTitle
+            }
+            msgTitle.text = currentRoom!.location?.uppercaseString
+            msgDate.text = currentRoom!.calendarId
+            msgContent.text = "Placeholder for Event Details"
+            msgLocation.text = currentRoom!.status
+        case 2: // Timer section
+            return
+        default:
+            return
         }
         
-        msgTitle.text = currentMsg!.title
-        msgDate.text = currentMsg!.date
-        msgContent.text = currentMsg!.message
-        msgLocation.text = currentMsg!.location?.uppercaseString
     }
 
     override func didReceiveMemoryWarning() {
