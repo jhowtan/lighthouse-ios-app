@@ -6,4 +6,5 @@ target 'Lighthouse' do
   pod 'google-plus-ios-sdk'
   pod 'GoogleAPISwiftClient', '~> 0.1.0'
   pod 'SwiftyJSON'
+  pod 'SwiftDate'
 end
