@@ -29,8 +29,8 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         SharedAccess.sharedInstance.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
                 // user authenticated with Firebase
-                SharedAccess.sharedInstance.auth = authData
-//                SharedAccess.sharedInstance.currentUser = authData.uid
+                SharedAccess.sharedInstance.accessToken = authData.token
+                SharedAccess.sharedInstance.currentUser = authData.uid
                 
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",
                     style: UIBarButtonItemStyle.Plain, target: self, action: "logOut")
@@ -59,8 +59,8 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
     }
     
     func logOut(){
-        signOutOfGoogle()
         SharedAccess.sharedInstance.fbRootRef.unauth()
+        signOutOfGoogle()
     }
     
     // Manual Segue Transition
@@ -95,7 +95,12 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             if (CalendarEventsManager.sharedInstance.roomList.count > 0) {
                 proceedToListView()
             } else {
-                CalendarEventsManager.sharedInstance.cacheFirebaseData()
+                let vc = storyboard!.instantiateViewControllerWithIdentifier("Preloader") as! UIViewController
+                vc.modalPresentationStyle = .OverFullScreen
+                vc.modalTransitionStyle = .CrossDissolve
+                presentViewController(vc, animated: true) {
+                    CalendarEventsManager.sharedInstance.cacheFirebaseData()
+                }
                 self.proceedToListView()
             }
         case 2:
@@ -167,7 +172,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             SharedAccess.sharedInstance.activeView = indexPath.row
             
             // Check if logged in before going through with the funtions
-            if(SharedAccess.sharedInstance.auth!.uid.isEmpty) {
+            if(SharedAccess.sharedInstance.currentUser.isEmpty) {
                 startAuth()
             }else {
                 moveToView()

@@ -32,6 +32,8 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     var activeView = 0
     // Login Auth variables
     var auth : FAuthData? // user .uid for currentUser id; .token for accessToken
+    var currentUser = ""
+    var accessToken = ""
     
     // Instantiate the Singleton
     class var sharedInstance : SharedAccess {

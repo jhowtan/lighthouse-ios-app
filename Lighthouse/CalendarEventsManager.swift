@@ -24,6 +24,20 @@ class CalendarEventsManager {
         return Singleton.instance
     }
     
+//    class itemIdObject {
+//        var calendarId: String
+//        
+//        init(calendarId: String) {
+//            self.calendarId = calendarId
+//        }
+//    }
+//
+//    func itemIdObjectToDictionary(itemIdObject) -> [String: String] {
+//        return [
+//            "id": itemIdObject.calendarId
+//        ]
+//    }
+    
     // Reference to current TableViewController
     var currentTableView: ItemsTableViewController?
 
@@ -55,8 +69,11 @@ class CalendarEventsManager {
         // array of objects
         let items = [String: String]()
 //        for calendar in roomList {
-//            items["id"] = calendar.calendarId
+////            var cId = itemIdObject(calendarId: calendar.calendarId)
+////            items.append(cId)
 //        }
+        
+        // Need to form params for performing request to Google API
         let params = [
             "timeMin" : now.toISOString(),
             "timeMax" : later.toISOString(),
@@ -68,6 +85,7 @@ class CalendarEventsManager {
         // Figure out how to make the processRequest() call with GoogleAPISwiftClient
         let accessToken = SharedAccess.sharedInstance.auth?.token
 //        println(accessToken)
+        
     }
 
     func changeRoomState(mutatedRoom : Room) {
