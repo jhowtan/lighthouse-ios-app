@@ -14,7 +14,7 @@ import Alamofire
 
 class CalendarEventsManager {
     let roomsRef = Firebase(url:"https://beacon-dan.firebaseio.com/rooms/")
-    var roomList = [Room]()
+    var roomList : [Room] = []
     
     // Instantiate the Singleton
     class var sharedInstance : CalendarEventsManager {
@@ -29,7 +29,7 @@ class CalendarEventsManager {
 
     // -------- FIREBASE METHODS -----------
     func cacheFirebaseData() {
-        roomsRef.observeSingleEventOfType(.Value, withBlock: { allRooms in
+        roomsRef.observeEventType(.Value, withBlock: { allRooms in
             let json = JSON(allRooms.value)
             for (key: String, subJson: JSON) in json {
                 //Do something you want
@@ -37,8 +37,10 @@ class CalendarEventsManager {
                 nRoom.key = key
                 self.roomList.append(nRoom)
             }
+            // Show available ones on top
+            self.roomList.sort({$0.status < $1.status})
+            println("Finish Calendar.cacheFirebaseData")
         })
-        
         // For debugging
         self.getFreeBusy()
     }
@@ -64,8 +66,8 @@ class CalendarEventsManager {
         let endpoint = "freeBusy"
    
         // Figure out how to make the processRequest() call with GoogleAPISwiftClient
-        let accessToken = SharedAccess.sharedInstance.auth!.token
-        println(accessToken)
+        let accessToken = SharedAccess.sharedInstance.auth?.token
+//        println(accessToken)
     }
 
     func changeRoomState(mutatedRoom : Room) {
@@ -87,6 +89,19 @@ class CalendarEventsManager {
 
         })
     }
+    
+//    func _sortByAvailability() {
+//        var sorted = [Room]()
+//        for r in CalendarEventsManager.sharedInstance.roomList {
+//            if (r.status == "available") {
+//                sorted.insert(r, atIndex: 0)
+//            }
+//            else if (r.status == "occupied") {
+//                sorted.append(r)
+//            }
+//        }
+//        CalendarEventsManager.sharedInstance.roomList = sorted
+//    }
     
     func displayRooms(rooms: Room) {
         if(currentTableView != nil){

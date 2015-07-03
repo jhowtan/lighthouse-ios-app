@@ -30,7 +30,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             if authData != nil {
                 // user authenticated with Firebase
                 SharedAccess.sharedInstance.auth = authData
-                SharedAccess.sharedInstance.currentUser = authData.uid
+//                SharedAccess.sharedInstance.currentUser = authData.uid
                 
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",
                     style: UIBarButtonItemStyle.Plain, target: self, action: "logOut")
@@ -167,7 +167,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             SharedAccess.sharedInstance.activeView = indexPath.row
             
             // Check if logged in before going through with the funtions
-            if(SharedAccess.sharedInstance.currentUser.isEmpty) {
+            if(SharedAccess.sharedInstance.auth!.uid.isEmpty) {
                 startAuth()
             }else {
                 moveToView()
@@ -208,7 +208,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                         println("User may have cancelled the Authentication Process")
                     } else {
                         // User is now logged in, set currentUser to the obtained uid
-                        SharedAccess.sharedInstance.currentUser = authData.uid
+                        // SharedAccess.sharedInstance.currentUser = authData.uid
                         SharedAccess.sharedInstance.auth = authData
                     }
             })
