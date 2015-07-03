@@ -1,6 +1,9 @@
 //
-//  KeepAlive.swift
+//  SharedAccess.swift
 //  Lighthouse
+//
+//  For beacon methods management and global variables:
+//  Beacons, Locations, Auth variables
 //
 //  Created by Roland on 30/6/15.
 //  Copyright (c) 2015 Digital Arts Network. All rights reserved.
@@ -14,7 +17,6 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     let fbRootRef = Firebase(url:"https://beacon-dan.firebaseio.com/")
     let beaconsRef = Firebase(url:"https://beacon-dan.firebaseio.com/beacons/")
     let locationRef = Firebase(url:"https://beacon-dan.firebaseio.com/location/")
-    let messagesRef = Firebase(url:"https://beacon-dan.firebaseio.com/messages/")
     
     // Beacon variables
     let beaconManager = ESTBeaconManager()
@@ -29,8 +31,17 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     // Other global variables
     var myMessages = [Message]()
     var activeView = 0
+    // Login Auth variables
     var currentUser = ""
     var auth : NSObject?
+    
+    // Instantiate the Singleton
+    class var sharedInstance : SharedAccess {
+        struct Singleton {
+            static let instance = SharedAccess()
+        }
+        return Singleton.instance
+    }
     
     // Google auth variables
     let googleClientID = "186193271444-835107nm0lkjlepsmv66fkl4rp6eoir7.apps.googleusercontent.com"
@@ -38,17 +49,8 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     // Reference to current TableViewController
     var currentTableView: ItemsTableViewController?
     
-    // Instantiate the Singleton
-    class var sharedInstance : SharedAccess {
-        struct Static {
-            static let instance : SharedAccess = SharedAccess()
-        }
-        return Static.instance
-    }
-    
     // View Methods
-    
-    
+
     // -------- FIREBASE METHODS --------------------------
     func cacheFirebaseData() {
         // Get and save the static beacon object from firebase
@@ -125,31 +127,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
         beaconManager.delegate = self
         
         // Start Ranging for beacons
-        sharedAccess.startRanging()
-    }
-    
-    
-    // ------ Blast(Messaging) Methods -------
-    func getUserMessages(){
-        // .Value will always be triggered last so the ordering does not matter
-        // We just need to cache the messages on load to pass to the Messages View
-        
-        // This is just used to list the messages the current user has
-        messagesRef.childByAppendingPath(currentUser).observeEventType(.ChildAdded, withBlock: { messages in
-            let json = JSON(messages.value)
-            var newMessage = Message(json: json)
-            
-            // Use the appdelegate add message method
-            self.addMessageSnapshot(newMessage)
-        })
-    }
-    
-    func addMessageSnapshot(newMessage: Message) {
-        myMessages.insert(newMessage, atIndex: 0)
-        
-        if(currentTableView != nil){
-            currentTableView!.insertNewObject()
-        }
+        SharedAccess.sharedInstance.startRanging()
     }
     
     // --------- BEACON MANAGEMENT METHODS ------------------
@@ -171,7 +149,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     func beaconManager(manager: AnyObject!, didStartMonitoringForRegion region: CLBeaconRegion!) {
-        
+        // For when the app goes into background
     }
     
     func startRanging(){
@@ -182,5 +160,3 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
 
 }
-
-let sharedAccess = SharedAccess()

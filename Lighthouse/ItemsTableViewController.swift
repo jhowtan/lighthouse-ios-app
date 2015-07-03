@@ -9,8 +9,6 @@
 import UIKit
 
 class ItemsTableViewController: UITableViewController {
-    // get global variable
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,11 +19,11 @@ class ItemsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        sharedAccess.currentTableView = self
+        SharedAccess.sharedInstance.currentTableView = self
         
         var viewTitle:String?
         
-        switch sharedAccess.activeView {
+        switch SharedAccess.sharedInstance.activeView {
         case 0:
             // self.title = "Blast"
             viewTitle = "Sylvia"
@@ -41,7 +39,7 @@ class ItemsTableViewController: UITableViewController {
         
         self.title = viewTitle
         
-        sharedAccess.messagesRef.removeAllObservers()
+        MessageManager.sharedInstance.messagesRef.removeAllObservers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,11 +58,11 @@ class ItemsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        switch sharedAccess.activeView {
+        switch SharedAccess.sharedInstance.activeView {
         case 0:
-            return sharedAccess.myMessages.count
+            return MessageManager.sharedInstance.myMessages.count
         case 1:
-            return 1
+            return CalendarEventsManager.sharedInstance.roomList.count
         case 2:
             return 1
         default:
@@ -75,12 +73,12 @@ class ItemsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("List Item", forIndexPath: indexPath) as! ListItemCell
         
-        let message = sharedAccess.myMessages[indexPath.row]
+        let message = MessageManager.sharedInstance.myMessages[indexPath.row]
         cell.msgIndex = indexPath.row
         cell.msgTitle!.text = message.title
         cell.msgDate!.text = message.date
         
-        if sharedAccess.activeView != 1 {
+        if SharedAccess.sharedInstance.activeView != 1 {
             cell.roomAvailability.hidden = true
         }
         
@@ -130,14 +128,13 @@ class ItemsTableViewController: UITableViewController {
 
     
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController]
         var nextView = segue.destinationViewController as! DetailViewController
         // Pass the selected object to the new view controller.
         if let indexPath = self.tableView.indexPathForSelectedRow() {
-            let msg = sharedAccess.myMessages[indexPath.row]
+            let msg = MessageManager.sharedInstance.myMessages[indexPath.row]
             nextView.currentMsg = msg
         }
     }
