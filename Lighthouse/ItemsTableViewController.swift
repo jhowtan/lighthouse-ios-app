@@ -19,7 +19,6 @@ class ItemsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        SharedAccess.sharedInstance.currentTableView = self
         
         var viewTitle:String?
         
@@ -39,7 +38,7 @@ class ItemsTableViewController: UITableViewController {
         
         self.title = viewTitle
         
-        MessageManager.sharedInstance.messagesRef.removeAllObservers()
+//        MessageManager.sharedInstance.messagesRef.removeAllObservers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,8 +59,10 @@ class ItemsTableViewController: UITableViewController {
         // Return the number of rows in the section.
         switch SharedAccess.sharedInstance.activeView {
         case 0:
+            MessageManager.sharedInstance.currentTableView = self
             return MessageManager.sharedInstance.myMessages.count
         case 1:
+            CalendarEventsManager.sharedInstance.currentTableView = self
             return CalendarEventsManager.sharedInstance.roomList.count
         case 2:
             return 1
