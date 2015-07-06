@@ -29,7 +29,9 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         SharedAccess.sharedInstance.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
                 // user authenticated with Firebase
-                SharedAccess.sharedInstance.accessToken = authData.token
+//                var token: String? = authData.providerData["accessToken"] as? String
+            
+                SharedAccess.sharedInstance.accessToken = (authData.providerData["accessToken"] as? String)!
                 SharedAccess.sharedInstance.currentUser = authData.uid
                 
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",
@@ -97,15 +99,20 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             // Check if roomList has values
             // If not, call the start firebase call
             if (CalendarEventsManager.sharedInstance.roomList.count > 0) {
+                CalendarEventsManager.sharedInstance.getFreeBusy()
                 proceedToListView()
             } else {
                 let vc = storyboard!.instantiateViewControllerWithIdentifier("Preloader") as! UIViewController
                 vc.modalPresentationStyle = .OverFullScreen
                 vc.modalTransitionStyle = .CrossDissolve
                 presentViewController(vc, animated: true) {
-                    CalendarEventsManager.sharedInstance.cacheFirebaseData()
+                    CalendarEventsManager.sharedInstance.getCalendars()
+                    
+                    // Delay 2 seconds
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+                        self.proceedToListView()
+                    }
                 }
-                self.proceedToListView()
             }
         case 2:
             println("Will show Broker list")
@@ -217,7 +224,8 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                         println("User may have cancelled the Authentication Process")
                     } else {
                         // User is now logged in, set currentUser to the obtained uid
-                        // SharedAccess.sharedInstance.currentUser = authData.uid
+                        SharedAccess.sharedInstance.currentUser = authData.uid
+                        SharedAccess.sharedInstance.accessToken = authData.providerData["accessToken"] as! String
                         SharedAccess.sharedInstance.auth = authData
                     }
             })
