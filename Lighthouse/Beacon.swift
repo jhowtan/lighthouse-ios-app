@@ -11,13 +11,13 @@ import SwiftyJSON
 
 struct Beacon {
     var name:String!
-    var major:Int!
-    var minor:Int!
+    var major:UInt16!
+    var minor:UInt16!
     var uuid:String!
     
     init (json: JSON) {
-        self.major = json["major"].int
-        self.minor = json["minor"].int
+        self.major = json["major"].uInt16
+        self.minor = json["minor"].uInt16
         self.uuid = json["uuid"].string
     }
 }

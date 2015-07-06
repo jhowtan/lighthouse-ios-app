@@ -11,7 +11,6 @@ import SwiftyJSON
 
 class MessageManager {
     let messagesRef = Firebase(url:"https://beacon-dan.firebaseio.com/messages/")
-    var myMessages = [Message]()
 
     // Reference to current TableViewController
     var currentTableView: ItemsTableViewController?
@@ -40,7 +39,7 @@ class MessageManager {
     }
     
     func addMessageSnapshot(newMessage: Message) {
-        myMessages.insert(newMessage, atIndex: 0)
+        SharedAccess.myMessages.insert(newMessage, atIndex: 0)
         
         if(currentTableView != nil){
             currentTableView!.insertNewObject()

@@ -20,13 +20,14 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     
     // Beacon variables
     let beaconManager = ESTBeaconManager()
-    let beaconRegion = CLBeaconRegion(
+    let meetingRoomRegion = CLBeaconRegion(
         proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
-        identifier: "Lighthouse")
+        identifier: "LighthouseRooms")
     
     var beaconList = [Beacon]() // local store from Firebase
     var locationList = [Location]()
     var receptionBeacon:Beacon?
+    var receptionRegion:CLBeaconRegion?
     
     // Other global variables
     var activeView = 0
@@ -34,6 +35,9 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     var auth : FAuthData? // user .uid for currentUser id; .token for accessToken
     var currentUser = ""
     var accessToken = ""
+    
+    // Messages array should be in SharedAccess so we can initialise it from init and query the length of the array
+    var myMessages = [Message]()
     
     // Instantiate the Singleton
     class var sharedInstance : SharedAccess {
@@ -73,7 +77,6 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                 // catch the beacon name for reception
                 if(nLocation.name == "Reception") {
                     receptionLabel = nLocation.beacon!
-                    println("SharedAccess.swift - cacheFirebaseData(): receptionLabel is \(receptionLabel)")
                 }
             }
             
@@ -85,7 +88,17 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                     // catch the beacon name for reception
                     if (nBeacon.name == receptionLabel) {
                         self.receptionBeacon = nBeacon
-//                        println("Found the receptionBeacon! ------ \(self.receptionBeacon?.minor)")
+                        println("Retrieved the receptionBeacon! ------ \(self.receptionBeacon!.name)")
+                        
+                        let bcnMinor = nBeacon.minor as CLBeaconMinorValue
+                        let bcnMajor = nBeacon.major as CLBeaconMajorValue
+                        
+                        // Declare reception region after getting the minor and major values of the reception beacon from firebase
+                        self.receptionRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), major: nBeacon.major, minor: nBeacon.minor, identifier: "LighthouseReception")
+                        
+                        // Start monitoring the reception region
+                        self.beaconManager.startMonitoringForRegion(self.receptionRegion)
+                        
                     }
                     
                     // Push beacon to global beacon variable
@@ -106,22 +119,46 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
             // use nearestBeacon.minor to match with list of beacons in AppDelegate
             
             // if nearest beacon is the reception beacon, alert the user
-            if(receptionBeacon != nil && nearestBeacon.minor.integerValue == receptionBeacon!.minor){
-                println("Neareset beacon check \(nearestBeacon.minor.integerValue == receptionBeacon!.minor)")
-                Notifications.display("You have some parcel for pickup.")
+            if(receptionBeacon != nil){
+//                println("Neareset beacon check \(nearestBeacon.minor.integerValue == receptionBeacon!.minor)")
+//                Notifications.display("You have some parcel for pickup.")
             }
         }
     }
     
     func beaconManager(manager: AnyObject!, didStartMonitoringForRegion region: CLBeaconRegion!) {
-        // For when the app goes into background
+        println("we are now monitoring")
+
+    }
+    
+    func beaconManager(manager: AnyObject!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .Denied || status == .Restricted {
+            NSLog("Location Services authorization denied, can't range")
+        }
+    }
+    
+    func beaconManager(manager: AnyObject!, rangingBeaconsDidFailForRegion region: CLBeaconRegion!, withError error: NSError!) {
+        NSLog("Ranging beacons failed for region '%@'\n\nMake sure that Bluetooth and Location Services are on, and that Location Services are allowed for this app. Also note that iOS simulator doesn't support Bluetooth.\n\nThe error was: %@", region.identifier, error);
+    }
+    
+    func beaconManager(manager: AnyObject!, didEnterRegion region: CLBeaconRegion!) {
+        println("You have entered a region")
+        // Check the messages array if you have any message from reception
+        println(myMessages.count)
+        Notifications.display("You have some parcel for pickup.")
+    }
+    
+    func beaconManager(manager: AnyObject!, didExitRegion region: CLBeaconRegion!) {
+        println("You are out of the region.")
     }
     
     func startRanging(){
-//        beaconManager.requestWhenInUseAuthorization()
         beaconManager.requestAlwaysAuthorization()
-        beaconManager.startRangingBeaconsInRegion(beaconRegion)
+//        beaconManager.startRangingBeaconsInRegion(meetingRoomRegion)
+        
         println("BeaconManager has begun ranging...")
     }
+    
+    
 
 }

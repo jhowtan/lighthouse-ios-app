@@ -36,9 +36,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We use your location to figure out which beacon you're at.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We use your location to figure out which meeting room you're sitting at.</string>
+	<string>This application helps us remind you if there is anything on reception for pickup.</string>
+<!--	<key>NSLocationWhenInUseUsageDescription</key>-->
+<!--	<string>We use your location to figure out which meeting room you're sitting at.</string>-->
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
