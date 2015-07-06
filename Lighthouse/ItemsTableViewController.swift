@@ -26,15 +26,16 @@ class ItemsTableViewController: UITableViewController {
         switch SharedAccess.sharedInstance.activeView {
         case 0:
             // self.title = "Blast"
-            viewTitle = "Sylvia"
+            viewTitle = "Tina"
         case 1:
             // self.title = "Broker"
-            viewTitle = "Tina"
+            viewTitle = "Sylvia"
         case 2:
             // self.title = "Ticker"
             viewTitle = "James"
         default:
             println("Lighthouse")
+            viewTitle = "Lighthouse"
         }
         
         self.title = viewTitle

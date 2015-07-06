@@ -84,9 +84,13 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                 vc.modalTransitionStyle = .CrossDissolve
                 presentViewController(vc, animated: true) {
                     MessageManager.sharedInstance.getUserMessages()
+                    
+                    // Delay 2 seconds
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+                        self.proceedToListView()
+                    }
                 }
                 
-                self.proceedToListView()
             }
             
         case 1:
@@ -139,12 +143,12 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         switch indexPath.row {
         case 0:
             // cell.btnTitle.text = "Blast"
-            cell.btnTitle.text = "Sylvia"
+            cell.btnTitle.text = "Tina"
             cell.btnSubTitle.text = "Administrative tool"
             img = "blast-icon"
         case 1:
             // cell.btnTitle.text = "Broker"
-            cell.btnTitle.text = "Tina"
+            cell.btnTitle.text = "Sylvia"
             cell.btnSubTitle.text = "Facilities Reservation Tool"
 
             img = "ticker-icon"
