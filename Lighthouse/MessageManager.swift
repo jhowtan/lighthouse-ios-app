@@ -29,7 +29,7 @@ class MessageManager {
         // We just need to cache the messages on load to pass to the Messages View
         
         // This is just used to list the messages the current user has
-        messagesRef.childByAppendingPath(SharedAccess.sharedInstance.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
+        messagesRef.childByAppendingPath(sharedAccess.currentUser).observeEventType(.ChildAdded, withBlock: { messages in
             let json = JSON(messages.value)
             var newMessage = Message(json: json)
             
@@ -39,10 +39,12 @@ class MessageManager {
     }
     
     func addMessageSnapshot(newMessage: Message) {
-        SharedAccess.myMessages.insert(newMessage, atIndex: 0)
+        sharedAccess.myMessages.insert(newMessage, atIndex: 0)
         
         if(currentTableView != nil){
             currentTableView!.insertNewObject()
         }
+        
+        println("Inserted message. \(sharedAccess.myMessages.count)")
     }
 }

@@ -22,7 +22,7 @@ class ItemsTableViewController: UITableViewController {
         
         var viewTitle:String?
         
-        switch SharedAccess.sharedInstance.activeView {
+        switch sharedAccess.activeView {
         case 0:
             // self.title = "Blast"
             viewTitle = "Tina"
@@ -58,10 +58,10 @@ class ItemsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        switch SharedAccess.sharedInstance.activeView {
+        switch sharedAccess.activeView {
         case 0:
             MessageManager.sharedInstance.currentTableView = self
-            return MessageManager.sharedInstance.myMessages.count
+            return sharedAccess.myMessages.count
         case 1:
             CalendarEventsManager.sharedInstance.currentTableView = self
             return CalendarEventsManager.sharedInstance.roomList.count
@@ -75,14 +75,14 @@ class ItemsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("List Item", forIndexPath: indexPath) as! ListItemCell
         
-        switch SharedAccess.sharedInstance.activeView {
+        switch sharedAccess.activeView {
         case 0: // Messaging section
-            let message = MessageManager.sharedInstance.myMessages[indexPath.row]
+            let message = sharedAccess.myMessages[indexPath.row]
             cell.msgIndex = indexPath.row
             cell.msgTitle!.text = message.title
             cell.msgDate!.text = message.date
             
-            if SharedAccess.sharedInstance.activeView != 1 {
+            if sharedAccess.activeView != 1 {
                 cell.roomAvailability.hidden = true
             }
 
@@ -147,14 +147,14 @@ class ItemsTableViewController: UITableViewController {
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch SharedAccess.sharedInstance.activeView {
+        switch sharedAccess.activeView {
         // Messaging section
         case 0:
             // Get the new view controller using [segue destinationViewController]
             var nextView = segue.destinationViewController as! DetailViewController
             // Pass the selected object to the new view controller.
             if let indexPath = self.tableView.indexPathForSelectedRow() {
-                let msg = MessageManager.sharedInstance.myMessages[indexPath.row]
+                let msg = sharedAccess.myMessages[indexPath.row]
                 nextView.currentMsg = msg
             }
         // Calendar section

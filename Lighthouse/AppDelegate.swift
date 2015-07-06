@@ -10,7 +10,7 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate:
-    UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
+    UIResponder, UIApplicationDelegate,
     CLLocationManagerDelegate{
 
     var window: UIWindow?

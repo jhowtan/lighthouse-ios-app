@@ -92,7 +92,7 @@ class CalendarEventsManager {
             }
             
             var manager = Manager.sharedInstance
-            manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(SharedAccess.sharedInstance.accessToken)"]
+            manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(sharedAccess.accessToken)"]
             let request = manager.request(mutableURLRequest)
             request.responseJSON { (request, response, JSONData, error) in
                 let json = JSON(JSONData!)

@@ -38,13 +38,14 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     
     // Messages array should be in SharedAccess so we can initialise it from init and query the length of the array
     var myMessages = [Message]()
+    var pinged = false
     
-    // Instantiate the Singleton
+    // Declare the Singleton
     class var sharedInstance : SharedAccess {
-        struct Singleton {
-            static let instance = SharedAccess()
+        struct Static {
+            static let instance : SharedAccess = SharedAccess()
         }
-        return Singleton.instance
+        return Static.instance
     }
     
     // Google auth variables
@@ -144,8 +145,13 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     func beaconManager(manager: AnyObject!, didEnterRegion region: CLBeaconRegion!) {
         println("You have entered a region")
         // Check the messages array if you have any message from reception
-        println(myMessages.count)
-        Notifications.display("You have some parcel for pickup.")
+        println(self.myMessages.count)
+        for msg in myMessages {
+            if(msg.type == "Beacon" && msg.location == "reception" && !pinged) {
+                Notifications.display("Parcel for you...")
+                pinged = true
+            }
+        }
     }
     
     func beaconManager(manager: AnyObject!, didExitRegion region: CLBeaconRegion!) {
@@ -154,11 +160,12 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     
     func startRanging(){
         beaconManager.requestAlwaysAuthorization()
-//        beaconManager.startRangingBeaconsInRegion(meetingRoomRegion)
+        // beaconManager.startRangingBeaconsInRegion(meetingRoomRegion)
         
         println("BeaconManager has begun ranging...")
     }
     
-    
-
 }
+
+// Initialize singleton even before initialising any view
+let sharedAccess = SharedAccess()

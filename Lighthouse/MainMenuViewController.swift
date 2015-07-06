@@ -23,16 +23,16 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         // Start getting firebase info
-        SharedAccess.sharedInstance.cacheFirebaseData()
+        sharedAccess.cacheFirebaseData()
         
         // Add auth listeners
-        SharedAccess.sharedInstance.fbRootRef.observeAuthEventWithBlock({ authData in
+        sharedAccess.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
                 // user authenticated with Firebase
 //                var token: String? = authData.providerData["accessToken"] as? String
             
-                SharedAccess.sharedInstance.accessToken = (authData.providerData["accessToken"] as? String)!
-                SharedAccess.sharedInstance.currentUser = authData.uid
+                sharedAccess.accessToken = (authData.providerData["accessToken"] as? String)!
+                sharedAccess.currentUser = authData.uid
                 
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",
                     style: UIBarButtonItemStyle.Plain, target: self, action: "logOut")
@@ -61,7 +61,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
     }
     
     func logOut(){
-        SharedAccess.sharedInstance.fbRootRef.unauth()
+        sharedAccess.fbRootRef.unauth()
         signOutOfGoogle()
     }
     
@@ -74,11 +74,11 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
     // Menu Interaction handlers
     func moveToView() {
         // If first row, check if messages array has value
-        switch SharedAccess.sharedInstance.activeView {
+        switch sharedAccess.activeView {
         case 0:
             // Check if myMessages has values
             // If not, call the start firebase call
-            if(MessageManager.sharedInstance.myMessages.count > 0) {
+            if(sharedAccess.myMessages.count > 0) {
                 proceedToListView()
             } else {
                 let vc = storyboard!.instantiateViewControllerWithIdentifier("Preloader") as! UIViewController
@@ -180,10 +180,10 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         if let indexPath = self.tableView.indexPathForSelectedRow() {
             
             // Save reference of selected main navi item
-            SharedAccess.sharedInstance.activeView = indexPath.row
+            sharedAccess.activeView = indexPath.row
             
             // Check if logged in before going through with the funtions
-            if(SharedAccess.sharedInstance.currentUser.isEmpty) {
+            if(sharedAccess.currentUser.isEmpty) {
                 startAuth()
             }else {
                 moveToView()
@@ -199,7 +199,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // use the Google+ SDK to get an OAuth token
         var signIn = GPPSignIn.sharedInstance()
         signIn.shouldFetchGooglePlusUser = true
-        signIn.clientID = SharedAccess.sharedInstance.googleClientID
+        signIn.clientID = sharedAccess.googleClientID
         signIn.scopes = ["email", "https://www.googleapis.com/auth/calendar"]
         signIn.delegate = self
         signIn.authenticate()
@@ -216,7 +216,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             println("Error! \(error)")
         } else {
             // We successfully obtained an OAuth token, authenticate on Firebase with it
-            SharedAccess.sharedInstance.fbRootRef.authWithOAuthProvider("google", token: auth.accessToken,
+            sharedAccess.fbRootRef.authWithOAuthProvider("google", token: auth.accessToken,
                 withCompletionBlock: { error, authData in
                     if error != nil {
                         // Error authenticating with Firebase with OAuth token
@@ -224,9 +224,9 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                         println("User may have cancelled the Authentication Process")
                     } else {
                         // User is now logged in, set currentUser to the obtained uid
-                        SharedAccess.sharedInstance.currentUser = authData.uid
-                        SharedAccess.sharedInstance.accessToken = authData.providerData["accessToken"] as! String
-                        SharedAccess.sharedInstance.auth = authData
+                        sharedAccess.currentUser = authData.uid
+                        sharedAccess.accessToken = authData.providerData["accessToken"] as! String
+                        sharedAccess.auth = authData
                     }
             })
         }

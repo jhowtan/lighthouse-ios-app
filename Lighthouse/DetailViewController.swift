@@ -23,7 +23,7 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        switch SharedAccess.sharedInstance.activeView {
+        switch sharedAccess.activeView {
 
         case 0: // Messaging section
             // Do any additional setup after loading the view.
