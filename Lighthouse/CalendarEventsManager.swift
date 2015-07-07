@@ -13,7 +13,9 @@ import Alamofire
 
 class CalendarEventsManager {
     let roomsRef = Firebase(url:"https://beacon-dan.firebaseio.com/rooms/")
+    var requestManager: Alamofire.Manager?
     var roomList : [Room] = []
+    var calendars : JSON = nil
     
     // Instantiate the Singleton
     class var sharedInstance : CalendarEventsManager {
@@ -79,9 +81,7 @@ class CalendarEventsManager {
         
         // Need to form params for performing request to Google API
         if NSJSONSerialization.isValidJSONObject(params) {
-            print("params is valid JSON")
-            
-            // Do your Alamofire requests
+            // Prepare HTTP packet for sending request
             let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://www.googleapis.com/calendar/v3/freeBusy")!)
             mutableURLRequest.HTTPMethod = "POST"
             var error: NSError? = nil
@@ -91,38 +91,96 @@ class CalendarEventsManager {
                 mutableURLRequest.HTTPBody = data
             }
             
+            // Do Alamofire requests
             var manager = Manager.sharedInstance
             manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(sharedAccess.accessToken)"]
             let request = manager.request(mutableURLRequest)
-            request.responseJSON { (request, response, JSONData, error) in
-                let json = JSON(JSONData!)
-                var calendars = json["calendars"]
-                println(calendars)
-            }
-        }
-
-        
-    }
-
-    func changeRoomState(mutatedRoom : Room) {
-        // .Value will always be triggered last so the ordering does not matter
-        // We just need to cache the messages on load to pass to the Messages View
-        
-        // This is just used to list the messages the current user has
-        roomsRef.observeEventType(.ChildChanged, withBlock: { changedRoom in
-            let json = JSON(changedRoom.value)
-            var key = json["name"].string
-            var cRoom : Room
-            for r in self.roomList {
-                // Find and retrieve changed room in list
-                if (r.name == key) {
-                    cRoom = r
+            request.responseJSON { (request, response, json, error) in
+                if(error != nil) {
+                    println("Error: \(error)")
+                }
+                else {
+                    var json = JSON(json!)
+                    self.calendars = json["calendars"]
+                    // Look for calendars that are currently occupied
+                    for (key: String, subJson: JSON) in self.calendars {
+                        var count = subJson["busy"].count
+                        // Calendar is currently busy
+                        if (count > 0) {
+                            // Find the busy room in roomList array to change to occupied
+                            var indexOfBusy = find(self.roomList.map({$0.calendarId}), key)
+                            self.roomList[indexOfBusy!].status = "occupied"
+                            // Get the event of that is currently taking place.
+                            self.getCalendarEvent(key)
+                        }
+                    }
                 }
             }
-            // Do something with changed room (cRoom)
-
-        })
+        }
     }
+
+    func getCalendarEvent(calId: String) {
+        var now = NSDate()
+        var later = now.add("minute", value: 30)!
+        
+        var params : [String: AnyObject] = [
+            "timeMin" : now.toISOString(),
+            "timeMax" : later.toISOString(),
+            "alwaysIncludeEmail": true,
+            "orderBy": "startTime",
+            "showDeleted": false,
+            "singleEvents": true
+        ]
+        println(params)
+
+        // TO FIX IN PARAMETERS IN URL
+        
+//        let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://www.googleapis.com/calendar/v3/calendars/\(calId)/events")!)
+//        mutableURLRequest.HTTPMethod = "GET"
+//        var error: NSError? = nil
+//        let options = NSJSONWritingOptions(0)
+//        if let data = NSJSONSerialization.dataWithJSONObject(params, options: options, error: &error) {
+//            mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            mutableURLRequest.HTTPBody = data
+//        }
+        
+        // Do Alamofire requests
+//        var manager = Manager.sharedInstance
+//        manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(sharedAccess.accessToken)"]
+//        let request = manager.request(mutableURLRequest)
+        
+//        request.responseJSON { (request, response, json, error) in
+//            if (error != nil) {
+//                println("Error: \(error)")
+//            }
+//            else {
+//                var json = JSON(json!)
+//                // Current event
+//                var currentEvent = json["data"]["items"][0]
+//                println(currentEvent)
+//            }
+//        }
+    }
+    
+//    func changeRoomState(mutatedRoom : Room) {
+//        // .Value will always be triggered last so the ordering does not matter
+//        // We just need to cache the messages on load to pass to the Messages View
+//        
+//        // This is just used to list the messages the current user has
+//        roomsRef.observeEventType(.ChildChanged, withBlock: { changedRoom in
+//            let json = JSON(changedRoom.value)
+//            var key = json["name"].string
+//            var cRoom : Room
+//            for r in self.roomList {
+//                // Find and retrieve changed room in list
+//                if (r.name == key) {
+//                    cRoom = r
+//                }
+//            }
+//            // Do something with changed room (cRoom)
+//
+//        })
+//    }
     
 //    func _sortByAvailability() {
 //        var sorted = [Room]()
