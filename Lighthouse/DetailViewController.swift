@@ -34,6 +34,11 @@ class DetailViewController: UIViewController {
                 self.title = pageTitle
             }
             
+            if sharedAccess.activeView != 1 {
+                bookBtn.hidden = true
+                pingBtn.hidden = true
+            }
+            
             msgTitle.text = currentMsg!.title
             msgDate.text = currentMsg!.date
             msgContent.text = currentMsg!.message
@@ -44,6 +49,8 @@ class DetailViewController: UIViewController {
                 self.title = pageTitle
             }
             if (currentRoom!.event != nil) {
+                bookBtn.hidden = true
+
                 let visibility = currentRoom!.event["visibility"].string
                 let attendees = currentRoom!.event["attendees"]
                 let startTime = currentRoom!.event["start"]["dateTime"].string
@@ -71,6 +78,7 @@ class DetailViewController: UIViewController {
                 msgLocation.text = currentRoom!.status
             } else {
                 // If currentRoom is an available room:
+                pingBtn.hidden = true
                 msgTitle.text = "Room is available".uppercaseString
                 msgDate.text = "Available for booking"
                 msgContent.text = "There are currently no occupants of the room."
