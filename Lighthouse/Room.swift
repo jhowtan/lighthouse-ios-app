@@ -12,7 +12,7 @@ import SwiftyJSON
 struct Room {
     var beacon : String!
     let calendarId : String!
-    var event : JSON?
+    var event : JSON
     let location : String!
     let name : String!
     var status : String?

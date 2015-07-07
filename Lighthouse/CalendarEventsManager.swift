@@ -74,6 +74,7 @@ class CalendarEventsManager {
             items.append(itemDict)
         }
         
+        // Request body parameters for making POST request
         var params : [String: AnyObject] = [
             "timeMin" : now.toISOString(),
             "timeMax" : later.toISOString(),
@@ -91,11 +92,11 @@ class CalendarEventsManager {
                 mutableURLRequest.HTTPBody = data
             }
             
-            // Do Alamofire requests
+            // Set accessToken to Authorization Header for request
             var manager = Manager.sharedInstance
             manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(sharedAccess.accessToken)"]
             let request = manager.request(mutableURLRequest)
-            request.responseJSON { (request, response, json, error) in
+            request.validate(statusCode: 200..<300).responseJSON { (request, response, json, error) in
                 if(error != nil) {
                     println("Error: \(error)")
                 }
@@ -107,9 +108,6 @@ class CalendarEventsManager {
                         var count = subJson["busy"].count
                         // Calendar is currently busy
                         if (count > 0) {
-                            // Find the busy room in roomList array to change to occupied
-                            var indexOfBusy = find(self.roomList.map({$0.calendarId}), key)
-                            self.roomList[indexOfBusy!].status = "occupied"
                             // Get the event of that is currently taking place.
                             self.getCalendarEvent(key)
                         }
@@ -123,6 +121,7 @@ class CalendarEventsManager {
         var now = NSDate()
         var later = now.add("minute", value: 30)!
         
+        // Parameter object is encoded in URL and does not need to be passed in request body
 //        var params : [String: AnyObject] = [
 //            "timeMin" : now.toISOString(),
 //            "timeMax" : later.toISOString(),
@@ -131,7 +130,7 @@ class CalendarEventsManager {
 //            "showDeleted": false,
 //            "singleEvents": true
 //        ]
-
+        
         let url = "https://www.googleapis.com/calendar/v3/calendars/\(calId)/events?timeMin=\(now.toISOString())&timeMax=\(later.toISOString())&alwaysIncludeEmail=true&orderBy=startTime&showDeleted=false&singleEvents=true"
         
         let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: url)!)
@@ -143,7 +142,7 @@ class CalendarEventsManager {
         manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(sharedAccess.accessToken)"]
         let request = manager.request(mutableURLRequest)
         
-        manager.request(mutableURLRequest).responseJSON {
+        manager.request(mutableURLRequest).validate(statusCode: 200..<300).responseJSON {
             (req, resp, json, error) in
             if (error != nil) {
                 println("Error: \(error)")
@@ -153,8 +152,10 @@ class CalendarEventsManager {
                 var json = JSON(json!)
                 // Current event
                 var currentEvent = json["items"][0]
-                println(currentEvent)
+                println("currentEvent: \(currentEvent)")
+                // Find the busy room in roomList array to change to occupied, add current event to room
                 var indexOfBusy = find(self.roomList.map({$0.calendarId}), calId)
+                self.roomList[indexOfBusy!].status = "occupied"
                 self.roomList[indexOfBusy!].event = currentEvent
             }
         }
