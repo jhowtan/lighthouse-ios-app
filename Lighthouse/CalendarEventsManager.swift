@@ -123,43 +123,41 @@ class CalendarEventsManager {
         var now = NSDate()
         var later = now.add("minute", value: 30)!
         
-        var params : [String: AnyObject] = [
-            "timeMin" : now.toISOString(),
-            "timeMax" : later.toISOString(),
-            "alwaysIncludeEmail": true,
-            "orderBy": "startTime",
-            "showDeleted": false,
-            "singleEvents": true
-        ]
-        println(params)
+//        var params : [String: AnyObject] = [
+//            "timeMin" : now.toISOString(),
+//            "timeMax" : later.toISOString(),
+//            "alwaysIncludeEmail": true,
+//            "orderBy": "startTime",
+//            "showDeleted": false,
+//            "singleEvents": true
+//        ]
 
-        // TO FIX IN PARAMETERS IN URL
+        let url = "https://www.googleapis.com/calendar/v3/calendars/\(calId)/events?timeMin=\(now.toISOString())&timeMax=\(later.toISOString())&alwaysIncludeEmail=true&orderBy=startTime&showDeleted=false&singleEvents=true"
         
-//        let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://www.googleapis.com/calendar/v3/calendars/\(calId)/events")!)
-//        mutableURLRequest.HTTPMethod = "GET"
-//        var error: NSError? = nil
-//        let options = NSJSONWritingOptions(0)
-//        if let data = NSJSONSerialization.dataWithJSONObject(params, options: options, error: &error) {
-//            mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//            mutableURLRequest.HTTPBody = data
-//        }
+        let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: url)!)
+        mutableURLRequest.HTTPMethod = "GET"
+        mutableURLRequest.HTTPBody = nil
+        mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // Do Alamofire requests
-//        var manager = Manager.sharedInstance
-//        manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(sharedAccess.accessToken)"]
-//        let request = manager.request(mutableURLRequest)
+        var manager = Manager.sharedInstance
+        manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(sharedAccess.accessToken)"]
+        let request = manager.request(mutableURLRequest)
         
-//        request.responseJSON { (request, response, json, error) in
-//            if (error != nil) {
-//                println("Error: \(error)")
-//            }
-//            else {
-//                var json = JSON(json!)
-//                // Current event
-//                var currentEvent = json["data"]["items"][0]
-//                println(currentEvent)
-//            }
-//        }
+        manager.request(mutableURLRequest).responseJSON {
+            (req, resp, json, error) in
+            if (error != nil) {
+                println("Error: \(error)")
+                println(resp)
+            }
+            else {
+                var json = JSON(json!)
+                // Current event
+                var currentEvent = json["items"][0]
+                println(currentEvent)
+                var indexOfBusy = find(self.roomList.map({$0.calendarId}), calId)
+                self.roomList[indexOfBusy!].event = currentEvent
+            }
+        }
     }
     
 //    func changeRoomState(mutatedRoom : Room) {
@@ -181,19 +179,7 @@ class CalendarEventsManager {
 //
 //        })
 //    }
-    
-//    func _sortByAvailability() {
-//        var sorted = [Room]()
-//        for r in CalendarEventsManager.sharedInstance.roomList {
-//            if (r.status == "available") {
-//                sorted.insert(r, atIndex: 0)
-//            }
-//            else if (r.status == "occupied") {
-//                sorted.append(r)
-//            }
-//        }
-//        CalendarEventsManager.sharedInstance.roomList = sorted
-//    }
+
     
     func displayRooms(rooms: Room) {
         if(currentTableView != nil){

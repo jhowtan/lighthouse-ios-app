@@ -12,16 +12,16 @@ import SwiftyJSON
 struct Room {
     var beacon : String!
     let calendarId : String!
-    var event : [JSON]!
+    var event : JSON?
     let location : String!
     let name : String!
-    var status : String!
+    var status : String?
     var key : String!
     
     init (json: JSON) {
         self.beacon = json["beacon"].string
         self.calendarId = json["calendarId"].string
-        self.event = json["event"].array
+        self.event = json["event"]
         self.location = json["location"].string
         self.name = json["name"].string
         self.status = json["status"].string
