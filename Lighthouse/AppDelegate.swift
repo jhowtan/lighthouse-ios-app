@@ -47,7 +47,10 @@ class AppDelegate:
         sharedAccess.inForeground = false
         
         // Reset message pinged status
-        sharedAccess.pinged = false
+        sharedAccess.pingedBackground = false
+        
+        // Start Monitoring beacons
+        sharedAccess.startMonitoring()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -59,7 +62,10 @@ class AppDelegate:
         sharedAccess.inForeground = true
         
         // Reset message pinged status
-        sharedAccess.pinged = false
+        sharedAccess.pingedForeground = false
+        
+        // Start Ranging beacons
+        sharedAccess.startRanging()
     }
 
     func applicationWillTerminate(application: UIApplication) {

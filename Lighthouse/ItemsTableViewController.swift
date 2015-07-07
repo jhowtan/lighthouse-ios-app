@@ -24,14 +24,15 @@ class ItemsTableViewController: UITableViewController {
         
         switch sharedAccess.activeView {
         case 0:
-            // self.title = "Blast"
-            viewTitle = "Tina"
+            // viewTitle = "Tina"
+            viewTitle = "Blast"
         case 1:
-            // self.title = "Broker"
-            viewTitle = "Sylvia"
+            // viewTitle = "Sylvia"
+            viewTitle = "Broker"
         case 2:
             // self.title = "Ticker"
-            viewTitle = "James"
+            // viewTitle = "James"
+            viewTitle = "Ticker"
         default:
             println("Lighthouse")
             viewTitle = "Lighthouse"
@@ -39,7 +40,6 @@ class ItemsTableViewController: UITableViewController {
         
         self.title = viewTitle
         
-//        MessageManager.sharedInstance.messagesRef.removeAllObservers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,9 +61,11 @@ class ItemsTableViewController: UITableViewController {
         switch sharedAccess.activeView {
         case 0:
             MessageManager.sharedInstance.currentTableView = self
+            sharedAccess.currentTableView = self
             return sharedAccess.myMessages.count
         case 1:
             CalendarEventsManager.sharedInstance.currentTableView = self
+            sharedAccess.currentTableView = self
             return CalendarEventsManager.sharedInstance.roomList.count
         case 2:
             return 1

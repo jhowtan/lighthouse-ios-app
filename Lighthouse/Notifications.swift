@@ -21,11 +21,13 @@ class Notifications {
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
-    class func alert (title:String, message:String) {
-        var refreshAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+    class func alert (title:String, message:String, view:UIViewController) {
+        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
             println("Handle Ok logic here")
         }))
+        
+        view.presentViewController(alert, animated: true, completion: nil)
         
     }
 }

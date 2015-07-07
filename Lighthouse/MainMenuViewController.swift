@@ -10,7 +10,7 @@ import UIKit
 
 class MainMenuViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate, GPPSignInDelegate {
     
-//    // Global variable
+    // Global variable
 //    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     override func viewDidLoad() {
@@ -29,7 +29,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         sharedAccess.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
                 // user authenticated with Firebase
-//                var token: String? = authData.providerData["accessToken"] as? String
+                // var token: String? = authData.providerData["accessToken"] as? String
             
                 sharedAccess.accessToken = (authData.providerData["accessToken"] as? String)!
                 sharedAccess.currentUser = authData.uid
@@ -51,6 +51,9 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         // Set main navigation logo
         let image = UIImage(named: "nav-logo")
         self.navigationItem.titleView = UIImageView(image: image)
+        
+        // Start ranging here
+        sharedAccess.startRanging()
     }
     
     // Authentication method called by Login button
@@ -149,22 +152,22 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         var img:String?
         switch indexPath.row {
         case 0:
-            // cell.btnTitle.text = "Blast"
-            cell.btnTitle.text = "Tina"
+             cell.btnTitle.text = "Blast"
+            // cell.btnTitle.text = "Tina"
             cell.btnSubTitle.text = "Administrative"
             cell.backgroundColor = UIColor.lightGrayColor()
             
             img = "blast-icon"
         case 1:
-            // cell.btnTitle.text = "Broker"
-            cell.btnTitle.text = "Sylvia"
+             cell.btnTitle.text = "Broker"
+            // cell.btnTitle.text = "Sylvia"
             cell.btnSubTitle.text = "Facilities Reservation"
             cell.backgroundColor = UIColor.grayColor()
             
             img = "ticker-icon"
         case 2:
-            // cell.btnTitle.text = "Ticker"
-            cell.btnTitle.text = "James"
+             cell.btnTitle.text = "Ticker"
+            // cell.btnTitle.text = "James"
             cell.btnSubTitle.text = "Timesheet Tracker"
             cell.backgroundColor = UIColor.darkGrayColor()
             

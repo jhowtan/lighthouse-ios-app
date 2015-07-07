@@ -43,7 +43,8 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     // Messages array should be in SharedAccess so we can initialise it from init 
     // and query the length of the array
     var myMessages = [Message]()
-    var pinged = false
+    var pingedForeground = false
+    var pingedBackground = false
     
     // Declare the Singleton
     class var sharedInstance : SharedAccess {
@@ -57,7 +58,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     let googleClientID = "186193271444-835107nm0lkjlepsmv66fkl4rp6eoir7.apps.googleusercontent.com"
     
     // Reference to current TableViewController
-    var currentTableView: ItemsTableViewController?
+    var currentTableView: UITableViewController?
     
     // View Methods
 
@@ -102,9 +103,6 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                         // Declare reception region after getting the minor and major values of the reception beacon from firebase
                         self.receptionRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), major: nBeacon.major, minor: nBeacon.minor, identifier: "LighthouseReception")
                         
-                        // Start monitoring the reception region
-                        self.beaconManager.startMonitoringForRegion(self.receptionRegion)
-                        
                     }
                     
                     // Push beacon to global beacon variable
@@ -115,6 +113,10 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     // --------- BEACON MANAGEMENT METHODS ------------------
+    func isBeacon(beacon: CLBeacon, withUUID UUIDString: String, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) -> Bool {
+        return beacon.proximityUUID.UUIDString == UUIDString && beacon.major.unsignedShortValue == major && beacon.minor.unsignedShortValue == minor
+    }
+    
     func beaconManager(manager: AnyObject!, didRangeBeacons beacons: [AnyObject]!, inRegion region: CLBeaconRegion!) {
             // To do:
             // Push notification for messages.
@@ -125,9 +127,23 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
             // use nearestBeacon.minor to match with list of beacons in AppDelegate
             
             // if nearest beacon is the reception beacon, alert the user
-            if(receptionBeacon != nil){
-//                println("Neareset beacon check \(nearestBeacon.minor.integerValue == receptionBeacon!.minor)")
-//                Notifications.display("You have some parcel for pickup.")
+            
+            if(receptionBeacon != nil && currentTableView != nil && myMessages.count > 0){
+                println("we are ranging and we have view and beacon identified...")
+                // Check if nearest beacon is
+                if isBeacon(nearestBeacon, withUUID: receptionBeacon!.uuid!, major: receptionBeacon!.major!, minor: receptionBeacon!.minor!) {
+                    
+                    // Loop through the messages arrray and check if any message came from reception
+                    for msg in myMessages {
+                        // If message is found, notify the user
+                        if(msg.type == "Beacon" && msg.location == "reception" && !pingedForeground) {
+                            Notifications.alert("You have a parcel", message: "Please pickup your parcel since your near reception.", view: self.currentTableView!)
+                            pingedForeground = true
+                        }
+                        
+                    }
+                    
+                }
             }
         }
     }
@@ -148,13 +164,13 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     func beaconManager(manager: AnyObject!, didEnterRegion region: CLBeaconRegion!) {
-        println("You have entered a region")
+        println("You have entered a region \(pingedForeground) \(pingedBackground)")
+        
         // Check the messages array if you have any message from reception
-        println(self.myMessages.count)
         for msg in myMessages {
-            if(msg.type == "Beacon" && msg.location == "reception" && !pinged) {
+            if(msg.type == "Beacon" && msg.location == "reception" && !pingedBackground) {
                 Notifications.display("Please pickup your parcel.")
-                pinged = true
+                pingedBackground = true
             }
         }
     }
@@ -164,10 +180,17 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     func startRanging(){
+        println("Start ranging...")
         beaconManager.requestAlwaysAuthorization()
-        // beaconManager.startRangingBeaconsInRegion(meetingRoomRegion)
-        
-        println("BeaconManager has begun ranging...")
+        beaconManager.startRangingBeaconsInRegion(meetingRoomRegion)
+    }
+    
+    func startMonitoring(){
+        println("Start monitoring...")
+        if(receptionRegion != nil) {
+            // Start monitoring the reception region
+            beaconManager.startMonitoringForRegion(receptionRegion)
+        }
     }
     
 }
