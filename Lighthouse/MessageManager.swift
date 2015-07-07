@@ -45,6 +45,5 @@ class MessageManager {
             currentTableView!.insertNewObject()
         }
         
-        println("Inserted message. \(sharedAccess.myMessages.count)")
     }
 }
