@@ -16,6 +16,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var msgDate: UILabel!
     @IBOutlet weak var msgLocation: UILabel!
     @IBOutlet weak var msgContent: UITextView!
+    @IBOutlet weak var bookBtn: UIButton!
+    @IBOutlet weak var pingBtn: UIButton!
     
     // Need to manage if detail is a message or a calendar room
     var currentMsg:Message?
@@ -51,7 +53,17 @@ class DetailViewController: UIViewController {
         }
         
     }
-
+    
+    // Book button handler
+    @IBAction func bookRoom(sender: AnyObject) {
+        
+    }
+    
+    // Ping button handler
+    @IBAction func pingAttendees(sender: AnyObject) {
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inP-iS-m9E">
-                                <rect key="frame" x="16" y="72" width="568" height="24"/>
+                                <rect key="frame" x="16" y="72" width="567.5" height="24"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -45,6 +45,24 @@
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="bookBtn" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cr0-pG-bGw" userLabel="bookBtn">
+                                <rect key="frame" x="531" y="69" width="53" height="30"/>
+                                <state key="normal" title="Book it!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="bookRoom:" destination="PBp-V4-XKD" eventType="touchUpInside" id="eWM-lX-T4Z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="pingBtn" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQh-tY-ZdR" userLabel="pingBtn">
+                                <rect key="frame" x="16" y="550" width="105" height="30"/>
+                                <state key="normal" title="Ping Attendees">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pingAttendees:" destination="PBp-V4-XKD" eventType="touchUpInside" id="uoi-rX-env"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -54,8 +72,12 @@
                             <constraint firstItem="IIf-LR-9vh" firstAttribute="trailing" secondItem="H75-UI-Ufp" secondAttribute="trailingMargin" id="Njk-Jk-HoH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="inP-iS-m9E" secondAttribute="trailing" constant="0.5" id="Nx8-FH-vMM"/>
                             <constraint firstItem="IIf-LR-9vh" firstAttribute="top" secondItem="inP-iS-m9E" secondAttribute="bottom" constant="8" id="Qr1-81-qwd"/>
+                            <constraint firstItem="iQh-tY-ZdR" firstAttribute="leading" secondItem="H75-UI-Ufp" secondAttribute="leadingMargin" id="abS-fm-LaK"/>
+                            <constraint firstItem="cr0-pG-bGw" firstAttribute="trailing" secondItem="H75-UI-Ufp" secondAttribute="trailingMargin" id="bDQ-dF-FHr"/>
+                            <constraint firstItem="ZLr-D8-nwR" firstAttribute="top" secondItem="iQh-tY-ZdR" secondAttribute="bottom" constant="20" id="bau-NG-qPW"/>
                             <constraint firstItem="inP-iS-m9E" firstAttribute="leading" secondItem="H75-UI-Ufp" secondAttribute="leadingMargin" id="c1u-4a-eYM"/>
                             <constraint firstItem="Bk5-eF-lbj" firstAttribute="top" secondItem="gzX-5F-IKT" secondAttribute="bottom" constant="85" id="fdY-Bb-hOM"/>
+                            <constraint firstItem="cr0-pG-bGw" firstAttribute="top" secondItem="gzX-5F-IKT" secondAttribute="bottom" constant="5" id="fuw-ZJ-J7o"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Bk5-eF-lbj" secondAttribute="trailing" constant="4" id="gVI-Xo-oLC"/>
                             <constraint firstItem="IFz-a2-mFC" firstAttribute="top" secondItem="Bk5-eF-lbj" secondAttribute="bottom" constant="21" id="heU-S0-O6H"/>
                             <constraint firstItem="ZLr-D8-nwR" firstAttribute="top" secondItem="Bk5-eF-lbj" secondAttribute="bottom" constant="53" id="hta-Ie-N7b"/>
@@ -64,10 +86,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bookBtn" destination="cr0-pG-bGw" id="hWy-99-2Vy"/>
                         <outlet property="msgContent" destination="Bk5-eF-lbj" id="a6c-YA-ClE"/>
                         <outlet property="msgDate" destination="IIf-LR-9vh" id="s1q-Ll-Nx3"/>
                         <outlet property="msgLocation" destination="IFz-a2-mFC" id="lTv-TX-FiF"/>
                         <outlet property="msgTitle" destination="inP-iS-m9E" id="suR-Pg-cpD"/>
+                        <outlet property="pingBtn" destination="iQh-tY-ZdR" id="G7U-iy-8iE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8mb-ju-8DU" userLabel="First Responder" sceneMemberID="firstResponder"/>
