@@ -35,6 +35,9 @@ class MessageManager {
             
             // Use the appdelegate add message method
             self.addMessageSnapshot(newMessage)
+            
+            sharedAccess.pingedBackground = false
+            sharedAccess.pingedForeground = false
         })
     }
     
