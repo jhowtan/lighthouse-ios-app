@@ -151,25 +151,30 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         case 0:
             // cell.btnTitle.text = "Blast"
             cell.btnTitle.text = "Tina"
-            cell.btnSubTitle.text = "Administrative tool"
+            cell.btnSubTitle.text = "Administrative"
+            cell.backgroundColor = UIColor.lightGrayColor()
+            
             img = "blast-icon"
         case 1:
             // cell.btnTitle.text = "Broker"
             cell.btnTitle.text = "Sylvia"
-            cell.btnSubTitle.text = "Facilities Reservation Tool"
-
+            cell.btnSubTitle.text = "Facilities Reservation"
+            cell.backgroundColor = UIColor.grayColor()
+            
             img = "ticker-icon"
         case 2:
             // cell.btnTitle.text = "Ticker"
             cell.btnTitle.text = "James"
-            cell.btnSubTitle.text = "Timesheet Tracker Tool"
+            cell.btnSubTitle.text = "Timesheet Tracker"
+            cell.backgroundColor = UIColor.darkGrayColor()
+            
             img = "broker-icon"
         default:
             println("Nothing to see here...")
         }
         
         // Apply the bg image
-        // cell.btnBgImage.image = UIImage(named: img!)
+         cell.btnBgImage.image = UIImage(named: img!)
         
         return cell
     }

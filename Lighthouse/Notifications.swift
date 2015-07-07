@@ -20,4 +20,12 @@ class Notifications {
         notification.alertBody = text
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
+    
+    class func alert (title:String, message:String) {
+        var refreshAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            println("Handle Ok logic here")
+        }))
+        
+    }
 }

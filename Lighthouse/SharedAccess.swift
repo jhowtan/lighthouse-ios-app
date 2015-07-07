@@ -27,16 +27,21 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     var beaconList = [Beacon]() // local store from Firebase
     var locationList = [Location]()
     var receptionBeacon:Beacon?
+    
     var receptionRegion:CLBeaconRegion?
     
     // Other global variables
     var activeView = 0
+    // Variable to check if app is on background or foreground
+    var inForeground = true
+    
     // Login Auth variables
     var auth : FAuthData? // user .uid for currentUser id; .token for accessToken
     var currentUser = ""
     var accessToken = ""
     
-    // Messages array should be in SharedAccess so we can initialise it from init and query the length of the array
+    // Messages array should be in SharedAccess so we can initialise it from init 
+    // and query the length of the array
     var myMessages = [Message]()
     var pinged = false
     
@@ -148,7 +153,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
         println(self.myMessages.count)
         for msg in myMessages {
             if(msg.type == "Beacon" && msg.location == "reception" && !pinged) {
-                Notifications.display("Parcel for you...")
+                Notifications.display("Please pickup your parcel.")
                 pinged = true
             }
         }
