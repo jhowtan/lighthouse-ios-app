@@ -99,7 +99,7 @@ class DetailViewController: UIViewController {
     // Ping button handler
     @IBAction func pingAttendees(sender: AnyObject) {
         let attendees = currentRoom!.event["attendees"]
-        MessageManager.sharedInstance.sendMessagesToAttendees(attendees)
+        MessageManager.sharedInstance.sendMessagesToAttendees(attendees, room: currentRoom!)
     }
     
     override func didReceiveMemoryWarning() {

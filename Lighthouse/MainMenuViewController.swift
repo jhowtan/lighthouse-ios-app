@@ -11,27 +11,28 @@ import UIKit
 class MainMenuViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate, GPPSignInDelegate {
     
     // Global variable
-//    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-
+    //    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         // Start getting firebase info
         sharedAccess.cacheFirebaseData()
+        MessageManager.sharedInstance.getUsersList()
         
         // Add auth listeners
         sharedAccess.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
                 // user authenticated with Firebase
-                // var token: String? = authData.providerData["accessToken"] as? String
-            
                 sharedAccess.accessToken = (authData.providerData["accessToken"] as? String)!
+                sharedAccess.currentUserName = (authData.providerData["displayName"] as? String)!
+                sharedAccess.currentUserEmail = (authData.providerData["email"] as? String)!
                 sharedAccess.currentUser = authData.uid
                 
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",
@@ -39,7 +40,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                 self.navigationItem.rightBarButtonItem = b
             } else {
                 // No user is logged in
-                println("No users logged in, calling startAuth()...")
+                println("Successfully Unauthenticated. Ready for login")
                 
                 // Add login button
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Login",
@@ -123,20 +124,20 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             println("Nothing to see here...")
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
@@ -152,21 +153,21 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         var img:String?
         switch indexPath.row {
         case 0:
-             cell.btnTitle.text = "Blast"
+            cell.btnTitle.text = "Blast"
             // cell.btnTitle.text = "Tina"
             cell.btnSubTitle.text = "Administrative"
             cell.backgroundColor = UIColor.lightGrayColor()
             
             img = "blast-icon"
         case 1:
-             cell.btnTitle.text = "Broker"
+            cell.btnTitle.text = "Broker"
             // cell.btnTitle.text = "Sylvia"
             cell.btnSubTitle.text = "Facilities Reservation"
             cell.backgroundColor = UIColor.grayColor()
             
             img = "ticker-icon"
         case 2:
-             cell.btnTitle.text = "Ticker"
+            cell.btnTitle.text = "Ticker"
             // cell.btnTitle.text = "James"
             cell.btnSubTitle.text = "Timesheet Tracker"
             cell.backgroundColor = UIColor.darkGrayColor()
@@ -177,7 +178,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         }
         
         // Apply the bg image
-         cell.btnBgImage.image = UIImage(named: img!)
+        cell.btnBgImage.image = UIImage(named: img!)
         
         return cell
     }
@@ -233,63 +234,65 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                     } else {
                         // User is now logged in, set currentUser to the obtained uid
                         sharedAccess.currentUser = authData.uid
+                        sharedAccess.currentUserName = authData.providerData["displayName"] as! String
+                        sharedAccess.currentUserEmail = authData.providerData["email"] as! String
                         sharedAccess.accessToken = authData.providerData["accessToken"] as! String
-                        sharedAccess.auth = authData
+                        // sharedAccess.auth = authData
                     }
             })
         }
     }
-
+    
     
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    // Return NO if you do not want the specified item to be editable.
+    return true
     }
     */
-
+    
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    if editingStyle == .Delete {
+    // Delete the row from the data source
+    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    } else if editingStyle == .Insert {
+    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
     }
     */
-
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
     }
     */
-
+    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
+    // Return NO if you do not want the item to be re-orderable.
+    return true
     }
     */
-
+    
     
     // MARK: - Navigation
     
     /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        var nextScene = segue.destinationViewController as! ItemsTableViewController
-        // Pass the selected object to the new view controller.
-        if let indexPath = self.tableView.indexPathForSelectedRow() {
-            println(indexPath.row)
-        }
+    // Get the new view controller using [segue destinationViewController].
+    var nextScene = segue.destinationViewController as! ItemsTableViewController
+    // Pass the selected object to the new view controller.
+    if let indexPath = self.tableView.indexPathForSelectedRow() {
+    println(indexPath.row)
+    }
     }
     */
-
-
+    
+    
 }

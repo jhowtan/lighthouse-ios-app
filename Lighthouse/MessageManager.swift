@@ -64,7 +64,7 @@ class MessageManager {
         var recipients : [String] = []
         for (index: String, subJson: JSON) in attendees {
             var searchByEmail = subJson["email"].string!
-//            var fbIndex = find(self.firebaseUsers.map({$0}), searchByEmail)
+//            recipients.append(firebaseUsers["\(searchByEmail)"])
         }
         
         var message = [
