@@ -11,7 +11,9 @@ import SwiftyJSON
 
 class MessageManager {
     let messagesRef = Firebase(url:"https://beacon-dan.firebaseio.com/messages/")
-
+    let usersRef = Firebase(url:"https://beacon-dan.firebaseio.com/users/")
+    
+    var firebaseUsers : [[String: String]] = []
     // Reference to current TableViewController
     var currentTableView: ItemsTableViewController?
     
@@ -47,6 +49,42 @@ class MessageManager {
         if(currentTableView != nil){
             currentTableView!.insertNewObject()
         }
+    }
+    
+    func getUsersList() {
+        usersRef.observeSingleEventOfType(.Value, withBlock: { users -> Void in
+            let json = JSON(users.value)
+            for (key: String, subJson: JSON) in json {
+                self.firebaseUsers.append([subJson["email"].string! : key])
+            }
+        })
+    }
+    
+    func sendMessagesToAttendees(attendees: JSON, room: Room) {
+        var recipients : [String] = []
+        for (index: String, subJson: JSON) in attendees {
+            var searchByEmail = subJson["email"].string!
+//            var fbIndex = find(self.firebaseUsers.map({$0}), searchByEmail)
+        }
         
+        var message = [
+            "date" : FirebaseServerValue.timestamp(),
+            "location" : room.location,
+            "message" : "You are expected at a meeting. Please proceed to \(room.name) immediately!",
+            "status" : "Created",
+            "title" : "MEETING ALERT",
+            "type" : "Global"
+        ]
+        
+        for recipient in recipients {
+            messagesRef.childByAppendingPath("\(recipient)").setValue(message, withCompletionBlock: {
+                (error:NSError?, messagesRef) in
+                if (error != nil) {
+                    println("Message could not be written to user")
+                } else {
+                    println ("Message sent successfully to \(recipient)")
+                }
+            })
+        }
     }
 }

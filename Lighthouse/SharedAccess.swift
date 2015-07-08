@@ -36,8 +36,10 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     var inForeground = true
     
     // Login Auth variables
-    var auth : FAuthData? // user .uid for currentUser id; .token for accessToken
+    // var auth : FAuthData?
     var currentUser = ""
+    var currentUserName = ""
+    var currentUserEmail = ""
     var accessToken = ""
     
     // Messages array should be in SharedAccess so we can initialise it from init 
