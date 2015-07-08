@@ -122,15 +122,6 @@ class CalendarEventsManager {
         var later = now.add("minute", value: 30)!
         
         // Parameter object is encoded in URL and does not need to be passed in request body
-//        var params : [String: AnyObject] = [
-//            "timeMin" : now.toISOString(),
-//            "timeMax" : later.toISOString(),
-//            "alwaysIncludeEmail": true,
-//            "orderBy": "startTime",
-//            "showDeleted": false,
-//            "singleEvents": true
-//        ]
-        
         let url = "https://www.googleapis.com/calendar/v3/calendars/\(calId)/events?timeMin=\(now.toISOString())&timeMax=\(later.toISOString())&alwaysIncludeEmail=true&orderBy=startTime&showDeleted=false&singleEvents=true"
         
         let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: url)!)
@@ -168,7 +159,7 @@ class CalendarEventsManager {
         var params : [String: AnyObject] = [
             "start" : ["dateTime" : now.toISOString()],
             "end" : ["dateTime" : later.toISOString()],
-            "attendees": ["email" : sharedAccess.currentUserEmail, "email" : calendar.calendarId],
+            "attendees": [["email" : sharedAccess.currentUserEmail], ["email" : calendar.calendarId]],
             "location" : calendar.location,
             "summary" : "This room has been booked!",
             "description" : "This room is presently booked by \(sharedAccess.currentUserName), and will be released in 30 mins.",
@@ -202,6 +193,7 @@ class CalendarEventsManager {
                     var json = JSON(json!)
                     var index = find(self.roomList.map({$0.calendarId}), calendar.calendarId)
                     self.roomList[index!].event = json
+                    println(json["summary"])
                 }
             }
         }

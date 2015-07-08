@@ -64,9 +64,15 @@ class MessageManager {
         var recipients : [String] = []
         for (index: String, subJson: JSON) in attendees {
             var searchByEmail = subJson["email"].string!
-//            recipients.append(firebaseUsers["\(searchByEmail)"])
+            println(searchByEmail)
+            for user in self.firebaseUsers {
+                if let val = user[searchByEmail] {
+                    println(val)
+                    recipients.append(val)
+                }
+            }
+            println("Recipients: \(recipients)")
         }
-        
         var message = [
             "date" : FirebaseServerValue.timestamp(),
             "location" : room.location,
