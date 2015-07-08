@@ -24,15 +24,14 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         
         // Start getting firebase info
         sharedAccess.cacheFirebaseData()
-        MessageManager.sharedInstance.getUsersList()
         
         // Add auth listeners
         sharedAccess.fbRootRef.observeAuthEventWithBlock({ authData in
             if authData != nil {
                 // user authenticated with Firebase
+                // var token: String? = authData.providerData["accessToken"] as? String
+            
                 sharedAccess.accessToken = (authData.providerData["accessToken"] as? String)!
-                sharedAccess.currentUserName = (authData.providerData["displayName"] as? String)!
-                sharedAccess.currentUserEmail = (authData.providerData["email"] as? String)!
                 sharedAccess.currentUser = authData.uid
                 
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Logout",
@@ -40,7 +39,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                 self.navigationItem.rightBarButtonItem = b
             } else {
                 // No user is logged in
-                println("Successfully Unauthenticated. Ready for login")
+                println("No users logged in, calling startAuth()...")
                 
                 // Add login button
                 var b : UIBarButtonItem = UIBarButtonItem(title: "Login",
@@ -234,10 +233,8 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                     } else {
                         // User is now logged in, set currentUser to the obtained uid
                         sharedAccess.currentUser = authData.uid
-                        sharedAccess.currentUserName = authData.providerData["displayName"] as! String
-                        sharedAccess.currentUserEmail = authData.providerData["email"] as! String
                         sharedAccess.accessToken = authData.providerData["accessToken"] as! String
-                        // sharedAccess.auth = authData
+                        sharedAccess.auth = authData
                     }
             })
         }
