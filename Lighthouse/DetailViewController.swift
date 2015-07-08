@@ -89,17 +89,17 @@ class DetailViewController: UIViewController {
         default:
             return
         }
-        
     }
     
     // Book button handler
     @IBAction func bookRoom(sender: AnyObject) {
-        
+        CalendarEventsManager.sharedInstance.bookAvailableRoom(self.currentRoom!)
     }
     
     // Ping button handler
     @IBAction func pingAttendees(sender: AnyObject) {
-        
+        let attendees = currentRoom!.event["attendees"]
+        MessageManager.sharedInstance.sendMessagesToAttendees(attendees)
     }
     
     override func didReceiveMemoryWarning() {

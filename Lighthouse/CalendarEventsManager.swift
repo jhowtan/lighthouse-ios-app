@@ -152,7 +152,7 @@ class CalendarEventsManager {
                 var json = JSON(json!)
                 // Current event
                 var currentEvent = json["items"][0]
-                println("currentEvent: \(currentEvent)")
+                // println("currentEvent: \(currentEvent)")
                 // Find the busy room in roomList array to change to occupied, add current event to room
                 var indexOfBusy = find(self.roomList.map({$0.calendarId}), calId)
                 self.roomList[indexOfBusy!].status = "occupied"
@@ -161,26 +161,51 @@ class CalendarEventsManager {
         }
     }
     
-//    func changeRoomState(mutatedRoom : Room) {
-//        // .Value will always be triggered last so the ordering does not matter
-//        // We just need to cache the messages on load to pass to the Messages View
-//        
-//        // This is just used to list the messages the current user has
-//        roomsRef.observeEventType(.ChildChanged, withBlock: { changedRoom in
-//            let json = JSON(changedRoom.value)
-//            var key = json["name"].string
-//            var cRoom : Room
-//            for r in self.roomList {
-//                // Find and retrieve changed room in list
-//                if (r.name == key) {
-//                    cRoom = r
-//                }
-//            }
-//            // Do something with changed room (cRoom)
-//
-//        })
-//    }
-
+    func bookAvailableRoom(calendar: Room) {
+        var now = NSDate()
+        var later = now.add("minute", value: 30)!
+        // Parameter object is encoded in URL and does not need to be passed in request body
+        var params : [String: AnyObject] = [
+            "start" : ["dateTime" : now.toISOString()],
+            "end" : ["dateTime" : later.toISOString()],
+            "attendees": ["email" : sharedAccess.currentUserEmail, "email" : calendar.calendarId],
+            "location" : calendar.location,
+            "summary" : "This room has been booked!",
+            "description" : "This room is presently booked by \(sharedAccess.currentUserName), and will be released in 30 mins.",
+            "reminders" : ["useDefault": true],
+            "transparency" : "opaque",
+            "visibility" : "public"
+        ]
+        
+        if NSJSONSerialization.isValidJSONObject(params) {
+            // Prepare HTTP packet for sending request
+            let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://www.googleapis.com/calendar/v3/calendars/\(sharedAccess.currentUserEmail)/events?sendNotifications=true")!)
+            mutableURLRequest.HTTPMethod = "POST"
+            var error: NSError? = nil
+            let options = NSJSONWritingOptions.allZeros
+            if let data = NSJSONSerialization.dataWithJSONObject(params, options: options, error: &error) {
+                mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                mutableURLRequest.HTTPBody = data
+            }
+            
+            // Set accessToken to Authorization Header for request
+            var manager = Manager.sharedInstance
+            manager.session.configuration.HTTPAdditionalHeaders = ["Authorization": "Bearer \(sharedAccess.accessToken)"]
+            let request = manager.request(mutableURLRequest)
+            request.validate(statusCode: 200..<300).responseJSON {
+                (req, resp, json, error) in
+                if (error != nil) {
+                    println("Error: \(error)")
+                    println(resp)
+                }
+                else {
+                    var json = JSON(json!)
+                    var index = find(self.roomList.map({$0.calendarId}), calendar.calendarId)
+                    self.roomList[index!].event = json
+                }
+            }
+        }
+    }
     
     func displayRooms(rooms: Room) {
         if(currentTableView != nil){
