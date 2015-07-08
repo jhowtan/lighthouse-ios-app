@@ -16,6 +16,7 @@ class MessageManager {
     var firebaseUsers : [[String: String]] = []
     // Reference to current TableViewController
     var currentTableView: ItemsTableViewController?
+    var detailView: DetailViewController?
     
     // Instantiate the Singleton
     class var sharedInstance : MessageManager {
@@ -83,7 +84,7 @@ class MessageManager {
         ]
         
         for recipient in recipients {
-            messagesRef.childByAppendingPath("\(recipient)").setValue(message, withCompletionBlock: {
+            messagesRef.childByAppendingPath("\(recipient)").childByAutoId().setValue(message, withCompletionBlock: {
                 (error:NSError?, messagesRef) in
                 if (error != nil) {
                     println("Message could not be written to user")
@@ -92,5 +93,6 @@ class MessageManager {
                 }
             })
         }
+        Notifications.alert("Ping Attendees", message: "Attendees have been successfully alerted", view: self.detailView!)
     }
 }

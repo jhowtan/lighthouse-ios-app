@@ -142,9 +142,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                             Notifications.alert("You have a parcel", message: "Please pickup your parcel since your near reception.", view: self.currentTableView!)
                             pingedForeground = true
                         }
-                        
                     }
-                    
                 }
             }
         }

@@ -27,13 +27,13 @@ class CalendarEventsManager {
     
     // Reference to current TableViewController
     var currentTableView: ItemsTableViewController?
+    var detailView: DetailViewController?
 
     // -------- FIREBASE METHODS -----------
     func getCalendars() {
         roomsRef.observeSingleEventOfType(.Value, withBlock: { allRooms in
             let json = JSON(allRooms.value)
             for (key: String, subJson: JSON) in json {
-                //Do something you want
                 var nRoom = Room(json: subJson)
                 nRoom.key = key
                 self.roomList.append(nRoom)
@@ -61,6 +61,8 @@ class CalendarEventsManager {
         ]
     }
     
+    // --- getFreeBusy()
+    // Called when upon click/loading of calendars from main menu
     func getFreeBusy() {
         var now = NSDate()
         var later = now.add("minute", value: 30)!
@@ -112,11 +114,14 @@ class CalendarEventsManager {
                             self.getCalendarEvent(key)
                         }
                     }
+                    println("Finished getting all busy calendar events")
                 }
             }
         }
     }
-
+    // getCalendarEvent(calId: String)
+    // Called upon retrieving a list of freeBusy responses from getFreeBusy()
+    // Should there be busy events, calendar will obtain a calendar event object for parsing
     func getCalendarEvent(calId: String) {
         var now = NSDate()
         var later = now.add("minute", value: 30)!
@@ -140,6 +145,7 @@ class CalendarEventsManager {
                 println(resp)
             }
             else {
+                // SUCCESSFUL RESPONSE
                 var json = JSON(json!)
                 // Current event
                 var currentEvent = json["items"][0]
@@ -193,7 +199,7 @@ class CalendarEventsManager {
                     var json = JSON(json!)
                     var index = find(self.roomList.map({$0.calendarId}), calendar.calendarId)
                     self.roomList[index!].event = json
-                    println(json["summary"])
+                    Notifications.alert("Book It", message: "This room has been successfully booked", view: self.detailView!)
                 }
             }
         }

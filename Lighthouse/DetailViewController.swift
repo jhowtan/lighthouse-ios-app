@@ -70,10 +70,10 @@ class DetailViewController: UIViewController {
                 } else {
                     attendeeString = "There is a private event ongoing."
                 }
+                var timeUntilRelease = NSDate.date(fromString: endTime!, format: DateFormat.ISO8601)!.toString(format: DateFormat.Custom("HH:mm"))
 
-//                msgTitle.text = currentRoom!.location?.uppercaseString
                 msgTitle.text = summary?.uppercaseString
-                msgDate.text = "\(startTime!) to \(endTime!)"
+                msgDate.text = "Released at \(timeUntilRelease)"
                 msgContent.text = "\(attendeeString)"
                 msgLocation.text = currentRoom!.status
             } else {
@@ -93,12 +93,18 @@ class DetailViewController: UIViewController {
     
     // Book button handler
     @IBAction func bookRoom(sender: AnyObject) {
+        CalendarEventsManager.sharedInstance.detailView = self
         CalendarEventsManager.sharedInstance.bookAvailableRoom(self.currentRoom!)
     }
     
     // Ping button handler
     @IBAction func pingAttendees(sender: AnyObject) {
         let attendees = currentRoom!.event["attendees"]
+        MessageManager.sharedInstance.detailView = self
+        // for testing purposes: app will crash should you send messages to yourself without the correct
+        // numberOfRowsInSection for tableView (of ItemsTableView).
+        sharedAccess.activeView = 0
+        // To add a conditional check if current user is part of attendees
         MessageManager.sharedInstance.sendMessagesToAttendees(attendees, room: currentRoom!)
     }
     
