@@ -26,8 +26,9 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     
     var beaconList = [Beacon]() // local store from Firebase
     var locationList = [Location]()
-    var receptionBeacon:Beacon?
+    var regionList = [CLBeaconRegion?]()
     
+    var receptionBeacon:Beacon?
     var receptionRegion:CLBeaconRegion?
     
     // Other global variables
@@ -76,6 +77,8 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
         // Add reference to reception label
         locationRef.observeSingleEventOfType(.Value, withBlock: { locations in
             var receptionLabel = ""
+            var iceLabel = ""
+            var mintLabel = ""
             
             let json = JSON(locations.value)
             for (key: String, subJson: JSON) in json {
@@ -87,6 +90,12 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                 if(nLocation.name == "Reception") {
                     receptionLabel = nLocation.beacon!
                 }
+                else if(nLocation.name == "Spider Phone") {
+                    iceLabel = nLocation.beacon!
+                }
+                else if(nLocation.name == "Entrance") {
+                    mintLabel = nLocation.beacon!
+                }
             }
             
             self.beaconsRef.observeSingleEventOfType(.Value, withBlock: { beacons in
@@ -95,6 +104,16 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                     var nBeacon = Beacon(json: subJson)
                     nBeacon.name = key
                     // catch the beacon name for reception
+                    let bcnMinor = nBeacon.minor as CLBeaconMinorValue
+                    let bcnMajor = nBeacon.major as CLBeaconMajorValue
+                    
+                    var nRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), major: bcnMajor, minor: bcnMinor, identifier: nBeacon.name)
+                    
+                    // Push region to global region variable
+                    self.regionList.append(nRegion)
+                    // Push beacon to global beacon variable
+                    self.beaconList.append(nBeacon)
+                    
                     if (nBeacon.name == receptionLabel) {
                         self.receptionBeacon = nBeacon
                         println("Retrieved the receptionBeacon! ------ \(self.receptionBeacon!.name)")
@@ -103,11 +122,9 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                         let bcnMajor = nBeacon.major as CLBeaconMajorValue
                         
                         // Declare reception region after getting the minor and major values of the reception beacon from firebase
-                        self.receptionRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), major: nBeacon.major, minor: nBeacon.minor, identifier: "LighthouseReception")
+                        self.receptionRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), major: nBeacon.major, minor: nBeacon.minor, identifier: "BLUEBERRY")
+                        // println("Retrieved the receptionBeacon! -- \(self.receptionRegion!)")
                     }
-                    
-                    // Push beacon to global beacon variable
-                    self.beaconList.append(nBeacon)
                 }
             })
         })
@@ -123,7 +140,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
             // beaconManager.stopRangingBeaconsInRegion(region)
             // nearestBeacon is a CLBeacon object
             // use nearestBeacon.minor to match with list of beacons in AppDelegate
-            
+
             // if nearest beacon is the reception beacon, alert the user
             
             if(receptionBeacon != nil && currentTableView != nil && myMessages.count > 0){
@@ -156,7 +173,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     
     func beaconManager(manager: AnyObject!, didStartMonitoringForRegion region: CLBeaconRegion!) {
         println("didStartMonitoringForRegion: called")
-
+        Notifications.display("didStartMonitoringForRegion: \(region.identifier)")
     }
     
     func beaconManager(manager: AnyObject!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -171,20 +188,20 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     
     func beaconManager(manager: AnyObject!, didEnterRegion region: CLBeaconRegion!) {
 //        println("You have entered a region \(pingedForeground) \(pingedBackground)")
-        Notifications.display("You have entered the region \(region)")
+        Notifications.display("You have entered the region: \(region.identifier)")
         beaconManager.startRangingBeaconsInRegion(region)
         // Check the messages array if you have any message from reception
-//        for msg in myMessages {
-//            if(msg.type == "Beacon" && msg.location == "reception" && !pingedBackground) {
-//                Notifications.display("Please pickup your parcel.")
-//                pingedBackground = true
-//            }
-//        }
+        for msg in myMessages {
+            if(msg.type == "Beacon" && msg.location == "reception" && !pingedBackground) {
+                Notifications.display("Please pickup your parcel.")
+                pingedBackground = true
+            }
+        }
     }
     
     func beaconManager(manager: AnyObject!, didExitRegion region: CLBeaconRegion!) {
 //        println("You are out of the region.")
-        Notifications.display("You have exited the region \(region)")
+        Notifications.display("You have exited the region: \(region.identifier)")
         beaconManager.stopRangingBeaconsInRegion(region)
     }
     
@@ -195,10 +212,10 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     func startMonitoring(){
-        println("Start monitoring...")
-        if(receptionRegion != nil) {
-            // Start monitoring the reception region
-            beaconManager.startMonitoringForRegion(receptionRegion)
+        println("Start monitoring for all regions...")
+        for region in regionList {
+            beaconManager.startMonitoringForRegion(region)
+            // Notifications.display("You started monitoring for: \(region.identifier)")
         }
     }
     
