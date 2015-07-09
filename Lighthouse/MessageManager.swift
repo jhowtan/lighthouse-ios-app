@@ -61,14 +61,18 @@ class MessageManager {
         })
     }
     
+    // To modify for pinging absent attendees.
+    // Will require a check condition for seeing if attendees are within range of the beacon.
+    // May require a data structure to validate against
     func sendMessagesToAttendees(attendees: JSON, room: Room) {
         var recipients : [String] = []
+        // Search for attendees in here
         for (index: String, subJson: JSON) in attendees {
+            // use email as a key for retrieving the user key to assign messages to
             var searchByEmail = subJson["email"].string!
-            println(searchByEmail)
             for user in self.firebaseUsers {
+                // add to recipients only when valid value is found for the key
                 if let val = user[searchByEmail] {
-                    println(val)
                     recipients.append(val)
                 }
             }

@@ -104,7 +104,6 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                         
                         // Declare reception region after getting the minor and major values of the reception beacon from firebase
                         self.receptionRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), major: nBeacon.major, minor: nBeacon.minor, identifier: "LighthouseReception")
-                        
                     }
                     
                     // Push beacon to global beacon variable
@@ -120,9 +119,6 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     func beaconManager(manager: AnyObject!, didRangeBeacons beacons: [AnyObject]!, inRegion region: CLBeaconRegion!) {
-            // To do:
-            // Push notification for messages.
-        
         if let nearestBeacon = beacons.first as? CLBeacon {
             // beaconManager.stopRangingBeaconsInRegion(region)
             // nearestBeacon is a CLBeacon object
@@ -139,17 +135,27 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
                     for msg in myMessages {
                         // If message is found, notify the user
                         if(msg.type == "Beacon" && msg.location == "reception" && !pingedForeground) {
-                            Notifications.alert("You have a parcel", message: "Please pickup your parcel since your near reception.", view: self.currentTableView!)
+                            Notifications.alert("\(msg.title)", message: "\(msg.message!)", view: self.currentTableView!)
                             pingedForeground = true
                         }
                     }
+                    
+                    // Loop through the rooms arrray and check if rooms are occupied (event started)
+                    for room in CalendarEventsManager.sharedInstance.roomList {
+                        // 1. Obtain the attendees for the room
+                        // 2. Check if attendees are within the proximity of the room
+                        // 3. Check if user is the organizer for the room
+                        // 4. Check if ten minute buffer is up from the event startTime
+                        // 5. Notify organizer if the room is still required
+                    }
+
                 }
             }
         }
     }
     
     func beaconManager(manager: AnyObject!, didStartMonitoringForRegion region: CLBeaconRegion!) {
-        println("we are now monitoring")
+        println("didStartMonitoringForRegion: called")
 
     }
     
@@ -164,19 +170,22 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     func beaconManager(manager: AnyObject!, didEnterRegion region: CLBeaconRegion!) {
-        println("You have entered a region \(pingedForeground) \(pingedBackground)")
-        
+//        println("You have entered a region \(pingedForeground) \(pingedBackground)")
+        Notifications.display("You have entered the region \(region)")
+        beaconManager.startRangingBeaconsInRegion(region)
         // Check the messages array if you have any message from reception
-        for msg in myMessages {
-            if(msg.type == "Beacon" && msg.location == "reception" && !pingedBackground) {
-                Notifications.display("Please pickup your parcel.")
-                pingedBackground = true
-            }
-        }
+//        for msg in myMessages {
+//            if(msg.type == "Beacon" && msg.location == "reception" && !pingedBackground) {
+//                Notifications.display("Please pickup your parcel.")
+//                pingedBackground = true
+//            }
+//        }
     }
     
     func beaconManager(manager: AnyObject!, didExitRegion region: CLBeaconRegion!) {
-        println("You are out of the region.")
+//        println("You are out of the region.")
+        Notifications.display("You have exited the region \(region)")
+        beaconManager.stopRangingBeaconsInRegion(region)
     }
     
     func startRanging(){
