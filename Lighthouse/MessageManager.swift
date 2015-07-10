@@ -36,9 +36,12 @@ class MessageManager {
             let json = JSON(messages.value)
             var newMessage = Message(json: json)
             
-            // Use the appdelegate add message method
-            self.addMessageSnapshot(newMessage)
-            
+            if (newMessage.type == "Global") {
+                Notifications.display(newMessage.title)
+                Notifications.alert(newMessage.title, message: newMessage.message, view: self.detailView!)
+                self.addMessageSnapshot(newMessage)
+            }
+
             sharedAccess.pingedBackground = false
             sharedAccess.pingedForeground = false
         })

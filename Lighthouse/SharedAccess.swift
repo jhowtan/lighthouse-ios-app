@@ -173,7 +173,7 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     
     func beaconManager(manager: AnyObject!, didStartMonitoringForRegion region: CLBeaconRegion!) {
         println("didStartMonitoringForRegion: called")
-        Notifications.display("didStartMonitoringForRegion: \(region.identifier)")
+        // Notifications.display("didStartMonitoringForRegion: \(region.identifier)")
     }
     
     func beaconManager(manager: AnyObject!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -187,21 +187,21 @@ class SharedAccess: UIView, ESTBeaconManagerDelegate {
     }
     
     func beaconManager(manager: AnyObject!, didEnterRegion region: CLBeaconRegion!) {
-//        println("You have entered a region \(pingedForeground) \(pingedBackground)")
-        Notifications.display("You have entered the region: \(region.identifier)")
+        println("You have entered a region \(pingedForeground) \(pingedBackground)")
+        // Notifications.display("You have entered the region: \(region.identifier)")
         beaconManager.startRangingBeaconsInRegion(region)
         // Check the messages array if you have any message from reception
         for msg in myMessages {
             if(msg.type == "Beacon" && msg.location == "reception" && !pingedBackground) {
-                Notifications.display("Please pickup your parcel.")
+                Notifications.display(msg.title)
                 pingedBackground = true
             }
         }
     }
     
     func beaconManager(manager: AnyObject!, didExitRegion region: CLBeaconRegion!) {
-//        println("You are out of the region.")
-        Notifications.display("You have exited the region: \(region.identifier)")
+        println("You are out of the region.")
+        // Notifications.display("You have exited the region: \(region.identifier)")
         beaconManager.stopRangingBeaconsInRegion(region)
     }
     

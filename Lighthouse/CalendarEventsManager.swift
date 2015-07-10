@@ -38,8 +38,6 @@ class CalendarEventsManager {
                 nRoom.key = key
                 self.roomList.append(nRoom)
             }
-            // Show available ones on top
-            self.roomList.sort({$0.status < $1.status})
             println("Finish getCalendars")
             self.getFreeBusy()
         })

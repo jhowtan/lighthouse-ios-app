@@ -95,6 +95,11 @@ class ItemsTableViewController: UITableViewController {
             cell.msgTitle!.text = room.name
             cell.msgDate!.text = room.location
             cell.roomAvailability!.text = room.status
+            if (cell.roomAvailability.text == "available") {
+                cell.roomAvailability.textColor = UIColor.greenColor()
+            } else {
+                cell.roomAvailability.textColor = UIColor.redColor()
+            }
             return cell
         case 2: // Timer section
             return cell

@@ -104,6 +104,8 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
             // If not, call the start firebase call
             if (CalendarEventsManager.sharedInstance.roomList.count > 0) {
                 CalendarEventsManager.sharedInstance.getFreeBusy()
+                // Show available ones on top
+                CalendarEventsManager.sharedInstance.roomList.sort({$0.status < $1.status})
                 proceedToListView()
             } else {
                 let vc = storyboard!.instantiateViewControllerWithIdentifier("Preloader") as! UIViewController
@@ -111,6 +113,8 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                 vc.modalTransitionStyle = .CrossDissolve
                 presentViewController(vc, animated: true) {
                     CalendarEventsManager.sharedInstance.getCalendars()
+                    // Show available ones on top
+                    CalendarEventsManager.sharedInstance.roomList.sort({$0.status < $1.status})
                     
                     // Delay 2 seconds
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
@@ -182,7 +186,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         
         return cell
     }
-    
+
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Check if index path has value
