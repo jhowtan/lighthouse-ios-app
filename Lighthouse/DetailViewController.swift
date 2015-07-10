@@ -73,7 +73,7 @@ class DetailViewController: UIViewController {
                 var timeUntilRelease = NSDate.date(fromString: endTime!, format: DateFormat.ISO8601)!.toString(format: DateFormat.Custom("HH:mm"))
 
                 msgTitle.text = summary?.uppercaseString
-                msgDate.text = "Released at \(timeUntilRelease)"
+                msgDate.text = "Booked until \(timeUntilRelease)"
                 msgContent.text = "\(attendeeString)"
                 msgLocation.text = currentRoom!.status
             } else {

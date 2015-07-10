@@ -38,7 +38,6 @@ class MessageManager {
             
             if (newMessage.type == "Global") {
                 Notifications.display(newMessage.title)
-                Notifications.alert(newMessage.title, message: newMessage.message, view: self.detailView!)
                 self.addMessageSnapshot(newMessage)
             }
 
